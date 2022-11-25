@@ -6,18 +6,22 @@ labels: 'proposal'
 assignees: ''
 ---
 
-#### Goal
+### Goal
 
 Briefly explain the goal you try to achieve with this Substream
 
-#### Maps
+### Models
+
+Briefly describe the models that are used as input / output for this Substream
+
+### Maps
 
 Briefly list the maps including their input / output for this Substream
 
-#### Stores
+### Stores
 
 Briefly list the stores used in this Substream
 
-#### Consumers
+### Consumers
 
 Briefly explain how to consume this substream and whether this is a custom consumer or a default sink
