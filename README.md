@@ -111,7 +111,7 @@ cargo new substreams/<mysubstream> --lib
 ```
 
 Next you want to make sure that we will be able to compile the substreams and generate the relevant models for them. For
-that you'll need a substreams.yaml file. Copy this over from another substream and adapt it to your needs.
+that you'll need a `substreams.yaml` file. Copy this over from another substream and adapt it to your needs.
 
 ### Create the models
 
@@ -121,11 +121,11 @@ be located within the proto folder in your substreams directory. See this [proto
 
 After you have defined your models you want to generate the Rust models from your protobuffers. You can do this by 
 executing `make codegen SUBSTREAM=<mysubstream>`. This will generate the Rust code into the `src/pb` folder in your
-Substream module. You need to now add a mod.rs in that folder as well to export the actually code, see [here](https://github.com/EOS-Nation/substreams-monorepo/blob/develop/substreams/blocktime-meta/src/pb/mod.rs) for an example.
+Substream module. You need to now add a `mod.rs` in that folder to export the code, see [here](https://github.com/EOS-Nation/substreams-monorepo/blob/develop/substreams/blocktime-meta/src/pb/mod.rs) for an example.
 
 ### Write the transformers and stores
 
-To write the actual codes you first want to create your maps. Maps will transform an input format into some output format.
+To write the actual code you first want to create your maps. Maps will transform an input format into some output format.
 The first map will receive the full antelope block format (including all block headers and all transactions). Its job 
 is it to filter out the relevant data and output it into one of the custom models you defined a step above. 
 
