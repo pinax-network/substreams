@@ -71,19 +71,19 @@ For more information about the installation check the [buf website](https://docs
 ## Building Substreams
 
 To build any of the available Substreams in the `./substreams` directory you can use the Makefile by running 
-`make build SUBMODULE=<submodule>`. Alternatively you can change into the submodule directory and run 
+`make build SUBSTREAM=<substream>`. Alternatively you can change into the Substream directory and run 
 `cargo build --target wasm32-unknown-unknown --release`.
 
 You can also execute the `./build-all.sh` script in case you want to build all available substreams.
 
 ## Running Substreams
 
-To execute a Substream on the server you need to use the CLI and specify the substream.yaml file you want to execute, the
+To execute a Substream on the server you need to use the CLI and specify the `substream.yaml` file you want to execute, the
 endpoint to execute the Substream on and the store method. 
 
 For example executing the exemplary `blocktime-meta` Substream you need to run:
 
-`substreams run -e waxtest.firehose.eosnation.io:9001 ./submodules/blocktime-meta/substreams.yaml store_blockmeta`
+`substreams run -e waxtest.firehose.eosnation.io:9001 ./substreams/blocktime-meta/substreams.yaml store_blockmeta`
 
 In case you want to execute the Substream on a specific interval you can specify the start block using `-s <start_block_num>`
 and end block using `-t <end_block_num>`. The endblock can also be specified as range using `+`. That means using `-t +1000`
@@ -100,8 +100,44 @@ TODO describe how to run substreams from a node/go process and how to run the av
 
 ## Creating new Substreams
 
-TODO describe how to create new substreams
+This chapter will give you a brief understanding what to do if you want to create a new substream. 
 
+### Setup the codebase
+
+To create a new Substream you need to first create a new code base:
+
+```shell
+cargo new substreams/<mysubstream> --lib
+```
+
+Next you want to make sure that we will be able to compile the substreams and generate the relevant models for them. For
+that you'll need a substreams.yaml file. Copy this over from another substream and adapt it to your needs.
+
+### Create the models
+
+You probably want to start now by defining the output models for your maps, so you can write the transformation from a 
+full antelope Block to the data you actually need within your substreams. These are written as protobuffers and should 
+be located within the proto folder in your substreams directory. See this [protofile](https://github.com/EOS-Nation/substreams-monorepo/blob/develop/substreams/blocktime-meta/proto/block.proto) for example.
+
+After you have defined your models you want to generate the Rust models from your protobuffers. You can do this by 
+executing `make codegen SUBSTREAM=<mysubstream>`. This will generate the Rust code into the `src/pb` folder in your
+Substream module. You need to now add a mod.rs in that folder as well to export the actually code, see [here](https://github.com/EOS-Nation/substreams-monorepo/blob/develop/substreams/blocktime-meta/src/pb/mod.rs) for an example.
+
+### Write the transformers and stores
+
+To write the actual codes you first want to create your maps. Maps will transform an input format into some output format.
+The first map will receive the full antelope block format (including all block headers and all transactions). Its job 
+is it to filter out the relevant data and output it into one of the custom models you defined a step above. 
+
+The stores will then receive the outputs from the maps and store them into one of the predefined KV stores. Those are 
+providing different update policies (such as `set` or `add` for example) for different data types. So to add up int64
+values on a specific key you would use a `StoreAddInt64`. The available stores can be found [here](https://github.com/streamingfast/substreams-rs/blob/develop/substreams/src/store.rs).
+
+A simple example on how to map and store blocks can be found [here](https://github.com/EOS-Nation/substreams-monorepo/blob/develop/substreams/blocktime-meta/src/lib.rs).
+And more information about developing Substreams can be found on the [official documentation](https://substreams.streamingfast.io/developer-guide/overview).
+
+**Note:** Make sure the input / output data types you use in your maps and stores match the ones you have defined in your 
+`substreams.yaml` file.
 
 ## Contributing
 

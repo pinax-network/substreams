@@ -4,29 +4,7 @@ mod pb;
 use pb::types;
 use substreams::{prelude::*, store, log};
 use substreams::store::{StoreSetProto};
-use chrono::{NaiveDateTime};
 use crate::pb::block;
-
-#[derive(Debug, PartialEq)]
-pub struct BlockTimestamp(chrono::NaiveDateTime);
-
-impl BlockTimestamp {
-    pub fn from_block(blk: &types::Block) -> Self {
-        let header = blk.header.as_ref().unwrap();
-        let timestamp = header.timestamp.as_ref().unwrap();
-
-        BlockTimestamp(NaiveDateTime::from_timestamp(
-            timestamp.seconds,
-            timestamp.nanos as u32,
-        ))
-    }
-}
-
-impl ToString for BlockTimestamp {
-    fn to_string(&self) -> String {
-        self.0.to_string()
-    }
-}
 
 /// Extracts blockmeta from each block
 #[substreams::handlers::map]
