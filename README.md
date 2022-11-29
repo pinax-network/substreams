@@ -115,9 +115,10 @@ that you'll need a `substreams.yaml` file. Copy this over from another substream
 
 ### Create the models
 
-You probably want to start now by defining the output models for your maps, so you can write the transformation from a 
+You probably want to start now by defining the output models for your maps so you can write the transformation from a 
 full antelope Block to the data you actually need within your substreams. These are written as protobuffers and should 
-be located within the proto folder in your substreams directory. See this [protofile](https://github.com/EOS-Nation/substreams-monorepo/blob/develop/substreams/blocktime-meta/proto/block.proto) for example.
+be located within the `proto` folder in your substreams directory. See this [protofile](https://github.com/EOS-Nation/substreams-monorepo/blob/develop/substreams/blocktime-meta/proto/block.proto) 
+as an example.
 
 After you have defined your models you want to generate the Rust models from your protobuffers. You can do this by 
 executing `make codegen SUBSTREAM=<mysubstream>`. This will generate the Rust code into the `src/pb` folder in your

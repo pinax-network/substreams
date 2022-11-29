@@ -6,4 +6,4 @@ build:
 
 .PHONY: codegen
 codegen:
-	substreams protogen ./substreams/$(SUBSTREAM)/substreams.yaml --exclude-paths="sf/substreams,google"
+	substreams protogen ./substreams/$(SUBSTREAM)/substreams.yaml --exclude-paths="sf/antelope,sf/substreams,google"
