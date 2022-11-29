@@ -5,15 +5,22 @@ goal is to centralize build tools, documentation and shared code among our Subst
 
 It can also be used to discuss new Substream proposals.
 
-For a current list of available endpoints [see here](#available-endpoints).
+### Available endpoints
 
-Further resources:
+* `waxtest.firehose.eosnation.io:9001`
+
+### Further resources
+
 * [Substreams documentation](https://substreams.streamingfast.io)
 
 
 ## Repository structure
 
-TODO explain repository structure
+This repository currently holds all substreams as well as the SDK library. 
+
++ `core` holds the Substream core SDK for Antelope chains. This contains the generated protobuffer for the Antelope blocks
+  as well as helper methods to extract and parse block data.
+* `substreams` holds all the substreams bundled into their own subfolder.
 
 ## Prerequisites
 
@@ -89,9 +96,7 @@ In case you want to execute the Substream on a specific interval you can specify
 and end block using `-t <end_block_num>`. The endblock can also be specified as range using `+`. That means using `-t +1000`
 will run the substreams for 1000 blocks from the start block.
 
-### Available endpoints
-
-* `waxtest.firehose.eosnation.io:9001`
+For a current list of available endpoints [see here](#available-endpoints).
 
 
 ## Running consumers & sinks

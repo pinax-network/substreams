@@ -10,8 +10,8 @@ use crate::pb::block;
 fn map_blockmeta(blk: substreams_antelope_core::pb::antelope::Block) -> Result<block::BlockMeta, substreams::errors::Error> {
     Ok(block::BlockMeta {
         block_num: blk.number,
-        block_id: blk.id,
-        trx_count: blk.unfiltered_transaction_count,
+        block_id: blk.id.clone(),
+        trx_count: blk.transaction_traces_count(),
         timestamp: Some(blk.header.unwrap().timestamp.unwrap())
     })
 }
