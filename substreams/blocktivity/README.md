@@ -26,7 +26,7 @@ message Blocktivity {
 Each store will get the `Blocktivity` objects, calculate the key (the timestamp of the hour of this block) and then 
 accumulates the data in multiple `StoreAddInt64` stores.
 
-`store_trx_count` - Adds up the number of transactions per key (hour)
-`store_act_count` - Adds up the number of actions per key (hour)
-`store_cpu_usage_us` - Adds up the cpu_usage_us values per key (hour)
-`store_net_usage_words` - Adds up the net_usage_words per key (hour)
+* `store_trx_count` - Adds up the number of transactions per key (hour)
+* `store_act_count` - Adds up the number of actions per key (hour)
+* `store_cpu_usage_us` - Adds up the cpu_usage_us values per key (hour)
+* `store_net_usage_words` - Adds up the net_usage_words per key (hour)
