@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package antelope.blocktivity.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message Blocktivity {
+  uint32 block_num = 1;                     // block number
+  google.protobuf.Timestamp timestamp = 2;  // block creation timestamp (UTC)
+  uint32 trx_count = 3;                     // number of successfully executed transactions in this block
+  uint32 act_count = 4;                     // number of successfully executed actions in this block
+  uint32 cpu_usage_us = 5;                  // cpu_usage_us of this block
+  uint32 net_usage_words = 6;               // net_usage_words of this block
+}
