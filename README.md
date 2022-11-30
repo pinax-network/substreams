@@ -24,7 +24,9 @@ This repository currently holds all substreams as well as the SDK library.
 
 ## Prerequisites
 
-Before starting to work with Substreams, you need to have Rust, the Substreams CLI and buf installed. 
+Before starting to work with Substreams, you need to have `Rust` and the `Substreams CLI` installed. To create new substreams
+you also need to have `buf` available (to generate Rust code from you proto buffers). In case you want to utilize different
+sinks you might also need to have `Go` installed.
 
 ### Rust
 
@@ -75,6 +77,23 @@ VERSION="1.9.0" && \
 
 For more information about the installation check the [buf website](https://docs.buf.build/installation).
 
+### Go
+
+To run the available sinks from the Streamingfast team you currently need to have Go installed (until they release) 
+binaries. 
+
+MacOS users can again use Homebrew to install Go running `brew install go`. Linux and Windows users should follow the 
+[official installation](https://go.dev/doc/install).
+
+Make sure you have proper `PATH` variables set in your shell profile (for example `.zshrc` for zsh users):
+
+```shell
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH
+export PATH=$PATH:$GOBIN
+```
+
 ## Building Substreams
 
 To build any of the available Substreams in the `./substreams` directory you can use the Makefile by running 
@@ -98,10 +117,25 @@ will run the substreams for 1000 blocks from the start block.
 
 For a current list of available endpoints [see here](#available-endpoints).
 
+## Packing Substreams
+
+In case you want to run a Substream on a sink you need to pack your substream. This will create a `*.spkg` bundle file.
+
+This can be easily done by running `make pack SUBSTREAM=<mysubstream>`.
 
 ## Running consumers & sinks
 
 TODO describe how to run substreams from a node/go process and how to run the available sinks (file, MongoDB, graph-node)
+
+### Running sinks
+
+There are sinks available from the Streamingfast team, currently those are the [file](https://github.com/streamingfast/substreams-sink-files), 
+[PostgresSQL](https://github.com/streamingfast/substreams-sink-postgres) and [MongoDB](https://github.com/streamingfast/substreams-sink-mongodb) 
+sink.
+
+### Writing consumers
+
+TODO describe how to write custom consumers for substreams in different languages.
 
 ## Creating new Substreams
 

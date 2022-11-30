@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: blocktime_meta
-  version: v0.5.4
+  version: v0.0.1
   url: https://github.com/EOS-Nation/substreams-monorepo
   doc: |
     Antelope blocktime meta
@@ -29,12 +29,12 @@ modules:
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.v1.Blockmeta
+      type: proto:antelope.block.v1.BlockMeta
 
   - name: store_blockmeta
     kind: store
     updatePolicy: set
-    valueType: proto:antelope.v1.Blockmeta
+    valueType: proto:antelope.block.v1.BlockMeta
     inputs:
       - map: map_blockmeta
 
