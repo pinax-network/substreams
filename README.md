@@ -133,6 +133,10 @@ There are sinks available from the Streamingfast team, currently those are the [
 [PostgresSQL](https://github.com/streamingfast/substreams-sink-postgres) and [MongoDB](https://github.com/streamingfast/substreams-sink-mongodb) 
 sink.
 
+#### File sink
+
+Install the sink by running `go install github.com/streamingfast/substreams-sink-files/cmd/substreams-sink-files@latest`.
+
 ### Writing consumers
 
 TODO describe how to write custom consumers for substreams in different languages.

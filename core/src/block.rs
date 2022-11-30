@@ -25,4 +25,22 @@ impl pb::Block {
             self.unfiltered_transaction_count
         };
     }
+
+    /// Number of top-level actions that were successfully executed within this block.
+    pub fn executed_input_action_count(&self) -> u32 {
+        return if self.filtering_applied == true {
+            self.filtered_executed_input_action_count
+        } else {
+            self.unfiltered_executed_input_action_count
+        };
+    }
+
+    /// Number of actions that were successfully executed within this block.
+    pub fn executed_total_action_count(&self) -> u32 {
+        return if self.filtering_applied == true {
+            self.filtered_executed_total_action_count
+        } else {
+            self.unfiltered_executed_total_action_count
+        };
+    }
 }
