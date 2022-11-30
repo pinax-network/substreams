@@ -21,38 +21,49 @@ protobuf:
     - ./proto
 
 modules:
-  - name: map_blocktivity
+  - name: map_blocks
     kind: map
     initialBlock: 2
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.blocktivity.v1.Blocktivity
+      type: proto:antelope.blocktivity.v1.BlockStats
 
   - name: store_trx_count
     kind: store
     updatePolicy: add
     valueType: int64
     inputs:
-      - map: map_blocktivity
+      - map: map_blocks
 
   - name: store_act_count
     kind: store
     updatePolicy: add
     valueType: int64
     inputs:
-      - map: map_blocktivity
+      - map: map_blocks
 
   - name: store_cpu_usage_us
     kind: store
     updatePolicy: add
     valueType: int64
     inputs:
-      - map: map_blocktivity
+      - map: map_blocks
 
   - name: store_net_usage_words
     kind: store
     updatePolicy: add
     valueType: int64
     inputs:
-      - map: map_blocktivity
+      - map: map_blocks
+
+  - name: map_hourly_stats
+    kind: map
+    inputs:
+      - source: sf.antelope.type.v2.Block
+      - store: store_trx_count
+      - store: store_act_count
+      - store: store_cpu_usage_us
+      - store: store_net_usage_words
+    output:
+      type: proto:antelope.blocktivity.v1.HourlyStats
