@@ -1,5 +1,5 @@
 [package]
-name = "tokens"
+name = "token-transfers"
 version = "0.0.1"
 description = "Antelope tokens created"
 edition = "2021"

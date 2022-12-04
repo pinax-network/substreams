@@ -1,12 +1,21 @@
-use crate::asset::Symbol;
+use crate::abi;
+use substreams_antelope_core::asset::Asset;
+use substreams_antelope_core::extended_symbol::ExtendedSymbol;
+use substreams_antelope_core::pb::antelope::Action;
 
+type Err = String;
+pub(crate) type Result<T> = std::result::Result<T, Err>;
 
-// TODO: -> Result<Symbol, Err>
-pub fn extract_symbol(value_str: String) -> Symbol {
-    let parts1: Vec<&str> = value_str.split(" ").collect();
-    let symcode = String::from(parts1[1]);
-    let parts2: Vec<&str> = parts1[0].split(".").collect();
-    let precision = parts2[1].len() as u8;
+// extract extended symbol from create action
+pub(crate) fn extract_extsym_from_create(action: &Action) -> Result<ExtendedSymbol> {
+    if action.name != "create".to_string() {
+        return Err("Wrong action".to_string());
+    }
+    let params = action.json_data.parse::<abi::Create>()?;
+    let asset = params.maximum_supply.parse::<Asset>()?;
 
-    Symbol{ symcode, precision}
+    Ok(ExtendedSymbol{
+        contract: action.account.clone(),
+        symbol: asset.symbol
+    })
 }
