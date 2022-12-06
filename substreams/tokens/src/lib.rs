@@ -17,13 +17,13 @@ fn map_tokens(blk: substreams_antelope_core::pb::antelope::Block) -> Result<toke
         for trace in &trx.action_traces {
             if let Ok(ext_sym) = util::extract_extsym_from_create(trace.action.as_ref().unwrap()) {
 
-                log::debug!("Found {}::create action in block #{}", ext_sym.contract, blk.number);
+                log::debug!("Found {}::create action in block #{}", ext_sym.contract.to_string(), blk.number);
                 tokens.push(tokens::Token {
                     block_num: blk.number,
                     timestamp: Some(blk.header.as_ref().unwrap().timestamp.as_ref().unwrap().clone()),
-                    contract: ext_sym.contract,
-                    symcode: ext_sym.symbol.symcode,
-                    precision: ext_sym.symbol.precision as u32,
+                    contract: ext_sym.contract.to_string(),
+                    symcode: ext_sym.symbol.code().to_string(),
+                    precision: ext_sym.symbol.precision() as u32,
                 })
             }
         }
