@@ -74,6 +74,6 @@ export async function handler(args: CommandArgs<typeof builder>) {
   for await (const response of stream.responses) {
     tokens.processBlock(response);
   }
-  tokens.saveTokens();
+  tokens.saveTokens(`tokens-${args.startBlock}_${args.stopBlock}.csv`);
   console.log("Done");
 }

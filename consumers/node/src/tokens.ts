@@ -3,7 +3,7 @@ import { Token } from './generated/tokens'
 import * as moment from 'moment';
 import { BlockScopedData, Response } from './generated/sf/substreams/v1/substreams';
 
-const csvFilename = `tokens.csv`;
+let csvFilename = `tokens.csv`;
 let linesWritten = 0;
 const tokens = new Map<string, Token>();
 
@@ -38,7 +38,9 @@ issuer\n`);
     linesWritten++;
 }
 
-export function saveTokens() {
+
+export function saveTokens(filename?: string) {
+    if(filename) csvFilename = filename;
     for (const token of tokens.values()) {
         saveToken(token);
     }
