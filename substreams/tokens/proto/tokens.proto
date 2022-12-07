@@ -15,4 +15,6 @@ message Token {
   string contract = 3;
   string symcode = 4;
   uint32 precision = 5;
+  int64 amount = 6;
+  string issuer = 7;
 }
