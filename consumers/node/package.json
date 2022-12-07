@@ -1,0 +1,31 @@
+{
+  "name": "node-consumer",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "substreams": "nodemon -- src/index.ts",
+    "codegen": "buf generate buf.build/fubhy/substreams && buf generate ../../substreams/tokens/proto;",
+    "prettier": "prettier --list-different \"**/*.{js,jsx,ts,tsx,json,md,yml}\"",
+    "format": "yarn prettier --write",
+    "lint": "yarn prettier",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "start": "ts-node ./src/index.ts run ../../substreams/tokens/tokens-v0.0.1.spkg --modules store_tokens --start-block 2 --stop-block 100000"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.7.3",
+    "@protobuf-ts/grpc-transport": "^2.8.2",
+    "@tsconfig/node16": "^1.0.3",
+    "fs-extra": "^11.1.0",
+    "moment": "^2.29.4",
+    "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.11.9",
+    "@types/yargs": "^17.0.16"
+  }
+}
