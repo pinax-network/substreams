@@ -5,15 +5,15 @@ import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 
 // Substream generated code
 // $ buf generate buf.build/fubhy/substreams
-import { StreamClient } from './client/sf/substreams/v1/substreams.client';
-import { Package } from './client/sf/substreams/v1/package';
-import { ForkStep, Request, Response } from './client/sf/substreams/v1/substreams';
+import { StreamClient } from './src/generated/sf/substreams/v1/substreams.client';
+import { Package } from './src/generated/sf/substreams/v1/package';
+import { ForkStep, Request, Response } from './src/generated/sf/substreams/v1/substreams';
 
 // Export utils & Typescript interfaces
-export * from "./client/sf/substreams/v1/clock"
-export * from "./client/sf/substreams/v1/modules"
-export * from "./client/sf/substreams/v1/package"
-export * from "./client/sf/substreams/v1/substreams"
+export * from "./src/generated/sf/substreams/v1/clock"
+export * from "./src/generated/sf/substreams/v1/modules"
+export * from "./src/generated/sf/substreams/v1/package"
+export * from "./src/generated/sf/substreams/v1/substreams"
 export * from "./utils";
 
 // Envionrment Variables
@@ -51,14 +51,14 @@ const stream = client.blocks(Request.create({
     outputModules: MODULES,
 }));
 
-interface Adapter {
+export interface Adapter {
     init(startBlockNum: string, stopBlockNum: string): Promise<void> | void;
     processBlock(response: Response): Promise<void> | void;
     done(): Promise<void> | void;
 }
 
 // Parse Substream Block Data
-export default async (adapter: Adapter) => {
+export async function run(adapter: Adapter) {
     await adapter.init(START_BLOCK_NUM, STOP_BLOCK_NUM);
     for await (const response of stream.responses) {
         adapter.processBlock(response);

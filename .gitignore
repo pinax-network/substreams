@@ -1,6 +1,5 @@
 ### Substreams template
 .envrc
-generated/
 /substreams-examples/*/*.yaml.pb
 localirr
 localblocks
@@ -814,4 +813,5 @@ dmypy.json
 cython_debug/
 
 yarn.lock
-consumers/**/*.csv
+adapters/**/*.csv
+adapters/**/*.jsonl

@@ -1,5 +1,5 @@
 {
-  "name": "substream-consumer",
+  "name": "substreams-consumer",
   "version": "0.1.0",
   "main": "index.js",
   "types": "index.d.js",
