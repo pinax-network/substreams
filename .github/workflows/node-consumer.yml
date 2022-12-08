@@ -1,4 +1,4 @@
-name: Node.js Substreams Consumer
+name: Node.js Substreams
 
 on: [push, pull_request]
 

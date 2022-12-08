@@ -1,7 +1,7 @@
 # EOS-Nation Substreams monorepo
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/EOS-Nation/substreams-monorepo/blob/main/LICENSE)
-[![NodeJS Consumer](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml/badge.svg)](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml)
+[![Node.js Substreams](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml/badge.svg)](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml)
 [![Rust Substreams](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/rust-substreams.yml/badge.svg)](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/rust-substreams.yml)
 
 This repository holds all Substreams, libraries and consumers for the EOS-Nation Substreams run on Antelope chains. Its 
