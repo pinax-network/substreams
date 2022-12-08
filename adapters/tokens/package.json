@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "adapters-tokens",
+  "description": "Substreams Data Adapter",
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",

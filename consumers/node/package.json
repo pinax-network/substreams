@@ -1,8 +1,9 @@
 {
   "name": "substreams-consumer",
+  "description": "Node.js Substreams Consumer",
   "version": "0.1.0",
-  "main": "index.js",
-  "types": "index.d.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
   "license": "MIT",
   "scripts": {
     "codegen": "buf generate buf.build/fubhy/substreams",
@@ -11,7 +12,8 @@
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.7.3",
-    "@protobuf-ts/grpc-transport": "^2.8.2"
+    "@protobuf-ts/grpc-transport": "^2.8.2",
+    "dotenv": "^16.0.3"
   },
   "devDependencies": {
     "@types/node": "^18.11.11",

@@ -1,5 +1,5 @@
 import fs from "fs";
-import * as substreams from "../../consumers/node/index.js";
+import * as substreams from "../../consumers/node/dist/index.js";
 
 // Initialize Process (write to JSONL file)
 let writer;

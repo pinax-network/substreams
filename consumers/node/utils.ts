@@ -1,10 +1,12 @@
-import { Clock } from "./client/sf/substreams/v1/clock";
-import { BlockScopedData, Response } from "./client/sf/substreams/v1/substreams";
+import { Clock } from "./src/generated/sf/substreams/v1/clock";
+import { BlockScopedData, Response } from "./src/generated/sf/substreams/v1/substreams";
 
-export function printBlock( clock?: Clock ) {
+export function printBlock( clock?: Clock, interval = 100 ) {
     const seconds = getSeconds(clock);
     const date = formatDate(seconds);
-    console.log(`----------- NEW BLOCK #${clock?.number} (${date}) ---------------`);
+    const block_num = Number(clock?.number);
+    if ( block_num % interval !== 0) return;
+    console.log(`----------- NEW BLOCK #${block_num} (${date}) ---------------`);
 }
 
 export function formatDate( seconds: number ) {

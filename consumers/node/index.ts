@@ -17,16 +17,22 @@ export * from "./src/generated/sf/substreams/v1/substreams"
 export * from "./utils";
 
 // Envionrment Variables
-const PACKAGE = "../../substreams/tokens/tokens-v0.0.1.spkg"
-const MODULES = "store_tokens".split(",");
-const START_BLOCK_NUM = "2";
-const STOP_BLOCK_NUM = "1000";
-const API_TOKEN = "";
-const FIREHOSE_HOST = "eos.firehose.eosnation.io:9001";
+import * as dotenv from "dotenv";
+dotenv.config();
+const PACKAGE = process.env.PACKAGE;
+const MODULES = (process.env.MODULES || "").split(",");
+const START_BLOCK_NUM = process.env.START_BLOCK_NUM;
+const STOP_BLOCK_NUM = process.env.STOP_BLOCK_NUM;
+const API_TOKEN = process.env.API_TOKEN;
+const FIREHOSE_HOST = process.env.FIREHOSE_HOST || "eos.firehose.eosnation.io:9001";
+
+if ( !START_BLOCK_NUM) throw new Error("Missing START_BLOCK_NUM environment variable");
+if ( !PACKAGE) throw new Error("Missing PACKAGE environment variable");
+if ( !MODULES) throw new Error("Missing MODULES environment variable");
 
 // Credentials
 const metadata = new Metadata();
-metadata.add('authorization', API_TOKEN);
+if ( API_TOKEN ) metadata.add('authorization', API_TOKEN);
 const creds = credentials.combineChannelCredentials(
     credentials.createSsl(),
     credentials.createFromMetadataGenerator((_, callback) => callback(null, metadata)),
@@ -52,7 +58,7 @@ const stream = client.blocks(Request.create({
 }));
 
 export interface Adapter {
-    init(startBlockNum: string, stopBlockNum: string): Promise<void> | void;
+    init(startBlockNum?: string, stopBlockNum?: string): Promise<void> | void;
     processBlock(response: Response): Promise<void> | void;
     done(): Promise<void> | void;
 }
