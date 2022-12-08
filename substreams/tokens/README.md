@@ -1,7 +1,10 @@
-Antelope tokens substream
-===============================
+# Antelope `Tokens` Substream
 
-Exemplary Substream that extracts tokens from Antelope blocks and stores them into a KV store.
+> Exemplary Substream that extracts tokens from Antelope blocks and stores them into a KV store.
+
+| Version | IPFS hash |
+|---------|-----------|
+| v0.0.1  | QmYtDPjGUwQUAukhEKxeKqL9UeF1H9a2d1sNSMAQGDwVZe
 
 ### Models
 
@@ -32,5 +35,5 @@ message Token {
 ### Running the Substream
 
 ```
-substreams run -e waxtest.firehose.eosnation.io:9001 substreams.yaml store_tokens
+substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml store_tokens
 ```

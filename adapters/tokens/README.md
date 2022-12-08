@@ -1,5 +1,8 @@
 # Node.js `Substream` Tokens Adapter
 
+> Client side logic to extract block data coming from Substreams
+> Can store/write in any format (CSV/JSONL or Database)
+
 ## Environment Variables
 
 **.env**
