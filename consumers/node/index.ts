@@ -19,7 +19,7 @@ export * from "./utils";
 
 // Envionrment Variables
 import * as dotenv from "dotenv";
-import { download, isIPFS } from './utils';
+import { download, getIpfsHash, isIpfs } from './utils';
 dotenv.config();
 const PACKAGE = process.env.PACKAGE;
 const MODULES = (process.env.MODULES || "").split(",");
@@ -49,16 +49,17 @@ const client = new StreamClient(
 
 export async function downloadPackage() {
     if ( !PACKAGE) throw new Error("Missing PACKAGE environment variable");
-    if ( isIPFS(PACKAGE) ) {
-        console.log(`Downloading IPFS Substream package: ${PACKAGE}`);
+
+    // Download IPFS Substream package
+    if ( isIpfs(PACKAGE) ) {
         const url = `https://eos.mypinata.cloud/ipfs/${PACKAGE}`
-        const binary = await download(url);
-        return Package.fromBinary(binary);
+        console.log(`Downloading Substream from IPFS: ${url}`);
+        return download(url);
     }
-    // fallback to local filesystem
+    // Read Substream from local filesystem
+    console.log(`Reading Substream from file system: ${PACKAGE}`);
     const file = path.isAbsolute(PACKAGE) ? PACKAGE : path.resolve(process.cwd(), PACKAGE);
-    const binary = fs.readFileSync(file);
-    return Package.fromBinary(binary);
+    return new Uint8Array(fs.readFileSync(file));
 }
 
 // Load Substream
@@ -82,7 +83,10 @@ export interface Adapter {
 export async function run(adapter: Adapter) {
 
     // Setup Substream
-    const { modules } = await downloadPackage();
+    const binary = await downloadPackage();
+    const ipfs = await getIpfsHash(binary);
+    console.log(`Substream IPFS Hash: ${ipfs}`);
+    const { modules } = Package.fromBinary(binary);
     const stream = createStream(modules);
 
     // Send Substream Data to Adapter

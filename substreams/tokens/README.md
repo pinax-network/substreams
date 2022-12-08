@@ -1,6 +1,6 @@
 # Antelope `Tokens` Substream
 
-> Exemplary Substream that extracts tokens from Antelope blocks and stores them into a KV store.
+> Extracts token supply from Antelope `eosio.token` based tokens.
 
 | Version | IPFS hash |
 |---------|-----------|

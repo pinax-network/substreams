@@ -9,7 +9,7 @@ goal is to centralize build tools, documentation and shared code among our Subst
 
 It can also be used to discuss new Substream proposals.
 
-### Available hosts
+### Firsehose V2
 
 | Chain       | Host     |
 |-------------|----------|
@@ -20,6 +20,12 @@ It can also be used to discuss new Substream proposals.
 | WAX Testnet | `waxtest.firehose.eosnation.io:9001`
 | Jungle 4    | `jungle4.firehose.eosnation.io:9001`
 | Kylin       | `kylin.firehose.eosnation.io:9001`
+
+## Substreams
+
+| Substream | Description |
+|-----------|-------------|
+| [`tokens`](substreams/tokens)  | Extracts token supply from Antelope `eosio.token` based tokens. |
 
 ### Further resources
 
