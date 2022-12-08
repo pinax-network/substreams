@@ -813,7 +813,5 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-
-package-lock.json
 yarn.lock
 consumers/**/*.csv

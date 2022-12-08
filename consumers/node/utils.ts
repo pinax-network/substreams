@@ -1,11 +1,10 @@
-import { Clock } from "./generated/sf/substreams/v1/clock";
-import { BlockScopedData, Response } from "./generated/sf/substreams/v1/substreams";
+import { Clock } from "./client/sf/substreams/v1/clock";
+import { BlockScopedData, Response } from "./client/sf/substreams/v1/substreams";
 
 export function printBlock( clock?: Clock ) {
-    const {number: blockNum, timestamp} = clock!;
     const seconds = getSeconds(clock);
     const date = formatDate(seconds);
-    console.log(`----------- NEW BLOCK #${blockNum} (${date}) ---------------`);
+    console.log(`----------- NEW BLOCK #${clock?.number} (${date}) ---------------`);
 }
 
 export function formatDate( seconds: number ) {
