@@ -2,6 +2,10 @@ name: NodeJS Consumer
 
 on: [push, pull_request]
 
+defaults:
+  run:
+    working-directory: consumers/node
+
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -12,8 +16,8 @@ jobs:
         with:
           node-version: latest
           cache: npm
+          cache-dependency-path: consumers/node/package-lock.json
     
-      - run: cd consumers/node
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test

@@ -1,7 +1,8 @@
 {
-  "name": "node-consumer",
-  "version": "1.0.0",
-  "main": "src/index.ts",
+  "name": "@pinax/substream",
+  "version": "0.1.0",
+  "main": "index.js",
+  "types": "index.d.js",
   "license": "MIT",
   "private": true,
   "scripts": {
