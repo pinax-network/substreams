@@ -1,18 +1,29 @@
 # EOS-Nation Substreams monorepo
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/EOS-Nation/substreams-monorepo/blob/main/LICENSE)
+[![NodeJS Consumer](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml/badge.svg)](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml)
+[![Rust Substreams](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/rust-substreams.yml/badge.svg)](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/rust-substreams.yml)
+
 This repository holds all Substreams, libraries and consumers for the EOS-Nation Substreams run on Antelope chains. Its 
 goal is to centralize build tools, documentation and shared code among our Substream implementations. 
 
 It can also be used to discuss new Substream proposals.
 
-### Available endpoints
+### Available hosts
 
-* `waxtest.firehose.eosnation.io:9001`
+| Chain       | Host     |
+|-------------|----------|
+| EOS         | `eos.firehose.eosnation.io:9001`
+| WAX         | `wax.firehose.eosnation.io:9001`
+| Ore         | `ore.firehose.eosnation.io:9001`
+| Telos       | `telos.firehose.eosnation.io:9001`
+| WAX Testnet | `waxtest.firehose.eosnation.io:9001`
+| Jungle 4    | `jungle4.firehose.eosnation.io:9001`
+| Kylin       | `kylin.firehose.eosnation.io:9001`
 
 ### Further resources
 
-* [Substreams documentation](https://substreams.streamingfast.io)
-
+- [Substreams documentation](https://substreams.streamingfast.io)
 
 ## Repository structure
 
