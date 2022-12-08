@@ -14,7 +14,7 @@
 
 ```env
 # Required
-PACKAGE="../../substreams/tokens/tokens-v0.0.1.spkg"
+PACKAGE=QmYtDPjGUwQUAukhEKxeKqL9UeF1H9a2d1sNSMAQGDwVZe
 MODULES=store_tokens
 START_BLOCK_NUM=2
 STOP_BLOCK_NUM=1001

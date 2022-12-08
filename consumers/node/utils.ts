@@ -21,3 +21,14 @@ export function parseBlockData( response: Response) {
 export function getSeconds( clock?: Clock ) {
     return Number(clock?.timestamp?.seconds);
 }
+
+export const isIPFS = ( str: string ) => /^Qm[1-9A-Za-z]{44}$/.test(str);
+
+export async function download(url: string) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`unexpected response ${response.statusText}`)
+
+    const blob = await response.blob();
+    const buffer = await blob.arrayBuffer();
+    return new Uint8Array(buffer);
+}
