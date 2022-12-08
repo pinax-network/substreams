@@ -28,7 +28,7 @@ API_TOKEN=""
 
 ```js
 import fs from "fs";
-import substream, { Response, printBlock, parseBlockData } from "substream-consumer";
+import substream, { printBlock, parseBlockData } from "substream-consumer";
 
 // Initialize Process (write to JSONL file)
 let writer: fs.WriteStream;
@@ -38,7 +38,7 @@ function init(startBlock, stopBlock) {
 }
 
 // Process Block Data
-function processBlock(response: Response) {
+function processBlock(response) {
     const block = parseBlockData(response);
     if (!block) return;
     printBlock(block.clock);
