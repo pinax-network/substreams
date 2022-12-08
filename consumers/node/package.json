@@ -4,7 +4,6 @@
   "main": "index.js",
   "types": "index.d.js",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "codegen": "buf generate buf.build/fubhy/substreams",
     "build": "tsc",

@@ -1,36 +1,69 @@
-# Example Node.js Substream consumer
+# Node.js `Substream` Consumer
 
-Streams Antelope substream from `/substreams/tokens/tokens-v0.0.1.spkg` package in the desired block range and dumps all found tokens into `tokens.csv` file
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/EOS-Nation/substreams-monorepo/blob/main/LICENSE)
+[![NodeJS Consumer](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml/badge.svg)](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml)
 
 ## Requirements
 
-- node (v16+)
-- ts-node
-- buf (https://buf.build/)
-- tokens-v0.0.1.spkg package generated from `/substreams/tokens` substream of this repository
-- Antelope firehose v2 endpoint (using `eos.firehose.eosnation.io:9001` by default)
+- [Node.js (LTS or Current)](https://nodejs.org/en/)
+- [Buf - Protocol Buffers](https://buf.build/)
+- [Antelope Firehose V2](https://eos.firehose.eosnation.io)
+  > `eos.firehose.eosnation.io:9001` by default
 
-## Installation
+## Environment Variables
 
-Install dependecies:
-```bash
-npm i
+```env
+# Required
+PACKAGE="../../substreams/tokens/tokens-v0.0.1.spkg"
+MODULES=store_tokens
+START_BLOCK_NUM=2
+STOP_BLOCK_NUM=1000
+
+# (Optional)
+FIREHOSE_HOST=eos.firehose.eosnation.io:9001
+API_TOKEN=""
 ```
 
-## Codegen
+## Quickstart
 
-Generate typescript bindings for protobufs:
-```bash
-npm run codegen
+```js
+import fs from "fs";
+import substream, { Response, printBlock, parseBlockData } from "substream-consumer";
+
+// Initialize Process (write to JSONL file)
+let writer: fs.WriteStream;
+function init(startBlock, stopBlock) {
+    console.log("Substream Initialized");
+    writer = fs.createWriteStream(`tokens_${startBlock}-${stopBlock}.csv`);
+}
+
+// Process Block Data
+function processBlock(response: Response) {
+    const block = parseBlockData(response);
+    if (!block) return;
+    printBlock(block.clock);
+
+    for ( const output of block.outputs ) {
+        writer.write(JSON.stringify(output) + "\n");
+    }
+}
+
+// Substream completed
+function done() {
+    console.log("Substream Finished");
+    writer.end();
+}
+
+// Run Substream process
+(async () => {
+    await substream({init, processBlock, done});
+    process.exit();
+})();
 ```
 
-## Run
+## Tests
 
-Run the client:
 ```bash
-npm run start
-```
-or, with parameters:
-```bash
-ts-node ./src/index.ts run ../../substreams/tokens/tokens-v0.0.1.spkg --modules store_tokens --start-block 3200000 --stop-block 3210000
+$ npm ci
+$ npm test
 ```
