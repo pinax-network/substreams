@@ -1,5 +1,5 @@
 import type { Argv } from 'yargs';
-import fs from 'fs-extra';
+import fs from 'fs';
 import path from 'node:path';
 import { credentials, Metadata } from '@grpc/grpc-js';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
@@ -44,14 +44,19 @@ export const builder = (yargs: Argv) =>
     });
 
 export async function handler(args: CommandArgs<typeof builder>) {
+  // CLI arguments
+  const { startBlock: startBlockNum, stopBlock: stopBlockNum, modules: outputModules } = args;
+  const filepath = args.package;
+
+  // Credentials
   const metadata = new Metadata();
   metadata.add('authorization', args.apiToken);
-
   const creds = credentials.combineChannelCredentials(
     credentials.createSsl(),
     credentials.createFromMetadataGenerator((_, callback) => callback(null, metadata)),
   );
 
+  // Create Substream Client
   const client = new StreamClient(
     new GrpcTransport({
       host: args.endpoint,
@@ -59,21 +64,21 @@ export async function handler(args: CommandArgs<typeof builder>) {
     }),
   );
 
-  const file = path.isAbsolute(args.package) ? args.package : path.resolve(process.cwd(), args.package);
-  const pkg = Package.fromBinary(await fs.readFile(file));
-  const stream = client.blocks(
-    Request.create({
-      startBlockNum: args.startBlock,
-      stopBlockNum: args.stopBlock ? args.stopBlock : undefined,
-      forkSteps: [ForkStep.STEP_IRREVERSIBLE],
-      modules: pkg.modules,
-      outputModules: args.modules,
-    }),
-  );
-
+  // Load Substream
+  const file = path.isAbsolute(filepath) ? filepath : path.resolve(process.cwd(), filepath);
+  const pkg = Package.fromBinary(fs.readFileSync(file));
+  const stream = client.blocks(Request.create({
+    startBlockNum,
+    stopBlockNum,
+    forkSteps: [ForkStep.STEP_IRREVERSIBLE],
+    modules: pkg.modules,
+    outputModules,
+  }));
+  
+  // Parse Substream Block Data
+  await tokens.init(startBlockNum, stopBlockNum);
   for await (const response of stream.responses) {
     tokens.processBlock(response);
   }
-  tokens.saveTokens(`tokens-${args.startBlock}_${args.stopBlock}.csv`);
-  console.log("Done");
+  await tokens.done();
 }
