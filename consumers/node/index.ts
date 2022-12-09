@@ -8,7 +8,7 @@ import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { StreamClient } from './src/generated/sf/substreams/v1/substreams.client';
 import { Package } from './src/generated/sf/substreams/v1/package';
 import { Modules } from './src/generated/sf/substreams/v1/modules';
-import { ForkStep, Request, Response } from './src/generated/sf/substreams/v1/substreams';
+import { BlockScopedData, ForkStep, Request, Response } from './src/generated/sf/substreams/v1/substreams';
 
 // Export utils & Typescript interfaces
 export * from "./src/generated/sf/substreams/v1/clock"
@@ -19,7 +19,7 @@ export * from "./utils";
 
 // Envionrment Variables
 import * as dotenv from "dotenv";
-import { download, getIpfsHash, isIpfs } from './utils';
+import { download, getIpfsHash, isIpfs, parseBlockData } from './utils';
 dotenv.config();
 const PACKAGE = process.env.PACKAGE;
 const MODULES = (process.env.MODULES || "").split(",");
@@ -75,7 +75,7 @@ export function createStream(modules?: Modules) {
 
 export interface Adapter {
     init(startBlockNum?: string, stopBlockNum?: string): Promise<void> | void;
-    processBlock(response: Response): Promise<void> | void;
+    processBlock(block: BlockScopedData): Promise<void> | void;
     done(): Promise<void> | void;
 }
 
@@ -92,7 +92,8 @@ export async function run(adapter: Adapter) {
     // Send Substream Data to Adapter
     await adapter.init(START_BLOCK_NUM, STOP_BLOCK_NUM);
     for await (const response of stream.responses) {
-        adapter.processBlock(response);
+        const block = parseBlockData(response);
+        if ( block ) adapter.processBlock(block);
     }
     await adapter.done();
 }
