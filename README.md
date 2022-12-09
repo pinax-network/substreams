@@ -17,9 +17,16 @@ It can also be used to discuss new Substream proposals.
 | WAX         | `wax.firehose.eosnation.io:9001`
 | Ore         | `ore.firehose.eosnation.io:9001`
 | Telos       | `telos.firehose.eosnation.io:9001`
-| WAX Testnet | `waxtest.firehose.eosnation.io:9001`
-| Jungle 4    | `jungle4.firehose.eosnation.io:9001`
-| Kylin       | `kylin.firehose.eosnation.io:9001`
+
+### Firsehose V2 (Testnets)
+
+| Chain         | Host     |
+|---------------|----------|
+| WAX Testnet   | `waxtest.firehose.eosnation.io:9001`
+| Jungle 4      | `jungle4.firehose.eosnation.io:9001`
+| Kylin         | `kylin.firehose.eosnation.io:9001`
+| Ore Stage     | `orestage.firehose.eosnation.io:9001`
+| Telos Testnet | `telostest.firehose.eosnation.io:9001`
 
 ## Substreams
 
