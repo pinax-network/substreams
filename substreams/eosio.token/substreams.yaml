@@ -1,10 +1,10 @@
 specVersion: v0.1.0
 package:
   name: eosio_token
-  version: v0.0.1
+  version: v0.1.0
   url: https://github.com/EOS-Nation/substreams-monorepo
   doc: |
-    Antelope `eosio.token` Substream
+    Antelope `eosio.token` related action events
 
 imports:
   antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
@@ -12,7 +12,7 @@ imports:
 binaries:
   default:
     type: wasm/rust-v1
-    file: ../../target/wasm32-unknown-unknown/release/eosio.token.wasm
+    file: ../../target/wasm32-unknown-unknown/release/eosio_token.wasm
 
 protobuf:
   files:
@@ -21,7 +21,7 @@ protobuf:
     - ./proto
 
 modules:
-  - name: map_eosio_token
+  - name: map_actions
     kind: map
     initialBlock: 2
     inputs:
