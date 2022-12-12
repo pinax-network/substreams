@@ -49,6 +49,6 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - map: map_transfers_eosio_token
+      - map: map_transfers
     output:
       type: proto:antelope.token.v1.eosio.token

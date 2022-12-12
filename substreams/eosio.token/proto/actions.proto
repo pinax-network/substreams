@@ -7,9 +7,10 @@ import "google/protobuf/timestamp.proto";
 message Action {
   uint32 block_num = 1;
   google.protobuf.Timestamp timestamp = 2;
-  string account = 3;
-  string name = 4;
-  string json_data = 5;
+  string transaction_id = 3;
+  string account = 4;
+  string name = 5;
+  string json_data = 6;
 }
 
 message Actions {

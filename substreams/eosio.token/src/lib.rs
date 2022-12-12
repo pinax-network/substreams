@@ -22,10 +22,12 @@ fn map_actions(block: Block) -> Result<Actions, Error> {
         for trace in &trx.action_traces {
             let action = trace.action.as_ref().unwrap().clone();
             if !filter_by.contains(action.name.as_str()) { continue; }
+            if trace.receiver != action.account { continue; } // skip extra receivers
 
             actions.push(Action {
                 block_num: block.number,
                 timestamp: Some(block.header.as_ref().unwrap().timestamp.as_ref().unwrap().clone()),
+                transaction_id: trace.transaction_id.clone(),
                 account: action.account,
                 name: action.name,
                 json_data: action.json_data,
@@ -76,7 +78,6 @@ pub fn map_transfers_accounts(actions: Actions) -> Result<Actions, Error> {
     let mut response = vec![];
 
     for action in actions.actions {
-        if action.account != "eosio.token" { continue; }
         if !has_account(action.clone()) { continue; }
         response.push(action);
     }
