@@ -15,7 +15,8 @@
     "@protobuf-ts/grpc-transport": "2.*",
     "blockstore-core": "1.*",
     "dotenv": "*",
-    "ipfs-unixfs-importer": "9.*"
+    "ipfs-unixfs-importer": "9.*",
+    "protobufjs": "^7.1.2"
   },
   "devDependencies": {
     "@types/node": "*",

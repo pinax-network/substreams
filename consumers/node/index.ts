@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'node:path';
+import protobuf from "protobufjs";
 import { credentials, Metadata } from '@grpc/grpc-js';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 
@@ -22,6 +23,7 @@ import * as dotenv from "dotenv";
 import { download, getIpfsHash, isIpfs, parseBlockData } from './utils';
 dotenv.config();
 const PACKAGE = process.env.PACKAGE;
+const PROTO = process.env.PROTO;
 const MODULES = (process.env.MODULES || "").split(",");
 const START_BLOCK_NUM = process.env.START_BLOCK_NUM;
 const STOP_BLOCK_NUM = process.env.STOP_BLOCK_NUM;
@@ -58,8 +60,8 @@ export async function downloadPackage() {
     }
     // Read Substream from local filesystem
     console.log(`Reading Substream from file system: ${PACKAGE}`);
-    const file = path.isAbsolute(PACKAGE) ? PACKAGE : path.resolve(process.cwd(), PACKAGE);
-    return new Uint8Array(fs.readFileSync(file));
+    const filepath = path.isAbsolute(PACKAGE) ? PACKAGE : path.resolve(process.cwd(), PACKAGE);
+    return new Uint8Array(fs.readFileSync(filepath));
 }
 
 // Load Substream
@@ -74,9 +76,10 @@ export function createStream(modules?: Modules) {
 }
 
 export interface Adapter {
-    init(startBlockNum?: string, stopBlockNum?: string): Promise<void> | void;
-    processBlock(block: BlockScopedData): Promise<void> | void;
-    done(): Promise<void> | void;
+    init(startBlockNum?: string, stopBlockNum?: string): any;
+    processBlock(block: BlockScopedData): any;
+    processMapOutput(value: Uint8Array): any;
+    done(): any;
 }
 
 // Parse Substream Block Data
@@ -93,7 +96,16 @@ export async function run(adapter: Adapter) {
     await adapter.init(START_BLOCK_NUM, STOP_BLOCK_NUM);
     for await (const response of stream.responses) {
         const block = parseBlockData(response);
-        if ( block ) adapter.processBlock(block);
+        if ( !block ) continue;
+        adapter.processBlock(block);
+
+        for ( const output of block.outputs ) {
+            if ( output.data.oneofKind == "mapOutput" ) {
+                const { value } = output.data.mapOutput;
+                if ( !value.length ) continue;
+                adapter.processMapOutput( value );
+            }
+        }
     }
     await adapter.done();
 }

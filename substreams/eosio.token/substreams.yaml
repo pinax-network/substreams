@@ -16,7 +16,7 @@ binaries:
 
 protobuf:
   files:
-    - eosio.token.proto
+    - actions.proto
   importPaths:
     - ./proto
 

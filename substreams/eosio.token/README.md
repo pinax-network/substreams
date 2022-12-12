@@ -4,14 +4,14 @@
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `eosio.token.proto` | **v0.1.0**  | `QmZTXiX2NyMjWyR6d58jJAbW2ZCg2awiCjZRbb6JyustxX`
+| `actions.proto`     | **v0.1.0**  | `QmZTXiX2NyMjWyR6d58jJAbW2ZCg2awiCjZRbb6JyustxX`
 | `eosio.token.spkg`  | **v0.1.0**  | `QmbN4xycZ2omL68cuzNp2Civ1QTRR6mJ7P7kBQuACsEp1H`
 
 ### Maps
 
 | type | Name          | Description
-|------|---------------|------------------|
-| map  | `map_actions` | `eosio.token` action events
+|------|---------------|-----------------------|
+| map  | `map_actions` | `eosio.token` actions
 
 ### Quickstart
 
