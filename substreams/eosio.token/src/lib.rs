@@ -77,7 +77,7 @@ pub fn map_transfers_accounts(actions: Actions) -> Result<Actions, Error> {
 
     for action in actions.actions {
         if action.account != "eosio.token" { continue; }
-        if has_account(action.clone()) { continue; }
+        if !has_account(action.clone()) { continue; }
         response.push(action);
     }
 
