@@ -21,7 +21,7 @@ function processBlock( block: substreams.BlockScopedData ) {
 function processMapOutput( value: Uint8Array ) {
     const { actions } = Actions.decode(value).toJSON();
     for ( const action of actions ) {
-        action["jsonData"] = JSON.parse(action.jsonData);
+        if ( action.jsonData ) action["jsonData"] = JSON.parse(action.jsonData);
         writer.write(JSON.stringify(action) + "\n");
     };
 }
