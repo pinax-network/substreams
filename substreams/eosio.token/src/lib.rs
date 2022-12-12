@@ -1,13 +1,13 @@
 // standard modules
 use std::collections::HashSet;
-use serde_json;
-use serde_json::{Value};
+use std::str::FromStr;
 
 // substream modules
 use substreams_antelope_core::pb::antelope::{Block};
 use substreams::errors::Error;
 
 // local modules
+mod abi;
 mod pb;
 mod accounts;
 use crate::pb::eosio_token::{Action, Actions};
@@ -61,15 +61,14 @@ pub fn map_transfers_eosio_token(actions: Actions) -> Result<Actions, Error> {
     Ok(Actions { actions: response })
 }
 
-pub fn to_json(action: Action) -> Value {
-    serde_json::from_str(action.json_data.as_str()).unwrap()
-}
-
 pub fn has_account(action: Action) -> bool {
-    let data = to_json(action.clone());
+    let params = abi::Transfer::from_str(&action.json_data);
+    if params.is_err() { return false; }
+    let data = params.unwrap();
+
     let filter_by = HashSet::from(ACCOUNTS);
-    if filter_by.contains(data["from"].as_str().unwrap()) { return true; }
-    if filter_by.contains(data["to"].as_str().unwrap()) { return true; }
+    if filter_by.contains(data.from.as_str()) { return true; }
+    if filter_by.contains(data.to.as_str()) { return true; }
     return false;
 }
 
