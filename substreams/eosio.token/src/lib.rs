@@ -9,17 +9,19 @@ use substreams::errors::Error;
 
 // local modules
 mod pb;
+mod accounts;
 use crate::pb::eosio_token::{Action, Actions};
+use crate::accounts::{ACTIONS, ACCOUNTS};
 
 #[substreams::handlers::map]
 fn map_actions(block: Block) -> Result<Actions, Error> {
     let mut actions = vec![];
-    let events = HashSet::from(["create","issue","retire","transfer","open","close"]);
+    let filter_by = HashSet::from(ACTIONS);
 
     for trx in block.clone().all_transaction_traces() {
         for trace in &trx.action_traces {
             let action = trace.action.as_ref().unwrap().clone();
-            if !events.contains(action.name.as_str()) { continue; }
+            if !filter_by.contains(action.name.as_str()) { continue; }
 
             actions.push(Action {
                 block_num: block.number,
@@ -63,9 +65,9 @@ pub fn to_json(action: Action) -> Value {
 
 pub fn has_account(action: Action) -> bool {
     let data = to_json(action.clone());
-    let accounts = HashSet::from(["eosnationftw"]);
-    if accounts.contains(data["from"].as_str().unwrap()) { return true; }
-    if accounts.contains(data["to"].as_str().unwrap()) { return true; }
+    let filter_by = HashSet::from(ACCOUNTS);
+    if filter_by.contains(data["from"].as_str().unwrap()) { return true; }
+    if filter_by.contains(data["to"].as_str().unwrap()) { return true; }
     return false;
 }
 
