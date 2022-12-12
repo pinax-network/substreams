@@ -57,14 +57,25 @@ pub fn map_transfers_eosio_token(actions: Actions) -> Result<Actions, Error> {
     Ok(Actions { actions: response })
 }
 
+pub fn to_json(action: Action) -> Value {
+    serde_json::from_str(action.json_data.as_str()).unwrap()
+}
+
+pub fn has_account(action: Action) -> bool {
+    let data = to_json(action.clone());
+    let accounts = HashSet::from(["eosnationftw"]);
+    if accounts.contains(data["from"].as_str().unwrap()) { return true; }
+    if accounts.contains(data["to"].as_str().unwrap()) { return true; }
+    return false;
+}
+
 #[substreams::handlers::map]
-pub fn map_transfers_eosnationftw(actions: Actions) -> Result<Actions, Error> {
+pub fn map_transfers_accounts(actions: Actions) -> Result<Actions, Error> {
     let mut response = vec![];
 
     for action in actions.actions {
         if action.account != "eosio.token" { continue; }
-        let data: Value = serde_json::from_str(action.json_data.as_str()).unwrap();
-        if !(data["to"] == "eosnationftw" || data["from"] == "eosnationftw") { continue; }
+        if has_account(action.clone()) { continue; }
         response.push(action);
     }
 

@@ -45,7 +45,7 @@ modules:
     output:
       type: proto:antelope.token.v1.eosio.token
 
-  - name: map_transfers_eosnationftw
+  - name: map_transfers_accounts
     kind: map
     initialBlock: 2
     inputs:
