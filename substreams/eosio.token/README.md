@@ -4,14 +4,37 @@
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `actions.proto`     | **v0.1.0**  | `QmZTXiX2NyMjWyR6d58jJAbW2ZCg2awiCjZRbb6JyustxX`
-| `eosio.token.spkg`  | **v0.1.0**  | `QmbN4xycZ2omL68cuzNp2Civ1QTRR6mJ7P7kBQuACsEp1H`
+| `eosio.token.spkg`  | **v0.1.0**  | `QmXhHkjuqCFvxEaYDrcURZMhD7y9RNSfNWmXHtX8ramEHL`
 
 ### Maps
 
-| type | Name          | Description
-|------|---------------|-----------------------|
-| map  | `map_actions` | `eosio.token` actions
+| type | Name                         | Description
+|------|------------------------------|-----------------------|
+| map  | `map_actions`                | `eosio.token` based actions 
+| map  | `map_transfers`              | `eosio.token` based **transfer** actions 
+| map  | `map_transfers_eosio_token`  | `eosio.token` **transfer** actions 
+| map  | `map_transfers_accounts`     | `eosio.token` based **transfer** actions from accounts
+
+### Protobuf
+
+| Name                | Version     | IPFS hash |
+|---------------------|-------------|-----------|
+| `actions.proto`     | **v0.1.0**  | `QmWthaEr1Zde3g7CdoWpPqL4fCvptHZHFq4evBNoWppotP`
+
+```proto
+message Actions {
+  repeated Action actions = 1;
+}
+
+message Action {
+  uint32 block_num = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  string transaction_id = 3;
+  string account = 4;
+  string name = 5;
+  string json_data = 6;
+}
+```
 
 ### Quickstart
 

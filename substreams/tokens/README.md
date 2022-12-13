@@ -4,7 +4,7 @@
 
 | Version | IPFS hash |
 |---------|-----------|
-| v0.0.1  | QmYtDPjGUwQUAukhEKxeKqL9UeF1H9a2d1sNSMAQGDwVZe
+| v0.1.0  | QmXhHkjuqCFvxEaYDrcURZMhD7y9RNSfNWmXHtX8ramEHL
 
 ### Models
 
@@ -21,6 +21,8 @@ message Token {
   string contract = 3;
   string symcode = 4;
   uint32 precision = 5;
+  int64 amount = 6;
+  string issuer = 7;
 }
 ```
 
