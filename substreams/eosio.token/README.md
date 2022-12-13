@@ -2,11 +2,13 @@
 
 > Antelope `eosio.token` related action events
 
+### Substream
+
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
 | `eosio.token.spkg`  | **v0.1.0**  | `QmXhHkjuqCFvxEaYDrcURZMhD7y9RNSfNWmXHtX8ramEHL`
 
-### Maps
+### Modules
 
 | type | Name                         | Description
 |------|------------------------------|-----------------------|
