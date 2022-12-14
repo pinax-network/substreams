@@ -16,7 +16,7 @@
     "blockstore-core": "1.*",
     "dotenv": "*",
     "ipfs-unixfs-importer": "9.*",
-    "protobufjs": "^7.1.2"
+    "protobufjs": "7.*"
   },
   "devDependencies": {
     "@types/node": "*",

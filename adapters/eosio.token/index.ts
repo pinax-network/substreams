@@ -3,7 +3,7 @@ import protobuf from "protobufjs";
 import * as substreams from "../../consumers/node";
 
 // Protobuf schema
-const root = protobuf.loadSync("../../substreams/eosio.token/proto/actions.proto");
+const root = protobuf.loadSync("./proto/actions.proto");
 const Actions = root.lookupType("Actions");
 
 // Initialize Process (write to JSONL file)

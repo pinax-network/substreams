@@ -9,7 +9,7 @@ import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { StreamClient } from './src/generated/sf/substreams/v1/substreams.client';
 import { Package } from './src/generated/sf/substreams/v1/package';
 import { Modules } from './src/generated/sf/substreams/v1/modules';
-import { BlockScopedData, ForkStep, Request, Response } from './src/generated/sf/substreams/v1/substreams';
+import { BlockScopedData, ForkStep, Request } from './src/generated/sf/substreams/v1/substreams';
 
 // Export utils & Typescript interfaces
 export * from "./src/generated/sf/substreams/v1/clock"
@@ -18,20 +18,11 @@ export * from "./src/generated/sf/substreams/v1/package"
 export * from "./src/generated/sf/substreams/v1/substreams"
 export * from "./utils";
 
-// Envionrment Variables
-import * as dotenv from "dotenv";
-import { download, getIpfsHash, isIpfs, parseBlockData } from './utils';
-dotenv.config();
-const PACKAGE = process.env.PACKAGE;
-const PROTO = process.env.PROTO;
-const MODULES = (process.env.MODULES || "").split(",");
-const START_BLOCK_NUM = process.env.START_BLOCK_NUM;
-const STOP_BLOCK_NUM = process.env.STOP_BLOCK_NUM;
-const API_TOKEN = process.env.API_TOKEN;
-const FIREHOSE_HOST = process.env.FIREHOSE_HOST || "eos.firehose.eosnation.io:9001";
+// Environment variables
+import { API_TOKEN, FIREHOSE_HOST, START_BLOCK_NUM, STOP_BLOCK_NUM, MODULES, PACKAGE, PROTO } from './config';
 
-if ( !START_BLOCK_NUM) throw new Error("Missing START_BLOCK_NUM environment variable");
-if ( !MODULES) throw new Error("Missing MODULES environment variable");
+// Utils
+import { isIpfs, downloadToFile, getIpfsHash, parseBlockData } from './utils';
 
 // Credentials
 const metadata = new Metadata();
@@ -49,18 +40,14 @@ const client = new StreamClient(
     }),
 );
 
-export async function downloadPackage() {
-    if ( !PACKAGE) throw new Error("Missing PACKAGE environment variable");
-
+export async function downloadPackage(ipfs: string) {
     // Download IPFS Substream package
-    if ( isIpfs(PACKAGE) ) {
-        const url = `https://eos.mypinata.cloud/ipfs/${PACKAGE}`
-        console.log(`Downloading Substream from IPFS: ${url}`);
-        return download(url);
-    }
+    if ( isIpfs(ipfs) ) return downloadToFile(ipfs);
+
     // Read Substream from local filesystem
-    console.log(`Reading Substream from file system: ${PACKAGE}`);
-    const filepath = path.isAbsolute(PACKAGE) ? PACKAGE : path.resolve(process.cwd(), PACKAGE);
+    console.log(`Reading Substream from file system: ${ipfs}`);
+    const filepath = path.isAbsolute(ipfs) ? ipfs : path.resolve(process.cwd(), ipfs);
+    if (!fs.existsSync(filepath)) throw new Error(`File not found: ${filepath}`);
     return new Uint8Array(fs.readFileSync(filepath));
 }
 
@@ -75,18 +62,23 @@ export function createStream(modules?: Modules) {
     }));
 }
 
-export interface Adapter {
+export type Adapter = {
     init(startBlockNum?: string, stopBlockNum?: string): any;
     processBlock(block: BlockScopedData): any;
     processMapOutput(value: Uint8Array): any;
     done(): any;
 }
 
+export type Config = {
+    START_BLOCK_NUM?: string;
+    STOP_BLOCK_NUM?: string;
+}
+
 // Parse Substream Block Data
-export async function run(adapter: Adapter) {
+export async function run(adapter: Adapter, config: Config = {}) {
 
     // Setup Substream
-    const binary = await downloadPackage();
+    const binary = await downloadPackage(PACKAGE);
     const ipfs = await getIpfsHash(binary);
     console.log(`Substream IPFS Hash: ${ipfs}`);
     const { modules } = Package.fromBinary(binary);
