@@ -3,7 +3,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/EOS-Nation/substreams-monorepo/blob/main/LICENSE)
 [![Node.js Substreams](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml/badge.svg)](https://github.com/EOS-Nation/substreams-monorepo/actions/workflows/node-consumer.yml)
 
-> General purpose SDK library
+> General purpose Substream SDK library
 
 ## Requirements
 
@@ -30,7 +30,7 @@ API_TOKEN=""
 
 ```js
 import fs from "fs";
-import * as substreams from "substreams-consumer";
+import * as substreams from "@pinax/substreams";
 
 // Initialize Process (write to JSONL file)
 let writer;
