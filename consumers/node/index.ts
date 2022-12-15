@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'node:path';
-import protobuf from "protobufjs";
 import { credentials, Metadata } from '@grpc/grpc-js';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 
@@ -22,7 +19,7 @@ export * from "./utils";
 import { API_TOKEN, FIREHOSE_HOST, START_BLOCK_NUM, STOP_BLOCK_NUM, MODULES, PACKAGE, PROTO } from './config';
 
 // Utils
-import { isIpfs, downloadToFile, getIpfsHash, parseBlockData } from './utils';
+import { downloadPackage, downloadProto, parseBlockData } from './utils';
 
 // Credentials
 const metadata = new Metadata();
@@ -40,17 +37,6 @@ const client = new StreamClient(
     }),
 );
 
-export async function downloadPackage(ipfs: string) {
-    // Download IPFS Substream package
-    if ( isIpfs(ipfs) ) return downloadToFile(ipfs);
-
-    // Read Substream from local filesystem
-    console.log(`Reading Substream from file system: ${ipfs}`);
-    const filepath = path.isAbsolute(ipfs) ? ipfs : path.resolve(process.cwd(), ipfs);
-    if (!fs.existsSync(filepath)) throw new Error(`File not found: ${filepath}`);
-    return new Uint8Array(fs.readFileSync(filepath));
-}
-
 // Load Substream
 export function createStream(modules?: Modules) {
     return client.blocks(Request.create({
@@ -65,7 +51,7 @@ export function createStream(modules?: Modules) {
 export type Adapter = {
     init(startBlockNum?: string, stopBlockNum?: string): any;
     processBlock(block: BlockScopedData): any;
-    processMapOutput(value: Uint8Array): any;
+    processMapOutput(value: Uint8Array, root: protobuf.Root): any;
     done(): any;
 }
 
@@ -74,14 +60,19 @@ export type Config = {
     STOP_BLOCK_NUM?: string;
 }
 
+async function downloadSubstream( ipfs: string ) {
+    const binary = await downloadPackage(ipfs);
+    const { modules } = Package.fromBinary(binary);
+    if ( !modules ) throw new Error(`No modules found in Substream: ${ipfs}`);
+    return modules;
+}
+
 // Parse Substream Block Data
 export async function run(adapter: Adapter, config: Config = {}) {
 
     // Setup Substream
-    const binary = await downloadPackage(PACKAGE);
-    const ipfs = await getIpfsHash(binary);
-    console.log(`Substream IPFS Hash: ${ipfs}`);
-    const { modules } = Package.fromBinary(binary);
+    const modules = await downloadSubstream(PACKAGE);
+    const root = await downloadProto(PROTO);
     const stream = createStream(modules);
 
     // Send Substream Data to Adapter
@@ -95,7 +86,7 @@ export async function run(adapter: Adapter, config: Config = {}) {
             if ( output.data.oneofKind == "mapOutput" ) {
                 const { value } = output.data.mapOutput;
                 if ( !value.length ) continue;
-                adapter.processMapOutput( value );
+                adapter.processMapOutput( value, root );
             }
         }
     }

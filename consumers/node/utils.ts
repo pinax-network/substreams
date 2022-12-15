@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import os from "os";
+import protobuf from "protobufjs";
 import { importer } from 'ipfs-unixfs-importer';
 import { MemoryBlockstore } from 'blockstore-core/memory';
 
@@ -31,19 +32,40 @@ export function getSeconds( clock?: Clock ) {
 
 export const isIpfs = ( str: string ) => /^Qm[1-9A-Za-z]{44}$/.test(str);
 
+export async function downloadPackage(ipfs: string) {
+    if ( isIpfs(ipfs) ) return downloadToFile(ipfs);
+    return readFileToBuffer(ipfs);
+}
+
+export function tmpFilepath(ipfs: string) {
+    return path.join(os.tmpdir(), ipfs);
+}
+
+export async function downloadProto(ipfs: string) {
+    await downloadToFile(ipfs);
+    return protobuf.loadSync(tmpFilepath(ipfs));
+}
+
+export function readFileToBuffer(ipfs: string) {
+    console.log(`Reading from file system: ${ipfs}`);
+    const filepath = path.isAbsolute(ipfs) ? ipfs : path.resolve(process.cwd(), ipfs);
+    if (!fs.existsSync(filepath)) throw new Error(`File not found: ${filepath}`);
+    return new Uint8Array(fs.readFileSync(filepath));
+}
+
 export async function downloadToFile(ipfs: string) {
-    const filepath = path.join(os.tmpdir(), ipfs);
+    const filepath = tmpFilepath(ipfs);
     if (fs.existsSync(filepath)) {
-        console.log(`Already exists: ${ipfs}`);
+        console.log(`File already exists: ${ipfs}`);
         const buffer = fs.readFileSync(filepath);
         return new Uint8Array(buffer);
     }
-    const data = await download(ipfs);
+    const data = await downloadBuffer(ipfs);
     fs.writeFileSync(filepath, data);
     return data;
 }
 
-export async function download(ipfs: string) {
+export async function downloadBuffer(ipfs: string) {
     console.log(`Downloading: ${ipfs}`);
     const url = `https://eos.mypinata.cloud/ipfs/${ipfs}`
     const response = await fetch(url);

@@ -4,7 +4,7 @@ dotenv.config();
 if ( !process.env.START_BLOCK_NUM) throw new Error("Missing START_BLOCK_NUM environment variable");
 if ( !process.env.MODULES) throw new Error("Missing MODULES environment variable");
 if ( !process.env.PACKAGE) throw new Error("Missing PACKAGE environment variable");
-// if ( !process.env.PROTO) throw new Error("Missing PROTO environment variable");
+if ( !process.env.PROTO) throw new Error("Missing PROTO environment variable");
 
 export const PACKAGE = process.env.PACKAGE;
 export const PROTO = process.env.PROTO;
