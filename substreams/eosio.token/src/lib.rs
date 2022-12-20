@@ -11,7 +11,16 @@ mod abi;
 mod pb;
 mod accounts;
 use crate::pb::eosio_token::{Action, Actions};
-use crate::accounts::{ACTIONS, ACCOUNTS};
+use crate::accounts::{ACCOUNTS};
+
+pub const ACTIONS: [&str; 6] = [
+    "create",
+    "issue",
+    "retire",
+    "transfer",
+    "open",
+    "close",
+];
 
 #[substreams::handlers::map]
 fn map_actions(block: Block) -> Result<Actions, Error> {

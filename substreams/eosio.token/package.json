@@ -1,0 +1,12 @@
+{
+  "name": "eosio.token",
+  "version": "1.0.0",
+  "description": "Antelope `eosio.token` related action events",
+  "scripts": {
+    "build": "buf build -o image.bin"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^1.0.0",
+    "@bufbuild/protoc-gen-es": "^1.0.0"
+  }
+}

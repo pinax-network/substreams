@@ -1,7 +1,7 @@
 [package]
 name = "eosio_token"
 version = "0.1.0"
-description = "Antelop [eosio.token] Substream"
+description = "Antelope [eosio.token] Substream"
 edition = "2021"
 
 [lib]

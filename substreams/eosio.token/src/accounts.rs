@@ -1,12 +1,4 @@
-pub const ACTIONS: [&str; 6] = [
-    "create",
-    "issue",
-    "retire",
-    "transfer",
-    "open",
-    "close",
-];
-
+// TO REMOVE when Substreams supports parameters
 pub const ACCOUNTS: [&str; 52] = [
     "eosnationftw",
     "eosnationinc",
