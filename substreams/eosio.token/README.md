@@ -37,5 +37,21 @@ message Action {
 ### Quickstart
 
 ```
-substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_actions
+$ substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_actions
+```
+
+### Build
+
+To include **/src/pb/mod.rs**
+
+```rs
+#[path = "antelope.eosio.token.v1.rs"]
+#[allow(dead_code)]
+pub mod eosio_token;
+```
+
+```bash
+$ substreams protogen ./substreams.yaml --exclude-paths="sf/antelope,sf/substreams,google"
+$ cargo build --target wasm32-unknown-unknown --release
+$ substreams pack ./substreams.yaml
 ```
