@@ -36,3 +36,17 @@ modules:
       - map: map_actions
     output:
       type: proto:antelope.token.v1.eosio.token
+
+  - name: store_transfers_amount
+    kind: store
+    updatePolicy: add
+    valueType: int64
+    inputs:
+      - map: map_transfers
+
+  - name: store_transfers_count
+    kind: store
+    updatePolicy: add
+    valueType: int64
+    inputs:
+      - map: map_transfers

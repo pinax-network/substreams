@@ -9,12 +9,25 @@
 | `eosio-token.spkg`  | **v0.1.0**  | `QmXhHkjuqCFvxEaYDrcURZMhD7y9RNSfNWmXHtX8ramEHL`
 | `eosio-token.spkg`  | **v0.1.1**  | `QmSPj4yghnFuosBeyZ2Cc5EY3agSP4Qg2g6v1Rh4tnWSgx`
 
-### Modules
+### Map Modules
 
-| type | Name                         | Description
-|------|------------------------------|-----------------------|
-| map  | `map_actions`                | `eosio.token` based actions 
-| map  | `map_transfers`              | `eosio.token` based **transfer** actions 
+| Name                         | Description
+|------------------------------|-----------------------|
+| `map_actions`                | all `eosio.token` actions 
+| `map_transfers`              | all `eosio.token` **transfer** actions 
+
+### Store Modules
+
+| Policy | Value | Name                     | Description
+|--------|-------|--------------------------|-----------------------|
+| add    | int64 | `store_transfers_amount` | `eosio.token` transfer quantity
+| add    | int64 | `store_transfers_count`  | `eosio.token` transfer counts
+
+### Store Keys
+
+- `<account>-<symcode>`
+- `<account>-<symcode>-from-<from>`
+- `<account>-<symcode>-to-<to>`
 
 ### Protobuf
 

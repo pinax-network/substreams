@@ -1,13 +1,15 @@
 use serde::{Deserialize, Serialize};
 use serde_json::{Result};
+use eosio::*;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Transfer {
-    from: String,
-    to: String,
-    quantity: String,
-    memo: String,
+    pub from: String,
+    pub to: String,
+    pub quantity: String,
+    pub memo: String,
 }
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Issue {
     pub to: String,
@@ -40,9 +42,17 @@ pub struct Retire {
     pub memo: String,
 }
 
+pub fn parse_quantity(quantity: &String) -> Asset {
+    quantity.parse::<Asset>().unwrap()
+}
+
 pub fn is_transfer(json_data: &str) -> Result<()> {
     let _data: Transfer = serde_json::from_str(json_data)?;
     Ok(())
+}
+
+pub fn parse_transfer(json_data: &str) -> Transfer {
+    serde_json::from_str(json_data).unwrap()
 }
 
 pub fn is_issue(json_data: &str) -> Result<()> {

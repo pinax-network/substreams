@@ -4,6 +4,7 @@ use std::collections::HashSet;
 // substream modules
 use substreams_antelope_core::pb::antelope::{Block};
 use substreams::errors::Error;
+use substreams::{prelude::*};
 
 // local modules
 mod abi;
@@ -25,6 +26,7 @@ fn map_actions(block: Block) -> Result<Actions, Error> {
     let filter_by = HashSet::from(ACTIONS);
 
     for trx in block.clone().all_transaction_traces() {
+        // action traces
         for trace in &trx.action_traces {
             let action = trace.action.as_ref().unwrap().clone();
             if !filter_by.contains(action.name.as_str()) { continue; }
@@ -58,15 +60,38 @@ pub fn map_transfers(actions: Actions) -> Result<Actions, Error> {
     let mut response = vec![];
 
     for action in actions.actions {
-        if action.name != "transfer" { continue; }
         response.push(action);
     }
 
     Ok(Actions { actions: response })
 }
 
-// #[substreams::handlers::store]
-// fn store_net_usage_words(actions: Actions, s: StoreAddInt64) {
-//     log::debug!("block {}: adding net_usage_words {}", blocktivity.block_num, blocktivity.net_usage_words);
-//     s.add(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.net_usage_words.clone() as i64)
-// }
+#[substreams::handlers::store]
+fn store_transfers_amount(actions: Actions, s: StoreAddInt64) {
+    for action in actions.actions {
+        let data = abi::parse_transfer(&action.json_data);
+        let quantity = abi::parse_quantity(&data.quantity);
+        let symcode = quantity.symbol.code().to_string();
+        let key_symcode = format!("{}-{}", action.account, symcode);
+        let key_from = format!("{}-{}-from-{}", action.account, symcode, data.from);
+        let key_to = format!("{}-{}-to-{}", action.account, symcode, data.to);
+        s.add(1, key_symcode, quantity.amount);
+        s.add(1, key_from, quantity.amount);
+        s.add(1, key_to, quantity.amount);
+    }
+}
+
+#[substreams::handlers::store]
+fn store_transfers_count(actions: Actions, s: StoreAddInt64) {
+    for action in actions.actions {
+        let data = abi::parse_transfer(&action.json_data);
+        let quantity = abi::parse_quantity(&data.quantity);
+        let symcode = quantity.symbol.code().to_string();
+        let key_symcode = format!("{}-{}", action.account, symcode);
+        let key_from = format!("{}-{}-from-{}", action.account, symcode, data.from);
+        let key_to = format!("{}-{}-to-{}", action.account, symcode, data.to);
+        s.add(1, key_symcode, 1);
+        s.add(1, key_from, 1);
+        s.add(1, key_to, 1);
+    }
+}
