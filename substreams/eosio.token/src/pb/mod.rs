@@ -1,3 +1,3 @@
-#[path = "antelope.eosio.token.v1.rs"]
+#[path = "antelope.actions.v1.rs"]
 #[allow(dead_code)]
-pub mod eosio_token;
+pub mod actions;

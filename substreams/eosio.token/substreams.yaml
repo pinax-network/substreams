@@ -1,8 +1,8 @@
 specVersion: v0.1.0
 package:
   name: eosio_token
-  version: v0.1.0
-  url: https://github.com/EOS-Nation/substreams-monorepo
+  version: v0.1.1
+  url: https://github.com/EOS-Nation/substreams-antelope
   doc: |
     Antelope `eosio.token` related action events
 
@@ -18,7 +18,7 @@ protobuf:
   files:
     - actions.proto
   importPaths:
-    - ./proto
+    - ../../common/proto
 
 modules:
   - name: map_actions
@@ -34,21 +34,5 @@ modules:
     initialBlock: 2
     inputs:
       - map: map_actions
-    output:
-      type: proto:antelope.token.v1.eosio.token
-
-  - name: map_transfers_eosio_token
-    kind: map
-    initialBlock: 2
-    inputs:
-      - map: map_transfers
-    output:
-      type: proto:antelope.token.v1.eosio.token
-
-  - name: map_transfers_accounts
-    kind: map
-    initialBlock: 2
-    inputs:
-      - map: map_transfers
     output:
       type: proto:antelope.token.v1.eosio.token

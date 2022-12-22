@@ -6,7 +6,8 @@
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `eosio.token.spkg`  | **v0.1.0**  | `QmXhHkjuqCFvxEaYDrcURZMhD7y9RNSfNWmXHtX8ramEHL`
+| `eosio-token.spkg`  | **v0.1.0**  | `QmXhHkjuqCFvxEaYDrcURZMhD7y9RNSfNWmXHtX8ramEHL`
+| `eosio-token.spkg`  | **v0.1.1**  | `QmSPj4yghnFuosBeyZ2Cc5EY3agSP4Qg2g6v1Rh4tnWSgx`
 
 ### Modules
 
@@ -14,8 +15,6 @@
 |------|------------------------------|-----------------------|
 | map  | `map_actions`                | `eosio.token` based actions 
 | map  | `map_transfers`              | `eosio.token` based **transfer** actions 
-| map  | `map_transfers_eosio_token`  | `eosio.token` **transfer** actions 
-| map  | `map_transfers_accounts`     | `eosio.token` based **transfer** actions from accounts
 
 ### Protobuf
 
@@ -37,7 +36,7 @@ message Action {
 ### Quickstart
 
 ```
-$ substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_actions
+$ substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_actions -s 284958698
 ```
 
 ### Build

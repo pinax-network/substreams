@@ -1,22 +1,71 @@
 use serde::{Deserialize, Serialize};
+use serde_json::{Result};
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "snake_case")]
-#[serde(deny_unknown_fields)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Transfer {
-    pub from: String,
+    from: String,
+    to: String,
+    quantity: String,
+    memo: String,
+}
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Issue {
     pub to: String,
     pub quantity: String,
     pub memo: String,
 }
 
-impl std::str::FromStr for Transfer {
-    type Err = String;
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Create {
+    pub issuer: String,
+    pub maximum_supply: String,
+}
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(match serde_json::from_str(&s) {
-            Ok(n) => n,
-            Err(_) => return Err("Failed to deserialize Transfer params".to_string()),
-        })
-    }
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Close {
+    pub owner: String,
+    pub symbol: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Open {
+    pub owner: String,
+    pub symbol: String,
+    pub ram_payer: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Retire {
+    pub quantity: String,
+    pub memo: String,
+}
+
+pub fn is_transfer(json_data: &str) -> Result<()> {
+    let _data: Transfer = serde_json::from_str(json_data)?;
+    Ok(())
+}
+
+pub fn is_issue(json_data: &str) -> Result<()> {
+    let _data: Issue = serde_json::from_str(json_data)?;
+    Ok(())
+}
+
+pub fn is_create(json_data: &str) -> Result<()> {
+    let _data: Create = serde_json::from_str(json_data)?;
+    Ok(())
+}
+
+pub fn is_close(json_data: &str) -> Result<()> {
+    let _data: Close = serde_json::from_str(json_data)?;
+    Ok(())
+}
+
+pub fn is_open(json_data: &str) -> Result<()> {
+    let _data: Open = serde_json::from_str(json_data)?;
+    Ok(())
+}
+
+pub fn is_retire(json_data: &str) -> Result<()> {
+    let _data: Retire = serde_json::from_str(json_data)?;
+    Ok(())
 }

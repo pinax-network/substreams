@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package antelope.eosio.token.v1;
+package antelope.actions.v1;
 
 import "google/protobuf/timestamp.proto";
 
