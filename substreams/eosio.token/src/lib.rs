@@ -32,15 +32,15 @@ fn map_actions(block: Block) -> Result<Actions, Error> {
             if !filter_by.contains(action.name.as_str()) { continue; }
             if trace.receiver != action.account { continue; } // skip extra receivers
 
-            // validate ABIs
+            // // validate ABIs
             let name = action.name;
             let json_data = action.json_data;
-            if name == "transfer" && abi::is_transfer(&json_data).is_err() { continue; }
-            if name == "issue" && abi::is_issue(&json_data).is_err() { continue; }
-            if name == "create" && abi::is_create(&json_data).is_err() { continue; }
-            if name == "close" && abi::is_close(&json_data).is_err() { continue; }
-            if name == "open" && abi::is_open(&json_data).is_err() { continue; }
-            if name == "retire" && abi::is_retire(&json_data).is_err() { continue; }
+            // if name == "transfer" && abi::is_transfer(&json_data).is_err() { continue; }
+            // if name == "issue" && abi::is_issue(&json_data).is_err() { continue; }
+            // if name == "create" && abi::is_create(&json_data).is_err() { continue; }
+            // if name == "close" && abi::is_close(&json_data).is_err() { continue; }
+            // if name == "open" && abi::is_open(&json_data).is_err() { continue; }
+            // if name == "retire" && abi::is_retire(&json_data).is_err() { continue; }
 
             actions.push(Action {
                 block_num: block.number,
@@ -60,6 +60,13 @@ pub fn map_transfers(actions: Actions) -> Result<Actions, Error> {
     let mut response = vec![];
 
     for action in actions.actions {
+        if action.name != "transfer" { continue; }
+        if abi::is_transfer(&action.json_data).is_err() { continue; }
+        // if name == "issue" && abi::is_issue(&json_data).is_err() { continue; }
+        // if name == "create" && abi::is_create(&json_data).is_err() { continue; }
+        // if name == "close" && abi::is_close(&json_data).is_err() { continue; }
+        // if name == "open" && abi::is_open(&json_data).is_err() { continue; }
+        // if name == "retire" && abi::is_retire(&json_data).is_err() { continue; }
         response.push(action);
     }
 
@@ -72,11 +79,17 @@ fn store_transfers_amount(actions: Actions, s: StoreAddInt64) {
         let data = abi::parse_transfer(&action.json_data);
         let quantity = abi::parse_quantity(&data.quantity);
         let symcode = quantity.symbol.code().to_string();
-        let key_symcode = format!("{}-{}", action.account, symcode);
-        let key_from = format!("{}-{}-from-{}", action.account, symcode, data.from);
-        let key_to = format!("{}-{}-to-{}", action.account, symcode, data.to);
+
+        // keys
+        let key_symcode = format!("account={},symcode={}", action.account, symcode);
+        let key_from = format!("account={},symcode={},from={}", action.account, symcode, data.from);
+        let key_from_to = format!("account={},symcode={},from={},to={}", action.account, symcode, data.from, data.to);
+        let key_to = format!("account={},symcode={},to={}", action.account, symcode, data.to);
+
+        // store
         s.add(1, key_symcode, quantity.amount);
         s.add(1, key_from, quantity.amount);
+        s.add(1, key_from_to, quantity.amount);
         s.add(1, key_to, quantity.amount);
     }
 }
@@ -87,11 +100,17 @@ fn store_transfers_count(actions: Actions, s: StoreAddInt64) {
         let data = abi::parse_transfer(&action.json_data);
         let quantity = abi::parse_quantity(&data.quantity);
         let symcode = quantity.symbol.code().to_string();
-        let key_symcode = format!("{}-{}", action.account, symcode);
-        let key_from = format!("{}-{}-from-{}", action.account, symcode, data.from);
-        let key_to = format!("{}-{}-to-{}", action.account, symcode, data.to);
+
+        // keys
+        let key_symcode = format!("account={},symcode={}", action.account, symcode);
+        let key_from = format!("account={},symcode={},from={}", action.account, symcode, data.from);
+        let key_from_to = format!("account={},symcode={},from={},to={}", action.account, symcode, data.from, data.to);
+        let key_to = format!("account={},symcode={},to={}", action.account, symcode, data.to);
+
+        // store
         s.add(1, key_symcode, 1);
         s.add(1, key_from, 1);
+        s.add(1, key_from_to, 1);
         s.add(1, key_to, 1);
     }
 }

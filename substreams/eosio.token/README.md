@@ -7,7 +7,7 @@
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
 | `eosio-token.spkg`  | **v0.1.0**  | `QmXhHkjuqCFvxEaYDrcURZMhD7y9RNSfNWmXHtX8ramEHL`
-| `eosio-token.spkg`  | **v0.1.1**  | `QmPhuoaiKvUARz6ekR4qJ5jSzK6a41MLcXiLJaYmQzMje2`
+| `eosio-token.spkg`  | **v0.1.1**  | `Qmd6br54LiYeG5wWgmo42eWe3mxjo5MgPpko2ziGxJztd4`
 
 ### Map Modules
 
@@ -18,18 +18,21 @@
 
 ### Store Modules
 
-| Policy | Value | Name                     | Description
-|--------|-------|--------------------------|-----------------------|
-| add    | int64 | `store_transfers_amount` | `eosio.token` transfer quantity
-| add    | int64 | `store_transfers_count`  | `eosio.token` transfer counts
+| Name                     | Policy | Value | Description
+|--------------------------|--------|-------|-----------------------|
+| `store_transfers_amount` | add    | int64 | `eosio.token` transfer quantity
+| `store_transfers_count`  | add    | int64 | `eosio.token` transfer counts
 
 ### Store Keys
 
-- `<account>-<symcode>`
-- `<account>-<symcode>-from-<from>`
-- `<account>-<symcode>-to-<to>`
+- `account={},symcode={}`
+- `account={},symcode={},from={}`
+- `account={},symcode={},to={}`
+- `account={},symcode={},from={},to={}`
 
 ### Protobuf
+
+- `antelope.actions.v1`
 
 ```proto
 message Actions {
