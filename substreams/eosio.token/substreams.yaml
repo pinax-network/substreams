@@ -3,8 +3,7 @@ package:
   name: eosio_token
   version: v0.1.1
   url: https://github.com/EOS-Nation/substreams-antelope
-  doc: |
-    Antelope `eosio.token` related action events
+  doc: Antelope `eosio.token` related action events
 
 imports:
   antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
@@ -27,7 +26,7 @@ modules:
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.token.v1.eosio.token
+      type: proto:antelope.actions.v1.Actions
 
   - name: map_transfers
     kind: map
@@ -35,7 +34,7 @@ modules:
     inputs:
       - map: map_actions
     output:
-      type: proto:antelope.token.v1.eosio.token
+      type: proto:antelope.actions.v1.Actions
 
   - name: store_transfers_amount
     kind: store
@@ -50,3 +49,10 @@ modules:
     valueType: int64
     inputs:
       - map: map_transfers
+
+  - name: store_balances
+    kind: store
+    updatePolicy: set
+    valueType: string
+    inputs:
+      - map: map_actions

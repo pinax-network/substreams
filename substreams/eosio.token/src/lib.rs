@@ -35,12 +35,12 @@ fn map_actions(block: Block) -> Result<Actions, Error> {
             // // validate ABIs
             let name = action.name;
             let json_data = action.json_data;
-            // if name == "transfer" && abi::is_transfer(&json_data).is_err() { continue; }
-            // if name == "issue" && abi::is_issue(&json_data).is_err() { continue; }
-            // if name == "create" && abi::is_create(&json_data).is_err() { continue; }
-            // if name == "close" && abi::is_close(&json_data).is_err() { continue; }
-            // if name == "open" && abi::is_open(&json_data).is_err() { continue; }
-            // if name == "retire" && abi::is_retire(&json_data).is_err() { continue; }
+            if name == "transfer" && !abi::is_transfer(&json_data) { continue; }
+            if name == "issue" && !abi::is_issue(&json_data) { continue; }
+            if name == "create" && abi::is_create(&json_data) { continue; }
+            if name == "close" && abi::is_close(&json_data) { continue; }
+            if name == "open" && abi::is_open(&json_data) { continue; }
+            if name == "retire" && abi::is_retire(&json_data) { continue; }
 
             actions.push(Action {
                 block_num: block.number,
@@ -61,7 +61,7 @@ pub fn map_transfers(actions: Actions) -> Result<Actions, Error> {
 
     for action in actions.actions {
         if action.name != "transfer" { continue; }
-        if abi::is_transfer(&action.json_data).is_err() { continue; }
+        if abi::is_transfer(&action.json_data) { continue; }
         // if name == "issue" && abi::is_issue(&json_data).is_err() { continue; }
         // if name == "create" && abi::is_create(&json_data).is_err() { continue; }
         // if name == "close" && abi::is_close(&json_data).is_err() { continue; }
