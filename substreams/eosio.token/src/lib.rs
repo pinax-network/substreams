@@ -5,21 +5,20 @@ use substreams::errors::Error;
 // local modules
 mod abi;
 mod pb;
-use crate::pb::actions::{Action, Actions};
-use crate::pb::tables::{DatabaseOperation, DatabaseOperations};
+use crate::pb::common::{ActionTrace, ActionTraces, DatabaseOperation, DatabaseOperations};
 
 #[substreams::handlers::map]
-fn map_action_traces(block: Block) -> Result<Actions, Error> {
-    let mut actions = vec![];
+fn map_action_traces(block: Block) -> Result<ActionTraces, Error> {
+    let mut action_traces = vec![];
 
     for trx in block.clone().all_transaction_traces() {
         // action traces
         for trace in &trx.action_traces {
-            let action = trace.action.as_ref().unwrap().clone();
+            let trace_action = trace.action.as_ref().unwrap().clone();
 
             // validate ABIs
-            let name = action.name;
-            let json_data = action.json_data;
+            let name = trace_action.name;
+            let json_data = trace_action.json_data;
             if name == "transfer" {
                 if !abi::is_transfer(&json_data) { continue; }
             } else if name == "issue" {
@@ -34,7 +33,7 @@ fn map_action_traces(block: Block) -> Result<Actions, Error> {
                 if abi::is_retire(&json_data) { continue; }
             } else { continue; }
 
-            actions.push(Action {
+            action_traces.push(ActionTrace {
                 // trace information
                 block_num: block.number,
                 timestamp: Some(block.header.as_ref().unwrap().timestamp.as_ref().unwrap().clone()),
@@ -42,7 +41,7 @@ fn map_action_traces(block: Block) -> Result<Actions, Error> {
                 action_ordinal: trace.action_ordinal.clone(),
 
                 // action
-                account: action.account,
+                account: trace_action.account,
                 receiver: trace.receiver.clone(),
                 name,
 
@@ -51,7 +50,7 @@ fn map_action_traces(block: Block) -> Result<Actions, Error> {
             })
         }
     }
-    Ok(Actions { actions })
+    Ok(ActionTraces { action_traces })
 }
 
 

@@ -5,7 +5,7 @@ package antelope.common.v1;
 import "google/protobuf/timestamp.proto";
 
 message ActionTraces {
-  repeated ActionTraces action_traces = 1;
+  repeated ActionTrace action_traces = 1;
 }
 
 message ActionTrace {

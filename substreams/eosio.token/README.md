@@ -6,7 +6,7 @@
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `eosio-token.spkg`  | **v0.2.0**  | `QmNvafLAF39piaWU5LkCkdc3c2FAP79faNJ3BFwhQ8e6EU`
+| `eosio-token.spkg`  | **v0.2.0**  | `QmahVkBjZcQQREtK7KyheioErp47uwojWm3jAW3Wq69AEq`
 
 ### Map Modules
 
@@ -25,7 +25,7 @@ package antelope.common.v1;
 import "google/protobuf/timestamp.proto";
 
 message ActionTraces {
-  repeated ActionTraces action_traces = 1;
+  repeated ActionTrace action_traces = 1;
 }
 
 message ActionTrace {

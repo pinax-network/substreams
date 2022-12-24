@@ -26,7 +26,7 @@ modules:
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.actions.v1.ActionTraces
+      type: proto:antelope.common.v1.ActionTraces
 
   - name: map_db_ops
     kind: map
@@ -34,4 +34,4 @@ modules:
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.tables.v1.DatabaseOperations
+      type: proto:antelope.common.v1.DatabaseOperations
