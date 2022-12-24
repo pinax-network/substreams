@@ -1,9 +1,9 @@
 specVersion: v0.1.0
 package:
   name: eosio_token
-  version: v0.1.1
+  version: v0.2.0
   url: https://github.com/EOS-Nation/substreams-antelope
-  doc: Antelope `eosio.token` related action events
+  doc: Antelope `eosio.token` based action traces & database operations.
 
 imports:
   antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
@@ -15,44 +15,23 @@ binaries:
 
 protobuf:
   files:
-    - actions.proto
+    - common.proto
   importPaths:
-    - ../../common/proto
+    - ../../proto/antelope
 
 modules:
-  - name: map_actions
+  - name: map_action_traces
     kind: map
     initialBlock: 2
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.actions.v1.Actions
+      type: proto:antelope.actions.v1.ActionTraces
 
-  - name: map_transfers
+  - name: map_db_ops
     kind: map
     initialBlock: 2
     inputs:
-      - map: map_actions
+      - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.actions.v1.Actions
-
-  - name: store_transfers_amount
-    kind: store
-    updatePolicy: add
-    valueType: int64
-    inputs:
-      - map: map_transfers
-
-  - name: store_transfers_count
-    kind: store
-    updatePolicy: add
-    valueType: int64
-    inputs:
-      - map: map_transfers
-
-  - name: store_balances
-    kind: store
-    updatePolicy: set
-    valueType: string
-    inputs:
-      - map: map_actions
+      type: proto:antelope.tables.v1.DatabaseOperations

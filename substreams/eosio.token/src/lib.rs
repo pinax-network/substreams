@@ -1,53 +1,52 @@
-// standard modules
-use std::collections::HashSet;
-
 // substream modules
 use substreams_antelope_core::pb::antelope::{Block};
 use substreams::errors::Error;
-use substreams::{prelude::*};
 
 // local modules
 mod abi;
 mod pb;
 use crate::pb::actions::{Action, Actions};
-
-pub const ACTIONS: [&str; 6] = [
-    "create",
-    "issue",
-    "retire",
-    "transfer",
-    "open",
-    "close",
-];
+use crate::pb::tables::{DatabaseOperation, DatabaseOperations};
 
 #[substreams::handlers::map]
-fn map_actions(block: Block) -> Result<Actions, Error> {
+fn map_action_traces(block: Block) -> Result<Actions, Error> {
     let mut actions = vec![];
-    let filter_by = HashSet::from(ACTIONS);
 
     for trx in block.clone().all_transaction_traces() {
         // action traces
         for trace in &trx.action_traces {
             let action = trace.action.as_ref().unwrap().clone();
-            if !filter_by.contains(action.name.as_str()) { continue; }
-            if trace.receiver != action.account { continue; } // skip extra receivers
 
-            // // validate ABIs
+            // validate ABIs
             let name = action.name;
             let json_data = action.json_data;
-            if name == "transfer" && !abi::is_transfer(&json_data) { continue; }
-            if name == "issue" && !abi::is_issue(&json_data) { continue; }
-            if name == "create" && abi::is_create(&json_data) { continue; }
-            if name == "close" && abi::is_close(&json_data) { continue; }
-            if name == "open" && abi::is_open(&json_data) { continue; }
-            if name == "retire" && abi::is_retire(&json_data) { continue; }
+            if name == "transfer" {
+                if !abi::is_transfer(&json_data) { continue; }
+            } else if name == "issue" {
+                if !abi::is_issue(&json_data) { continue; }
+            } else if name == "create" {
+                if abi::is_create(&json_data) { continue; }
+            } else if name == "close"{
+                if abi::is_close(&json_data) { continue; }
+            } else if name == "open"{
+                if abi::is_open(&json_data) { continue; }
+            } else if name == "retire"{
+                if abi::is_retire(&json_data) { continue; }
+            } else { continue; }
 
             actions.push(Action {
+                // trace information
                 block_num: block.number,
                 timestamp: Some(block.header.as_ref().unwrap().timestamp.as_ref().unwrap().clone()),
-                transaction_id: trace.transaction_id.clone(),
+                trx_id: trx.id.clone(),
+                action_ordinal: trace.action_ordinal.clone(),
+
+                // action
                 account: action.account,
+                receiver: trace.receiver.clone(),
                 name,
+
+                // action data
                 json_data,
             })
         }
@@ -55,62 +54,39 @@ fn map_actions(block: Block) -> Result<Actions, Error> {
     Ok(Actions { actions })
 }
 
+
 #[substreams::handlers::map]
-pub fn map_transfers(actions: Actions) -> Result<Actions, Error> {
-    let mut response = vec![];
+fn map_db_ops(block: Block) -> Result<DatabaseOperations, Error> {
+    let mut db_ops = vec![];
+    for trx in block.clone().all_transaction_traces() {
+        // table deltas
+        for db_op in &trx.db_ops {
 
-    for action in actions.actions {
-        if action.name != "transfer" { continue; }
-        if abi::is_transfer(&action.json_data) { continue; }
-        // if name == "issue" && abi::is_issue(&json_data).is_err() { continue; }
-        // if name == "create" && abi::is_create(&json_data).is_err() { continue; }
-        // if name == "close" && abi::is_close(&json_data).is_err() { continue; }
-        // if name == "open" && abi::is_open(&json_data).is_err() { continue; }
-        // if name == "retire" && abi::is_retire(&json_data).is_err() { continue; }
-        response.push(action);
+            // validate ABIs
+            if db_op.table_name == "accounts" {
+                // TO-DO add ABI validation //;
+            } else if db_op.table_name == "stats" {
+                // TO-DO add ABI validation //;
+            } else { continue; }
+
+            db_ops.push(DatabaseOperation {
+                // trace information
+                block_num: block.number,
+                timestamp: Some(block.header.as_ref().unwrap().timestamp.as_ref().unwrap().clone()),
+                trx_id: trx.id.clone(),
+                action_index: db_op.action_index,
+
+                // database operation
+                code: db_op.code.clone(),
+                table_name: db_op.table_name.clone(),
+                scope: db_op.scope.clone(),
+                primary_key: db_op.primary_key.clone(),
+
+                // table data
+                old_data: db_op.old_data.clone(),
+                new_data: db_op.new_data.clone(),
+            })
+        }
     }
-
-    Ok(Actions { actions: response })
-}
-
-#[substreams::handlers::store]
-fn store_transfers_amount(actions: Actions, s: StoreAddInt64) {
-    for action in actions.actions {
-        let data = abi::parse_transfer(&action.json_data);
-        let quantity = abi::parse_quantity(&data.quantity);
-        let symcode = quantity.symbol.code().to_string();
-
-        // keys
-        let key_symcode = format!("account={},symcode={}", action.account, symcode);
-        let key_from = format!("account={},symcode={},from={}", action.account, symcode, data.from);
-        let key_from_to = format!("account={},symcode={},from={},to={}", action.account, symcode, data.from, data.to);
-        let key_to = format!("account={},symcode={},to={}", action.account, symcode, data.to);
-
-        // store
-        s.add(1, key_symcode, quantity.amount);
-        s.add(1, key_from, quantity.amount);
-        s.add(1, key_from_to, quantity.amount);
-        s.add(1, key_to, quantity.amount);
-    }
-}
-
-#[substreams::handlers::store]
-fn store_transfers_count(actions: Actions, s: StoreAddInt64) {
-    for action in actions.actions {
-        let data = abi::parse_transfer(&action.json_data);
-        let quantity = abi::parse_quantity(&data.quantity);
-        let symcode = quantity.symbol.code().to_string();
-
-        // keys
-        let key_symcode = format!("account={},symcode={}", action.account, symcode);
-        let key_from = format!("account={},symcode={},from={}", action.account, symcode, data.from);
-        let key_from_to = format!("account={},symcode={},from={},to={}", action.account, symcode, data.from, data.to);
-        let key_to = format!("account={},symcode={},to={}", action.account, symcode, data.to);
-
-        // store
-        s.add(1, key_symcode, 1);
-        s.add(1, key_from, 1);
-        s.add(1, key_from_to, 1);
-        s.add(1, key_to, 1);
-    }
+    Ok(DatabaseOperations { db_ops })
 }

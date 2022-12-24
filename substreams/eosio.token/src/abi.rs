@@ -45,10 +45,6 @@ pub struct Retire {
     pub memo: String,
 }
 
-pub fn parse_quantity(quantity: &String) -> Asset {
-    quantity.parse::<Asset>().unwrap()
-}
-
 pub fn is_transfer(json_data: &str) -> bool {
     let json: Result<Transfer> = serde_json::from_str(json_data);
     match json {
@@ -66,10 +62,6 @@ pub fn is_transfer(json_data: &str) -> bool {
         },
         Err(_) => false,
     }
-}
-
-pub fn parse_transfer(json_data: &str) -> Transfer {
-    serde_json::from_str(json_data).unwrap()
 }
 
 pub fn is_issue(json_data: &str) -> bool {
