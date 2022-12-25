@@ -64,7 +64,7 @@ fn map_db_ops(block: Block) -> Result<DatabaseOperations, Error> {
             // validate ABIs
             if db_op.table_name == "accounts" {
                 // TO-DO add ABI validation //;
-            } else if db_op.table_name == "stats" {
+            } else if db_op.table_name == "stat" {
                 // TO-DO add ABI validation //;
             } else { continue; }
 

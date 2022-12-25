@@ -6,7 +6,7 @@
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `eosio-token.spkg`  | **v0.2.0**  | `QmahVkBjZcQQREtK7KyheioErp47uwojWm3jAW3Wq69AEq`
+| `eosio-token.spkg`  | **v0.2.0**  | `QmUc8qGvJ8rVsTQV6L2pvZEEwpfw3K6LxcxX9FMvF4cPB4`
 
 ### Map Modules
 
