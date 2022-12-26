@@ -17,7 +17,7 @@ protobuf:
   files:
     - common.proto
   importPaths:
-    - ../../proto/antelope
+    - ../../proto/antelope/v1
 
 modules:
   - name: map_action_traces
