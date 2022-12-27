@@ -1,0 +1,37 @@
+specVersion: v0.1.0
+package:
+  name: common
+  version: v0.1.0
+  url: https://github.com/EOS-Nation/substreams-antelope
+  doc: Antelope based action traces & database operations.
+
+imports:
+  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../../target/wasm32-unknown-unknown/release/common.wasm
+
+protobuf:
+  files:
+    - common.proto
+  importPaths:
+    - ../../proto/antelope/v1
+
+modules:
+  - name: map_action_traces
+    kind: map
+    initialBlock: 2
+    inputs:
+      - source: sf.antelope.type.v2.Block
+    output:
+      type: proto:antelope.common.v1.ActionTraces
+
+  - name: map_db_ops
+    kind: map
+    initialBlock: 2
+    inputs:
+      - source: sf.antelope.type.v2.Block
+    output:
+      type: proto:antelope.common.v1.DatabaseOperations
