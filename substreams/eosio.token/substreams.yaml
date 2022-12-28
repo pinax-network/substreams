@@ -22,16 +22,14 @@ protobuf:
 modules:
   - name: map_action_traces
     kind: map
-    initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: ../common/common-v0.1.0.spkg
     output:
       type: proto:antelope.common.v1.ActionTraces
 
   - name: map_db_ops
     kind: map
-    initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: ../common/common-v0.1.0.spkg
     output:
       type: proto:antelope.common.v1.DatabaseOperations

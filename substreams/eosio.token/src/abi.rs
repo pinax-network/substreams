@@ -120,6 +120,16 @@ pub fn is_retire(json_data: &str) -> bool {
     }
 }
 
+pub fn is_accounts(_new_data: &Vec<u8>) -> bool {
+    // TO-DO
+    return true;
+}
+
+pub fn is_stat(_new_data: &Vec<u8>) -> bool {
+    // TO-DO
+    return true;
+}
+
 #[test]
 fn test_transfer() {
     // valid
