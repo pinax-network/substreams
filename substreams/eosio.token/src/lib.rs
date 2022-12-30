@@ -13,12 +13,12 @@ fn map_action_traces(action_traces: ActionTraces) -> Result<ActionTraces, Error>
     for action_trace in action_traces.action_traces {
         // validate ABIs
         let matched = match action_trace.name.as_str() {
-            "transfer" => !abi::is_transfer(&action_trace.json_data),
-            "issue" => !abi::is_issue(&action_trace.json_data),
-            "create" => !abi::is_create(&action_trace.json_data),
-            "close" => !abi::is_close(&action_trace.json_data),
-            "open" => !abi::is_open(&action_trace.json_data),
-            "retire" => !abi::is_retire(&action_trace.json_data),
+            "transfer" => abi::is_transfer(&action_trace.json_data),
+            "issue" => abi::is_issue(&action_trace.json_data),
+            "create" => abi::is_create(&action_trace.json_data),
+            "close" => abi::is_close(&action_trace.json_data),
+            "open" => abi::is_open(&action_trace.json_data),
+            "retire" => abi::is_retire(&action_trace.json_data),
             _ => continue,
         };
         if !matched { continue; }
@@ -34,8 +34,8 @@ fn map_db_ops(db_ops: DatabaseOperations) -> Result<DatabaseOperations, Error> {
     for db_op in db_ops.db_ops {
         // validate ABIs
         let matched = match db_op.table_name.as_str() {
-            "accounts" => !abi::is_accounts(&db_op.new_data),
-            "stat" => !abi::is_stat(&db_op.new_data),
+            "accounts" => abi::is_accounts(&db_op.new_data),
+            "stat" => abi::is_stat(&db_op.new_data),
             _ => continue,
         };
         if !matched { continue; }

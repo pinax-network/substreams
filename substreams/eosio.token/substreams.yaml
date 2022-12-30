@@ -24,14 +24,14 @@ modules:
   - name: map_action_traces
     kind: map
     inputs:
-      - source: ../common/common-v0.1.0.spkg
+      - map: common:map_action_traces
     output:
       type: proto:antelope.common.v1.ActionTraces
 
   - name: map_db_ops
     kind: map
     inputs:
-      - source: ../common/common-v0.1.0.spkg
+      - map: common:map_db_ops
     output:
       type: proto:antelope.common.v1.DatabaseOperations
 
