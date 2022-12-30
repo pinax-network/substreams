@@ -7,7 +7,7 @@ package:
 
 imports:
   antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
-  common: ../common/common-v0.1.0.spkg
+  common: https://eos.mypinata.cloud/ipfs/Qma9W6pQDnm5V7nu5N9yLARNg2K9jn2gcySLRYfLj2d9Ec
 
 binaries:
   default:
