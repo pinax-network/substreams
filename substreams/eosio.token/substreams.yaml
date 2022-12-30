@@ -1,12 +1,13 @@
 specVersion: v0.1.0
 package:
   name: eosio_token
-  version: v0.2.0
+  version: v0.3.0
   url: https://github.com/EOS-Nation/substreams-antelope
   doc: Antelope `eosio.token` based action traces & database operations.
 
 imports:
   antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
+  common: ../common/common-v0.1.0.spkg
 
 binaries:
   default:
@@ -33,3 +34,17 @@ modules:
       - source: ../common/common-v0.1.0.spkg
     output:
       type: proto:antelope.common.v1.DatabaseOperations
+
+  - name: store_stat
+    kind: store
+    updatePolicy: set
+    valueType: proto:antelope.common.v1.DatabaseOperations
+    inputs:
+      - map: map_db_ops
+
+  - name: store_accounts
+    kind: store
+    updatePolicy: set
+    valueType: proto:antelope.common.v1.DatabaseOperations
+    inputs:
+      - map: map_db_ops

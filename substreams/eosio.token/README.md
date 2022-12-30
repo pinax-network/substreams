@@ -8,7 +8,7 @@
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `eosio-token.spkg`  | **v0.2.0**  | `QmUc8qGvJ8rVsTQV6L2pvZEEwpfw3K6LxcxX9FMvF4cPB4`
+| `eosio-token.spkg`  | **v0.3.0**  | `Qme1g4faqMGRz8EcrB6trA9ykdrNTuQZxGDebsb4YqMdcZ`
 
 ### Map Modules
 
@@ -16,6 +16,13 @@
 |-----------------------|--------------------------------------|
 | `map_action_traces`   | all `eosio.token` action traces
 | `map_db_ops`          | all `eosio.token` database operations
+
+### Stores Modules
+
+| Name             | Key                              |  Description
+|------------------|----------------------------------|-------------------------------------|
+| `store_accounts` | `{symcode}@{contract}`           |  all `eosio.token` account balances
+| `store_stat`     | `{symcode}@{contract}={account}` |  all `eosio.token` supply stat
 
 ### Protobuf
 

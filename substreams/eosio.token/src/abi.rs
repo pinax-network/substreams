@@ -91,10 +91,22 @@ pub fn is_close(json_data: &str) -> bool {
     match json {
         Ok(data) => {
             data.owner.parse::<AccountName>().is_ok()
-            // && data.symbol.parse::<Symbol>().is_ok()
+            && is_symbol(&data.symbol)
         },
         Err(_) => false,
     }
+}
+
+pub fn is_symbol(symbol: &str) -> bool {
+    let parts: Vec<&str> = symbol.split(",").collect();
+    let precision = parts[1].parse::<u8>();
+    let symcode = parts[0].parse::<SymbolCode>();
+
+    if parts.len() != 2 { return false; }
+    if precision.is_err() { return false; }
+    if symcode.is_err() { return false; }
+    if symcode.unwrap().as_u64() == 0 { return false; }
+    return true;
 }
 
 pub fn is_open(json_data: &str) -> bool {
@@ -102,13 +114,12 @@ pub fn is_open(json_data: &str) -> bool {
     match json {
         Ok(data) => {
             data.owner.parse::<AccountName>().is_ok()
+            && is_symbol(&data.symbol)
             && data.ram_payer.parse::<AccountName>().is_ok()
-            // && data.symbol.parse::<Symbol>().is_ok()
         },
         Err(_) => false,
     }
 }
-
 
 pub fn is_retire(json_data: &str) -> bool {
     let json: Result<Retire> = serde_json::from_str(json_data);

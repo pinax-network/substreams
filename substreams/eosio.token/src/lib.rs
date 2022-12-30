@@ -1,10 +1,10 @@
-// substream modules
+use substreams::{prelude::*, store};
 use substreams::errors::Error;
 
 // local modules
 mod abi;
 mod pb;
-use crate::pb::common::{ActionTraces, DatabaseOperations};
+use crate::pb::common::{ActionTraces, DatabaseOperation, DatabaseOperations};
 
 #[substreams::handlers::map]
 fn map_action_traces(action_traces: ActionTraces) -> Result<ActionTraces, Error> {
@@ -42,4 +42,22 @@ fn map_db_ops(db_ops: DatabaseOperations) -> Result<DatabaseOperations, Error> {
         response.push(db_op);
     }
     Ok(DatabaseOperations { db_ops: response })
+}
+
+#[substreams::handlers::store]
+fn store_stat(db_ops: DatabaseOperations, s: store::StoreSetProto<DatabaseOperation>) {
+    for db_op in db_ops.db_ops {
+        if db_op.table_name != "stat" { continue; }
+        let key = format!("{}@{}", db_op.scope, db_op.table_name);
+        s.set(1, key, &db_op);
+    }
+}
+
+#[substreams::handlers::store]
+fn store_accounts(db_ops: DatabaseOperations, s: store::StoreSetProto<DatabaseOperation>) {
+    for db_op in db_ops.db_ops {
+        if db_op.table_name != "accounts" { continue; }
+        let key = format!("{}@{}={}", db_op.scope, db_op.table_name, db_op.primary_key);
+        s.set(1, key, &db_op);
+    }
 }
