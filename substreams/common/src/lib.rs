@@ -8,17 +8,12 @@ use crate::pb::common::{ActionTrace, ActionTraces, DatabaseOperation, DatabaseOp
 
 #[substreams::handlers::map]
 fn map_action_traces(block: Block) -> Result<ActionTraces, Error> {
-    let mut action_traces = vec![];
+    let mut action_traces = vec![];  
 
     for trx in block.clone().all_transaction_traces() {
         // action traces
         for trace in &trx.action_traces {
             let trace_action = trace.action.as_ref().unwrap().clone();
-
-            // validate ABIs
-            let name = trace_action.name;
-            let json_data = trace_action.json_data;
-
             action_traces.push(ActionTrace {
                 // trace information
                 block_num: block.number,
@@ -29,10 +24,10 @@ fn map_action_traces(block: Block) -> Result<ActionTraces, Error> {
                 // action
                 account: trace_action.account,
                 receiver: trace.receiver.clone(),
-                name,
+                name: trace_action.name,
 
                 // action data
-                json_data,
+                json_data: trace_action.json_data,
             })
         }
     }
