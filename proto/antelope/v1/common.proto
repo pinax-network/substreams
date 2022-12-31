@@ -45,3 +45,21 @@ message DatabaseOperation {
   bytes old_data = 20;      // old data (bytes)
   bytes new_data = 21;      // new data (bytes)
 }
+
+message StoreDeltas {
+  repeated StoreDelta deltas = 1;
+}
+
+message StoreDelta {
+  enum Operation {
+    UNSET = 0;
+    CREATE = 1;
+    UPDATE = 2;
+    DELETE = 3;
+  }
+  Operation operation = 1;
+  uint64 ordinal = 2;
+  string key = 3;
+  bytes old_value = 4;
+  bytes new_value = 5;
+}

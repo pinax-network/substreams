@@ -17,6 +17,7 @@ binaries:
 protobuf:
   files:
     - common.proto
+    - eosio.token.proto
   importPaths:
     - ../../proto/antelope/v1
 
@@ -35,16 +36,16 @@ modules:
     output:
       type: proto:antelope.common.v1.DatabaseOperations
 
-  - name: store_stat
-    kind: store
-    updatePolicy: set
-    valueType: proto:antelope.common.v1.DatabaseOperations
-    inputs:
-      - map: map_db_ops
-
   - name: store_accounts
     kind: store
     updatePolicy: set
-    valueType: proto:antelope.common.v1.DatabaseOperations
+    valueType: proto:antelope.common.v1.Account
+    inputs:
+      - map: map_db_ops
+
+  - name: store_stat
+    kind: store
+    updatePolicy: set
+    valueType: proto:antelope.common.v1.CurrencyStats
     inputs:
       - map: map_db_ops

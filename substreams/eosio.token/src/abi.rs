@@ -1,3 +1,5 @@
+// use std::str::FromStr;
+
 use serde::{Deserialize, Serialize};
 use serde_json::{Result};
 use eosio::*;
@@ -196,3 +198,15 @@ fn test_issue() {
     let result = is_issue(&json_data.to_string());
     assert_eq!(result, true);
 }
+
+// pub fn string_to_symcode(str: &str) -> SymbolCode {
+//     let name = str.parse::<Name>();
+//     if name.is_err() { return SymbolCode::new(0); }
+//     return SymbolCode::new(name.unwrap().as_u64());
+// }
+
+// #[test]
+// fn test_symbol_code() {
+//     assert_eq!(SymbolCode::new(5459781).to_string(), "EOS");
+//     assert_eq!(Name::from_str("........ehbo5").unwrap().as_u64(), 5459781);
+// }

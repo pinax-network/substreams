@@ -2,13 +2,10 @@ syntax = "proto3";
 
 package antelope.eosio.token.v1;
 
-message Accounts {
-    repeated Account accounts = 1;
+message Account {
+    bytes account = 1;
 }
 
-message Account {
-    string contract = 1; // Name (ex: eosio.token)
-    string owner = 2; // Name (ex: myaccount)
-    string symcode = 3; // SymbolCode (ex: EOS)
-    string balance = 4; // Asset (ex: 1.0000 EOS)
+message CurrencyStats {
+    bytes currency_stats = 1;
 }
