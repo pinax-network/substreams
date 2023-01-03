@@ -2,8 +2,6 @@
 
 > Antelope `eosio.token` based **action traces** & **database operations**.
 
-![Diagram](https://user-images.githubusercontent.com/550895/209873867-aaf32fb8-4fcf-4d5f-8617-e6b804d6fca7.png)
-
 ### Mermaid graph
 
 ```mermaid
