@@ -22,16 +22,16 @@ graph TD;
 
 ### Map Modules
 
-| Name                  | Description                          | Hash      |
-|-----------------------|--------------------------------------|-----------|
-| `map_transfers`       | all `eosio.token` transfer events    | 0d74f81ffc681dd39a247e7109aec4f5de4ab519
+| Name                  | Hash      |
+|-----------------------|-----------|
+| `map_transfers`       | 0d74f81ffc681dd39a247e7109aec4f5de4ab519
 
 ### Stores Modules
 
-| Name             | Key                              |  Description                        | Hash    |
-|------------------|----------------------------------|-------------------------------------|---------|
-| `store_accounts` | `{contract}:{SYMCODE}`           |  all `eosio.token` account balances | 62379df73df1891983f4e2d4b30e97e95ba5c384
-| `store_stat`     | `{owner}:{contract}:{SYMCODE}`   |  all `eosio.token` supply stat      | 798551e967042603c00dbc13d615b2ca56cb6511
+| Name             | Key                            |  Hash     |
+|------------------|--------------------------------|-----------|
+| `store_accounts` | `{owner}:{contract}:{SYMCODE}` | 62379df73df1891983f4e2d4b30e97e95ba5c384
+| `store_stat`     | `{contract}:{SYMCODE}`         | 798551e967042603c00dbc13d615b2ca56cb6511
 
 ### Protobuf
 

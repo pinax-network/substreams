@@ -10,10 +10,10 @@
 
 ### Map Modules
 
-| Name                  | Description                    | Hash
-|-----------------------|--------------------------------|---------|
-| `map_action_traces`   | all action traces              | 143674a69c5c417d47bc0c520f4d94435695b577
-| `map_db_ops`          | all database operations        | 6ed37c8532510ed6d3032b953c62146c9a7b1483
+| Name                  | Hash
+|-----------------------|--------------|
+| `map_action_traces`   | 143674a69c5c417d47bc0c520f4d94435695b577
+| `map_db_ops`          | 6ed37c8532510ed6d3032b953c62146c9a7b1483
 
 ## Mermaid graph
 
