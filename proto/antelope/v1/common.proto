@@ -5,7 +5,7 @@ package antelope.common.v1;
 import "google/protobuf/timestamp.proto";
 
 message ActionTraces {
-  repeated ActionTrace action_traces = 1;
+    repeated ActionTrace action_traces = 1;
 }
 
 message ActionTrace {
@@ -16,50 +16,50 @@ message ActionTrace {
     uint32 action_ordinal = 4;
 
     // action
-    string account = 11;
-    string receiver = 12;
-    string name = 13;
+    string account = 5;
+    string receiver = 6;
+    string name = 7;
 
     // action data
-    string json_data = 20;
+    string json_data = 8;
 }
 
 message DatabaseOperations {
-  repeated DatabaseOperation db_ops = 1;
+    repeated DatabaseOperation db_ops = 1;
 }
 
 message DatabaseOperation {
-  // trace information
-  uint32 block_num = 1;
-  google.protobuf.Timestamp timestamp = 2;
-  string trx_id = 3;
-  uint32 action_index = 4;
+    // trace information
+    uint32 block_num = 1;
+    google.protobuf.Timestamp timestamp = 2;
+    string trx_id = 3;
+    uint32 action_index = 4;
 
-  // database operation
-  string code = 10;               // contract name (ex: "eosio.token")
-  string table_name = 11;         // table name (ex: "accounts")
-  string scope = 12;              // scope name (ex: "EOS")
-  string primary_key = 13;        // primary key (ex: "myaccount")
+    // database operation
+    string code = 5;               // contract name (ex: "eosio.token")
+    string table_name = 6;         // table name (ex: "accounts")
+    string scope = 7;              // scope name (ex: "EOS")
+    string primary_key = 8;        // primary key (ex: "myaccount")
 
-  // table data
-  bytes old_data = 20;      // old data (bytes)
-  bytes new_data = 21;      // new data (bytes)
+    // table data
+    bytes old_data = 9;      // old data (bytes)
+    bytes new_data = 10;      // new data (bytes)
 }
 
 message StoreDeltas {
-  repeated StoreDelta deltas = 1;
+    repeated StoreDelta deltas = 1;
 }
 
 message StoreDelta {
-  enum Operation {
-    UNSET = 0;
-    CREATE = 1;
-    UPDATE = 2;
-    DELETE = 3;
-  }
-  Operation operation = 1;
-  uint64 ordinal = 2;
-  string key = 3;
-  bytes old_value = 4;
-  bytes new_value = 5;
+    enum Operation {
+      UNSET = 0;
+      CREATE = 1;
+      UPDATE = 2;
+      DELETE = 3;
+    }
+    Operation operation = 1;
+    uint64 ordinal = 2;
+    string key = 3;
+    bytes old_value = 4;
+    bytes new_value = 5;
 }

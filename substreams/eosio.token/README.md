@@ -4,82 +4,80 @@
 
 ![Diagram](https://user-images.githubusercontent.com/550895/209873867-aaf32fb8-4fcf-4d5f-8617-e6b804d6fca7.png)
 
+### Mermaid graph
+
+```mermaid
+graph TD;
+  map_transfers[map: map_transfers]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_transfers
+  store_accounts[store: store_accounts]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> store_accounts
+  store_stat[store: store_stat]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> store_stat
+```
+
 ### Substream
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `eosio-token.spkg`  | **v0.3.0**  | `QmPzo6jMnLrEQbQBbMTLcAG31u2Eq2DgA3mRXRV4pSo8VF`
+| `eosio-token.spkg`  | **v0.4.0**  | `QmbttxBK9FbV8E8g8g8jp8rpYDvK8QzEwSx4bQmafngXpJ`
 
 ### Map Modules
 
-| Name                  | Description
-|-----------------------|--------------------------------------|
-| `map_action_traces`   | all `eosio.token` action traces
-| `map_db_ops`          | all `eosio.token` database operations
+| Name                  | Description                          | Hash      |
+|-----------------------|--------------------------------------|-----------|
+| `map_transfers`       | all `eosio.token` transfer events    | 0d74f81ffc681dd39a247e7109aec4f5de4ab519
 
 ### Stores Modules
 
-| Name             | Key                              |  Description
-|------------------|----------------------------------|-------------------------------------|
-| `store_accounts` | `{symcode}:{contract}:{owner}`   |  all `eosio.token` account balances
-| `store_stat`     | `{symcode}:{contract}`           |  all `eosio.token` supply stat
+| Name             | Key                              |  Description                        | Hash    |
+|------------------|----------------------------------|-------------------------------------|---------|
+| `store_accounts` | `{contract}:{SYMCODE}`           |  all `eosio.token` account balances | 62379df73df1891983f4e2d4b30e97e95ba5c384
+| `store_stat`     | `{owner}:{contract}:{SYMCODE}`   |  all `eosio.token` supply stat      | 798551e967042603c00dbc13d615b2ca56cb6511
 
 ### Protobuf
 
 ```proto
 syntax = "proto3";
 
-package antelope.common.v1;
+package antelope.eosio.token.v1;
 
 import "google/protobuf/timestamp.proto";
 
-message ActionTraces {
-  repeated ActionTrace action_traces = 1;
+message Account {
+    bytes account = 1;
 }
 
-message ActionTrace {
+message CurrencyStats {
+    bytes currency_stats = 1;
+}
+
+message TransferEvents {
+    repeated TransferEvent items = 1;
+}
+  
+message TransferEvent {
     // trace information
     uint32 block_num = 1;
     google.protobuf.Timestamp timestamp = 2;
     string trx_id = 3;
     uint32 action_ordinal = 4;
 
-    // action
-    string account = 11;
-    string receiver = 12;
-    string name = 13;
-
     // action data
-    string json_data = 20;
-}
-
-message DatabaseOperations {
-  repeated DatabaseOperation db_ops = 1;
-}
-
-message DatabaseOperation {
-  // trace information
-  uint32 block_num = 1;
-  google.protobuf.Timestamp timestamp = 2;
-  string trx_id = 3;
-  uint32 action_index = 4;
-
-  // database operation
-  string code = 10;               // contract name (ex: "eosio.token")
-  string table_name = 11;         // table name (ex: "accounts")
-  string scope = 12;              // scope name (ex: "EOS")
-  string primary_key = 13;        // primary key (ex: "myaccount")
-
-  // table data
-  bytes old_data = 20;      // old data (bytes)
-  bytes new_data = 21;      // new data (bytes)
+    string account = 5;
+    string symcode = 6;
+    uint32 precision = 7;
+    string from = 8;
+    string to = 9;
+    int64 amount = 10;
+    string memo = 11;
 }
 ```
 
 ### Quickstart
 
 ```
-$ substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_action_traces -s 284958698
+$ substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_transfers -s 284958698
 ```
 
 ### Build Protobuf

@@ -1,13 +1,12 @@
 specVersion: v0.1.0
 package:
   name: eosio_token
-  version: v0.3.0
+  version: v0.4.0
   url: https://github.com/EOS-Nation/substreams-antelope
   doc: Antelope `eosio.token` based action traces & database operations.
 
 imports:
   antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
-  common: https://eos.mypinata.cloud/ipfs/Qma9W6pQDnm5V7nu5N9yLARNg2K9jn2gcySLRYfLj2d9Ec
 
 binaries:
   default:
@@ -16,36 +15,30 @@ binaries:
 
 protobuf:
   files:
-    - common.proto
     - eosio.token.proto
   importPaths:
     - ../../proto/antelope/v1
 
 modules:
-  - name: map_action_traces
+  - name: map_transfers
     kind: map
     inputs:
-      - map: common:map_action_traces
+      - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.common.v1.ActionTraces
-
-  - name: map_db_ops
-    kind: map
-    inputs:
-      - map: common:map_db_ops
-    output:
-      type: proto:antelope.common.v1.DatabaseOperations
+      type: proto:antelope.eosio.token.v1.TransferEvents
 
   - name: store_accounts
     kind: store
     updatePolicy: set
-    valueType: proto:antelope.common.v1.Account
+    valueType: proto:antelope.eosio.token.v1.Account
+    initialBlock: 2
     inputs:
-      - map: map_db_ops
+      - source: sf.antelope.type.v2.Block
 
   - name: store_stat
     kind: store
     updatePolicy: set
-    valueType: proto:antelope.common.v1.CurrencyStats
+    valueType: proto:antelope.eosio.token.v1.CurrencyStats
+    initialBlock: 2
     inputs:
-      - map: map_db_ops
+      - source: sf.antelope.type.v2.Block

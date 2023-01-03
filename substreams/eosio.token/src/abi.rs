@@ -1,8 +1,6 @@
-// use std::str::FromStr;
-
 use serde::{Deserialize, Serialize};
 use serde_json::{Result};
-use eosio::*;
+use eosio::{Name, Asset, SymbolCode};
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
@@ -51,8 +49,8 @@ pub fn is_transfer(json_data: &str) -> bool {
     let json: Result<Transfer> = serde_json::from_str(json_data);
     match json {
         Ok(data) => {
-            let from = data.from.parse::<AccountName>();
-            let to = data.to.parse::<AccountName>();
+            let from = data.from.parse::<Name>();
+            let to = data.to.parse::<Name>();
             let quantity = data.quantity.parse::<Asset>();
 
             from.is_ok()
@@ -70,7 +68,7 @@ pub fn is_issue(json_data: &str) -> bool {
     let json: Result<Issue> = serde_json::from_str(json_data);
     match json {
         Ok(data) => {
-            data.to.parse::<AccountName>().is_ok()
+            data.to.parse::<Name>().is_ok()
             && data.quantity.parse::<Asset>().is_ok()
         },
         Err(_) => false,
@@ -81,7 +79,7 @@ pub fn is_create(json_data: &str) -> bool {
     let json: Result<Create> = serde_json::from_str(json_data);
     match json {
         Ok(data) => {
-            data.issuer.parse::<AccountName>().is_ok()
+            data.issuer.parse::<Name>().is_ok()
             && data.maximum_supply.parse::<Asset>().is_ok()
         },
         Err(_) => false,
@@ -92,7 +90,7 @@ pub fn is_close(json_data: &str) -> bool {
     let json: Result<Close> = serde_json::from_str(json_data);
     match json {
         Ok(data) => {
-            data.owner.parse::<AccountName>().is_ok()
+            data.owner.parse::<Name>().is_ok()
             && is_symbol(&data.symbol)
         },
         Err(_) => false,
@@ -115,9 +113,9 @@ pub fn is_open(json_data: &str) -> bool {
     let json: Result<Open> = serde_json::from_str(json_data);
     match json {
         Ok(data) => {
-            data.owner.parse::<AccountName>().is_ok()
+            data.owner.parse::<Name>().is_ok()
             && is_symbol(&data.symbol)
-            && data.ram_payer.parse::<AccountName>().is_ok()
+            && data.ram_payer.parse::<Name>().is_ok()
         },
         Err(_) => false,
     }
