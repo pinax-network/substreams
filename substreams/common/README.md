@@ -2,6 +2,16 @@
 
 > Antelope **action traces** & **database operations**.
 
+## Mermaid graph
+
+```mermaid
+graph TD;
+  map_action_traces[map: map_action_traces]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_action_traces
+  map_db_ops[map: map_db_ops]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_db_ops
+```
+
 ### Substream
 
 | Name                | Version     | IPFS hash |
@@ -14,16 +24,6 @@
 |-----------------------|--------------|
 | `map_action_traces`   | 143674a69c5c417d47bc0c520f4d94435695b577
 | `map_db_ops`          | 6ed37c8532510ed6d3032b953c62146c9a7b1483
-
-## Mermaid graph
-
-```mermaid
-graph TD;
-  map_action_traces[map: map_action_traces]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_action_traces
-  map_db_ops[map: map_db_ops]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_db_ops
-```
 
 ### Protobuf
 
