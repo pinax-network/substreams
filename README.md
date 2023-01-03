@@ -27,9 +27,10 @@
 
 ## Substreams
 
-| Substream | Description |
-|-----------|-------------|
-| [`eosio.tokens`](substreams/eosio.token)  | Maps module for `eosio.token` events
+| Substream      | Description |
+|----------------|-------------|
+| [`eosio.tokens`](substreams/eosio.token)  | Maps & Store module for `eosio.token` events
+| [`common`](substreams/common)  | Common Maps module for all events
 
 ### Further resources
 
