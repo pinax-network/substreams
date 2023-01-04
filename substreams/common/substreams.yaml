@@ -34,4 +34,4 @@ modules:
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.common.v1.DatabaseOperations
+      type: proto:antelope.common.v1.DBOps

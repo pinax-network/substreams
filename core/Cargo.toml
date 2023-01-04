@@ -3,8 +3,8 @@ name = "substreams-antelope-core"
 version = "0.0.1"
 description = "SDK for substreams running on antelope chains."
 edition = "2021"
-homepage = "https://sgithub.com/EOS-Nation/substreams-monorepo"
-repository = "https://sgithub.com/EOS-Nation/substreams-monorepo"
+homepage = "https://github.com/EOS-Nation/substreams-antelope-core"
+repository = "https://github.com/EOS-Nation/substreams-antelope-core"
 license = "Apache-2.0"
 readme = "../README.md"
 keywords = [ "substreams", "antelope", "streamingfast", "firehose", "thegraph"]
@@ -12,7 +12,7 @@ categories = ["api-bindings", "external-ffi-bindings", "wasm"]
 rust-version = "1.60"
 
 [dependencies]
-ethabi = "17.0"
+ethabi = "18.0"
 prost = { version = "^0.11.0" }
 prost-types = "^0.11.0"
 substreams = "^0.5.0"
