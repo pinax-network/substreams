@@ -1,7 +1,6 @@
 [workspace]
 members = [
     "substreams/*",
-    "core"
 ]
 
 [profile.release]

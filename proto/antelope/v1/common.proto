@@ -2,13 +2,12 @@ syntax = "proto3";
 
 package antelope.common.v1;
 
-import "google/protobuf/timestamp.proto";
 import "sf/antelope/type/v1/type.proto";
 
 message ActionTraces {
-    repeated ActionTrace action_traces = 1;
+    repeated sf.antelope.type.v1.ActionTrace action_traces = 1;
 }
 
 message DBOps {
-    repeated DBOp db_ops = 1;
+    repeated sf.antelope.type.v1.DBOp db_ops = 1;
 }
