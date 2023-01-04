@@ -15,9 +15,9 @@ binaries:
 
 protobuf:
   files:
-    - common.proto
+    - type.proto
   importPaths:
-    - ../../proto/antelope/v1
+    - ../../proto/sf/antelope/type/v1
 
 modules:
   - name: map_action_traces
@@ -26,7 +26,7 @@ modules:
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.common.v1.ActionTraces
+      type: sf.antelope.type.v2.ActionTraces
 
   - name: map_db_ops
     kind: map
@@ -34,4 +34,4 @@ modules:
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:antelope.common.v1.DBOps
+      type: sf.antelope.type.v2.DBOps

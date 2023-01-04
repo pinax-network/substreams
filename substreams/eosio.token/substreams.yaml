@@ -17,7 +17,7 @@ protobuf:
   files:
     - eosio.token.proto
   importPaths:
-    - ../../proto/antelope/v1
+    - ../../proto/antelope/common
 
 modules:
   - name: map_transfers

@@ -1,10 +1,18 @@
 syntax = "proto3";
 
-package sf.antelope.type.v1;
+package sf.antelope.type.v2;
 
 option go_package = "github.com/streamingfast/firehose-antelope/types/pb/sf/antelope/type/v1;pbantelope";
 
 import "google/protobuf/timestamp.proto";
+
+message ActionTraces {
+  repeated ActionTrace action_traces = 1;
+}
+
+message DBOps {
+  repeated DBOp db_ops = 1;
+}
 
 message Block {
   string id = 1;
