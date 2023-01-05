@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: common
-  version: v0.1.0
+  version: v0.2.0
   url: https://github.com/EOS-Nation/substreams-antelope
   doc: Antelope based action traces & database operations.
 
@@ -12,12 +12,6 @@ binaries:
   default:
     type: wasm/rust-v1
     file: ../../target/wasm32-unknown-unknown/release/common.wasm
-
-protobuf:
-  files:
-    - type.proto
-  importPaths:
-    - ../../proto/sf/antelope/type/v1
 
 modules:
   - name: map_action_traces

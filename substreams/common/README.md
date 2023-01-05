@@ -16,14 +16,14 @@ graph TD;
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `common.spkg`       | **v0.1.1**  | `Qmdf7GT6jaT9NB3XPLvss8YxuHiSAC1PP1xm9UqLbuouYT`
+| `common.spkg`       | **v0.2.0**  | `Qmdf7GT6jaT9NB3XPLvss8YxuHiSAC1PP1xm9UqLbuouYT`
 
 ### Map Modules
 
 | Name                  | Hash
 |-----------------------|--------------|
-| `map_action_traces`   | 143674a69c5c417d47bc0c520f4d94435695b577
-| `map_db_ops`          | 6ed37c8532510ed6d3032b953c62146c9a7b1483
+| `map_action_traces`   | 605a9fe0399415a2e62504a2df1f542200779e7a
+| `map_db_ops`          | a8ab7e0c8e221500e817c0173a23c812e2e6b25b
 
 ### Protobuf
 

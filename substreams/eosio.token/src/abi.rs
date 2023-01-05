@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use serde_json::{Result};
-use eosio::{Name, Asset, SymbolCode};
+use eosio::{Name, Asset};
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
@@ -64,82 +64,82 @@ pub fn is_transfer(json_data: &str) -> bool {
     }
 }
 
-pub fn is_issue(json_data: &str) -> bool {
-    let json: Result<Issue> = serde_json::from_str(json_data);
-    match json {
-        Ok(data) => {
-            data.to.parse::<Name>().is_ok()
-            && data.quantity.parse::<Asset>().is_ok()
-        },
-        Err(_) => false,
-    }
-}
+// pub fn is_issue(json_data: &str) -> bool {
+//     let json: Result<Issue> = serde_json::from_str(json_data);
+//     match json {
+//         Ok(data) => {
+//             data.to.parse::<Name>().is_ok()
+//             && data.quantity.parse::<Asset>().is_ok()
+//         },
+//         Err(_) => false,
+//     }
+// }
 
-pub fn is_create(json_data: &str) -> bool {
-    let json: Result<Create> = serde_json::from_str(json_data);
-    match json {
-        Ok(data) => {
-            data.issuer.parse::<Name>().is_ok()
-            && data.maximum_supply.parse::<Asset>().is_ok()
-        },
-        Err(_) => false,
-    }
-}
+// pub fn is_create(json_data: &str) -> bool {
+//     let json: Result<Create> = serde_json::from_str(json_data);
+//     match json {
+//         Ok(data) => {
+//             data.issuer.parse::<Name>().is_ok()
+//             && data.maximum_supply.parse::<Asset>().is_ok()
+//         },
+//         Err(_) => false,
+//     }
+// }
 
-pub fn is_close(json_data: &str) -> bool {
-    let json: Result<Close> = serde_json::from_str(json_data);
-    match json {
-        Ok(data) => {
-            data.owner.parse::<Name>().is_ok()
-            && is_symbol(&data.symbol)
-        },
-        Err(_) => false,
-    }
-}
+// pub fn is_close(json_data: &str) -> bool {
+//     let json: Result<Close> = serde_json::from_str(json_data);
+//     match json {
+//         Ok(data) => {
+//             data.owner.parse::<Name>().is_ok()
+//             && is_symbol(&data.symbol)
+//         },
+//         Err(_) => false,
+//     }
+// }
 
-pub fn is_symbol(symbol: &str) -> bool {
-    let parts: Vec<&str> = symbol.split(",").collect();
-    let precision = parts[1].parse::<u8>();
-    let symcode = parts[0].parse::<SymbolCode>();
+// pub fn is_symbol(symbol: &str) -> bool {
+//     let parts: Vec<&str> = symbol.split(",").collect();
+//     let precision = parts[1].parse::<u8>();
+//     let symcode = parts[0].parse::<SymbolCode>();
 
-    if parts.len() != 2 { return false; }
-    if precision.is_err() { return false; }
-    if symcode.is_err() { return false; }
-    if symcode.unwrap().as_u64() == 0 { return false; }
-    return true;
-}
+//     if parts.len() != 2 { return false; }
+//     if precision.is_err() { return false; }
+//     if symcode.is_err() { return false; }
+//     if symcode.unwrap().as_u64() == 0 { return false; }
+//     return true;
+// }
 
-pub fn is_open(json_data: &str) -> bool {
-    let json: Result<Open> = serde_json::from_str(json_data);
-    match json {
-        Ok(data) => {
-            data.owner.parse::<Name>().is_ok()
-            && is_symbol(&data.symbol)
-            && data.ram_payer.parse::<Name>().is_ok()
-        },
-        Err(_) => false,
-    }
-}
+// pub fn is_open(json_data: &str) -> bool {
+//     let json: Result<Open> = serde_json::from_str(json_data);
+//     match json {
+//         Ok(data) => {
+//             data.owner.parse::<Name>().is_ok()
+//             && is_symbol(&data.symbol)
+//             && data.ram_payer.parse::<Name>().is_ok()
+//         },
+//         Err(_) => false,
+//     }
+// }
 
-pub fn is_retire(json_data: &str) -> bool {
-    let json: Result<Retire> = serde_json::from_str(json_data);
-    match json {
-        Ok(data) => {
-            data.quantity.parse::<Asset>().is_ok()
-        },
-        Err(_) => false,
-    }
-}
+// pub fn is_retire(json_data: &str) -> bool {
+//     let json: Result<Retire> = serde_json::from_str(json_data);
+//     match json {
+//         Ok(data) => {
+//             data.quantity.parse::<Asset>().is_ok()
+//         },
+//         Err(_) => false,
+//     }
+// }
 
-pub fn is_accounts(_new_data: &Vec<u8>) -> bool {
-    // TO-DO
-    return true;
-}
+// pub fn is_accounts(_new_data: &Vec<u8>) -> bool {
+//     // TO-DO
+//     return true;
+// }
 
-pub fn is_stat(_new_data: &Vec<u8>) -> bool {
-    // TO-DO
-    return true;
-}
+// pub fn is_stat(_new_data: &Vec<u8>) -> bool {
+//     // TO-DO
+//     return true;
+// }
 
 #[test]
 fn test_transfer() {
@@ -184,18 +184,18 @@ fn test_transfer() {
     "#.to_string()), false);
 }
 
-#[test]
-fn test_issue() {
-    let json_data = r#"
-        {
-            "to": "toaccount",
-            "quantity": "1.0000 EOS",
-            "memo": "memo"
-        }
-        "#;
-    let result = is_issue(&json_data.to_string());
-    assert_eq!(result, true);
-}
+// #[test]
+// fn test_issue() {
+//     let json_data = r#"
+//         {
+//             "to": "toaccount",
+//             "quantity": "1.0000 EOS",
+//             "memo": "memo"
+//         }
+//         "#;
+//     let result = is_issue(&json_data.to_string());
+//     assert_eq!(result, true);
+// }
 
 // pub fn string_to_symcode(str: &str) -> SymbolCode {
 //     let name = str.parse::<Name>();
