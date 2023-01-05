@@ -1,5 +1,5 @@
-use substreams_antelope_core::pb::antelope::{Block, ActionTraces, DbOps};
 use substreams::errors::Error;
+use substreams_antelope_core::pb::antelope::{Block, ActionTraces, DbOps};
 
 #[substreams::handlers::map]
 fn map_action_traces(block: Block) -> Result<ActionTraces, Error> {
