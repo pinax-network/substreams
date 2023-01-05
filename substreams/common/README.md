@@ -16,7 +16,7 @@ graph TD;
 
 | Name                | Version     | IPFS hash |
 |---------------------|-------------|-----------|
-| `common.spkg`       | **v0.2.0**  | `Qmdf7GT6jaT9NB3XPLvss8YxuHiSAC1PP1xm9UqLbuouYT`
+| `common.spkg`       | **v0.2.0**  | `QmfE7kdRAPihhvij4ej3rUM2Sp3PcXQ9rTFCQPhPGB5dr5`
 
 ### Map Modules
 
