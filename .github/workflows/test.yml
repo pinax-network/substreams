@@ -12,5 +12,7 @@ jobs:
         with:
           toolchain: stable
 
-      - name: 'Build all substreams'
-        run: ./build-all.sh
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
