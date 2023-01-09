@@ -9,8 +9,6 @@ message BlockStats {
   google.protobuf.Timestamp timestamp = 2;  // block creation timestamp (UTC)
   uint32 trx_count = 3;                     // number of successfully executed transactions in this block
   uint32 act_count = 4;                     // number of successfully executed actions in this block
-  uint32 cpu_usage_us = 5;                  // cpu_usage_us of this block
-  uint32 net_usage_words = 6;               // net_usage_words of this block
 }
 
 message HourlyStats {
@@ -18,8 +16,7 @@ message HourlyStats {
   google.protobuf.Timestamp timestamp = 2;  // block creation timestamp (UTC) of the start block
   int64 trx_count = 3;                      // number of successfully executed transactions in the interval
   int64 act_count = 4;                      // number of successfully executed actions in the interval
-  int64 cpu_usage_us = 5;                   // accumulated cpu_usage_us in this interval
-  int64 net_usage_words = 6;                // accumulated net_usage_words in this interval
+  string chain = 5;                         // the blockchain we are running on
 }
 
 message Stats {

@@ -1,32 +1,25 @@
-Antelope blocktivity stats.
-===========================
+Block stats
+===========
 
-Substream to gather blocktivity stats on Antelope chains. For each hour this substream accumulates the count of successful
-transactions and actions, as well as accuulated cpu and net usage stats. 
+Substream to gather hourly accumulated stats from blockchains.
 
 ### Models
 
 ```protobuf
-message Blocktivity {
-  uint32 block_num = 1;                     // block number
-  google.protobuf.Timestamp timestamp = 2;  // block creation timestamp (UTC)
-  uint32 trx_count = 3;                     // number of successfully executed transactions in this block
-  uint32 act_count = 4;                     // number of successfully executed actions in this block
-  uint32 cpu_usage_us = 5;                  // cpu_usage_us of this block
-  uint32 net_usage_words = 6;               // net_usage_words of this block
+message HourlyStats {
+  uint32 block_num = 1;                     // start block number of the accumulated interval
+  google.protobuf.Timestamp timestamp = 2;  // block creation timestamp (UTC) of the start block
+  int64 trx_count = 3;                      // number of successfully executed transactions in the interval
+  int64 act_count = 4;                      // number of successfully executed actions in the interval
+  string chain = 5;
 }
 ```
 
-### Maps
+### Quickstart
 
-`map_blocktivity` - Transforms a full block into a `Blocktivity` object
-
-### Stores
-
-Each store will get the `Blocktivity` objects, calculate the key (the timestamp of the hour of this block) and then 
-accumulates the data in multiple `StoreAddInt64` stores.
-
-* `store_trx_count` - Adds up the number of transactions per key (hour)
-* `store_act_count` - Adds up the number of actions per key (hour)
-* `store_cpu_usage_us` - Adds up the cpu_usage_us values per key (hour)
-* `store_net_usage_words` - Adds up the net_usage_words per key (hour)
+1. Go into `dev/blocktivity` and run `docker-compose up`
+2. Check out the [postgres-sink](https://github.com/streamingfast/substreams-sink-postgres#setup) and then run 
+`go install ./cmd/substreams-sink-postgres` from within that directory (requires a proper Go installation, see 
+[here](https://github.com/EOS-Nation/substreams-antelope-core#go) for instructions)
+3. Run the sink: `substreams-sink-postgres run "psql://app_user:password@127.0.0.1:5432/app_db?sslmode=disable" "eos.firehose.eosnation.io:9001" "substreams.yaml" db_out`
+4. Open the Hasura console on `localhost:8080/console` and add the database under "Data" using this url: `postgresql://app_user:password@db:5432/app_db?sslmode=disable` and track the `hourly_stats` table

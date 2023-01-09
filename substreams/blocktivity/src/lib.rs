@@ -3,6 +3,7 @@ mod pb;
 
 use substreams::{prelude::*, log};
 use crate::pb::{blocktivity};
+use substreams_database_change::pb::database::{table_change::Operation, DatabaseChanges};
 
 /// Extracts the stats from each block
 #[substreams::handlers::map]
@@ -12,8 +13,6 @@ fn map_blocks(blk: substreams_antelope_core::pb::antelope::Block) -> Result<bloc
         timestamp: Some(blk.header.as_ref().unwrap().timestamp.clone().unwrap()),
         trx_count: blk.transaction_traces_count(),
         act_count: blk.executed_total_action_count(),
-        cpu_usage_us: blk.executed_transaction_traces().map(|trx| trx.receipt.as_ref().unwrap().cpu_usage_micro_seconds).sum(),
-        net_usage_words: blk.executed_transaction_traces().map(|trx| trx.receipt.as_ref().unwrap().net_usage_words).sum(),
     })
 }
 
@@ -29,26 +28,12 @@ fn store_act_count(blocktivity: blocktivity::BlockStats, s: StoreAddInt64) {
     s.add(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.act_count.clone() as i64)
 }
 
-#[substreams::handlers::store]
-fn store_cpu_usage_us(blocktivity: blocktivity::BlockStats, s: StoreAddInt64) {
-    log::debug!("block {}: adding cpu_usage_us {}", blocktivity.block_num, blocktivity.cpu_usage_us);
-    s.add(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.cpu_usage_us.clone() as i64)
-}
-
-#[substreams::handlers::store]
-fn store_net_usage_words(blocktivity: blocktivity::BlockStats, s: StoreAddInt64) {
-    log::debug!("block {}: adding net_usage_words {}", blocktivity.block_num, blocktivity.net_usage_words);
-    s.add(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.net_usage_words.clone() as i64)
-}
-
 /// Emits hourly accumulated stats
 #[substreams::handlers::map]
 fn map_hourly_stats(
     blk: substreams_antelope_core::pb::antelope::Block,
     store_trx_count: StoreGetInt64,
     store_act_count: StoreGetInt64,
-    store_cpu_usage_us: StoreGetInt64,
-    store_net_usage_words: StoreGetInt64,
 ) -> Result<blocktivity::Stats, substreams::errors::Error> {
     let mut res: Vec<blocktivity::HourlyStats> = Vec::new();
 
@@ -57,15 +42,31 @@ fn map_hourly_stats(
         log::debug!("block stats of block_num {} for key {} with trx_count {} and act_count {}", blk.number, get_key(blk.number), store_trx_count.get_at(1, get_key(blk.number).to_string()).unwrap(), store_act_count.get_at(1, get_key(blk.number).to_string()).unwrap());
         res.push(blocktivity::HourlyStats {
             block_num: get_key(blk.number),
+            chain: "EOS".parse().unwrap(),
             timestamp: Some(blk.header.as_ref().unwrap().timestamp.clone().unwrap()), // todo this needs to be replaced with the start block time
             trx_count: store_trx_count.get_at(1, get_key(blk.number).to_string()).unwrap(),
             act_count: store_act_count.get_at(1, get_key(blk.number).to_string()).unwrap(),
-            cpu_usage_us: store_cpu_usage_us.get_at(1, get_key(blk.number).to_string()).unwrap(),
-            net_usage_words: store_net_usage_words.get_at(1, get_key(blk.number).to_string()).unwrap(),
         })
     }
 
-    Ok(blocktivity::Stats{stats: res})
+    Ok(blocktivity::Stats { stats: res })
+}
+
+
+#[substreams::handlers::map]
+pub fn db_out(
+    stats: blocktivity::Stats
+) -> Result<DatabaseChanges, substreams::errors::Error> {
+    let mut database_changes: DatabaseChanges = Default::default();
+
+    for stat in stats.stats {
+        database_changes.push_change("hourly_stats", &*(stat.block_num).to_string(), 0, Operation::Create)
+            .change("chain", (stat.chain.clone(), stat.chain.clone()))
+            .change("trx_count", (0, stat.trx_count))
+            .change("act_count", (0, stat.act_count));
+    }
+
+    Ok(database_changes)
 }
 
 fn get_key(block_num: u32) -> u32 {

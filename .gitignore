@@ -1,3 +1,6 @@
+pgdata
+.idea
+
 ### Substreams template
 .envrc
 /substreams-examples/*/*.yaml.pb

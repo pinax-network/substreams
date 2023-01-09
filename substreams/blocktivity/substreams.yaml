@@ -8,6 +8,8 @@ package:
 
 imports:
   antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
+  database_change: https://github.com/streamingfast/substreams-database-change/releases/download/v0.1.0/substreams-database-change-v0.1.0.spkg
+  entities_change: https://github.com/streamingfast/substreams-entity-change/releases/download/v0.2.0/substreams-entity-change-v0.2.0.spkg
 
 binaries:
   default:
@@ -43,27 +45,18 @@ modules:
     inputs:
       - map: map_blocks
 
-  - name: store_cpu_usage_us
-    kind: store
-    updatePolicy: add
-    valueType: int64
-    inputs:
-      - map: map_blocks
-
-  - name: store_net_usage_words
-    kind: store
-    updatePolicy: add
-    valueType: int64
-    inputs:
-      - map: map_blocks
-
   - name: map_hourly_stats
     kind: map
     inputs:
       - source: sf.antelope.type.v2.Block
       - store: store_trx_count
       - store: store_act_count
-      - store: store_cpu_usage_us
-      - store: store_net_usage_words
     output:
       type: proto:antelope.blocktivity.v1.HourlyStats
+
+  - name: db_out
+    kind: map
+    inputs:
+      - map: map_hourly_stats
+    output:
+      type: proto:substreams.database.v1.DatabaseChanges
