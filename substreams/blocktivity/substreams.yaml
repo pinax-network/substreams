@@ -59,4 +59,4 @@ modules:
     inputs:
       - map: map_hourly_stats
     output:
-      type: proto:substreams.database.v1.DatabaseChanges
+      type: proto:sf.substreams.database.v1.DatabaseChanges

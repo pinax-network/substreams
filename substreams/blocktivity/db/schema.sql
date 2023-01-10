@@ -1,9 +1,10 @@
 create table hourly_stats
 (
-    block_num bigint not null
+    block_num bigint  not null
         constraint stats_pk primary key,
-    trx_count integer,
-    act_count integer
+    chain     text    not null,
+    trx_count integer not null,
+    act_count integer not null
 );
 
 create table cursors
