@@ -1,12 +1,12 @@
 specVersion: v0.1.0
 package:
   name: common
-  version: v0.2.0
+  version: v0.3.0
   url: https://github.com/EOS-Nation/substreams-antelope
   doc: Antelope based action traces & database operations.
 
 imports:
-  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.2/antelope-v0.0.2.spkg
+  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
 
 binaries:
   default:
@@ -14,11 +14,44 @@ binaries:
     file: ../../target/wasm32-unknown-unknown/release/common.wasm
 
 modules:
-  - name: map_action_traces
+
+  - name: map_block
     kind: map
     initialBlock: 2
     inputs:
       - source: sf.antelope.type.v2.Block
+    output:
+      type: proto:sf.antelope.type.v1.Block
+
+  - name: map_block_header
+    kind: map
+    initialBlock: 2
+    inputs:
+      - source: sf.antelope.type.v2.Block
+    output:
+      type: proto:sf.antelope.type.v1.BlockHeader
+
+  - name: map_blockroot_merkle
+    kind: map
+    initialBlock: 2
+    inputs:
+      - source: sf.antelope.type.v2.Block
+    output:
+      type: proto:sf.antelope.type.v1.BlockRootMerkle
+
+  - name: map_trace_traces
+    kind: map
+    initialBlock: 2
+    inputs:
+      - source: sf.antelope.type.v2.Block
+    output:
+      type: proto:sf.antelope.type.v1.TransactionTraces
+
+  - name: map_action_traces
+    kind: map
+    initialBlock: 2
+    inputs:
+      - map: map_trace_traces
     output:
       type: proto:sf.antelope.type.v1.ActionTraces
 
