@@ -6,7 +6,7 @@ package:
   doc: Antelope `eosio.token` based action traces & database operations.
 
 imports:
-  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
+  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
 
 binaries:
   default:

@@ -5,7 +5,7 @@ members = [
 
 [workspace.dependencies]
 substreams = "0.5.0"
-substreams-antelope-core = "0.0.3"
+substreams-antelope-core = "0.0.4"
 
 [build]
 target = "wasm32-unknown-unknown"

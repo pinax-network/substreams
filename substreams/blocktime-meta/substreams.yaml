@@ -9,7 +9,7 @@ package:
     This streams out Antelope block metas for each block timestamp.
 
 imports:
-  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
+  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
 
 binaries:
   default:
