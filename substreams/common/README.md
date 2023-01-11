@@ -15,7 +15,7 @@ graph TD;
   map_transaction_traces[map: map_transaction_traces]
   sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_transaction_traces
   map_action_traces[map: map_action_traces]
-  map_transaction_traces --> map_action_traces
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_action_traces
   map_db_ops[map: map_db_ops]
   sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_db_ops
 ```
@@ -24,19 +24,19 @@ graph TD;
 
 | Name                 | IPFS hash |
 |----------------------|-----------|
+| `common-v0.3.0.spkg` | `QmdUPvbKoccXiZSHgsC5mpZMXQt6tuMsoYYf3foke2X5uV`
 | `common-v0.2.0.spkg` | `QmfE7kdRAPihhvij4ej3rUM2Sp3PcXQ9rTFCQPhPGB5dr5`
-| `common-v0.3.0.spkg` | `Qmb5KN1zayAArWYaispw8LEn9u482nFoUMHFyZKpr9dxq5`
 
 ### Map Modules
 
 | Name                    | Hash
 |-------------------------|--------------|
-| map_block               | ba6bc8f56dfb3c59ebc305aeb59ec68a805c517f
-| map_block_header        | a0b07fd7b1ce6f2910c2ee4d5b8cee1d0531a39f
-| map_blockroot_merkle    | 84720a19b220c43fa165e9671f0baa71cb2d2069
-| map_transaction_traces  | 371016ed091fbb4b748abd73504de7c48df0751d
-| map_action_traces       | bdc9e04468b7210adb756f79690e16460ebc413f
-| map_db_ops              | 5f927ad914537a7eb684b04cf5b80b6b23aa3d18
+| map_block               | ceafe557414faffe8056c4ea65bcf00f25b4afb0
+| map_block_header        | a2a7c25df2ce833ff7b407489ed6171939e25e30
+| map_blockroot_merkle    | 182450c1f60f6367b7b51b4523b60edd9c359414
+| map_transaction_traces  | 21245d57356849699d0c54c679e29b64fc690c14
+| map_action_traces       | 2ca027126927ea9d38c8dc6597e9d75b0b47b475
+| map_db_ops              | b4f15fbba0faf3fabe545125a645daff82dbdb77
 
 ### Quickstart
 

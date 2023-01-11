@@ -1,7 +1,6 @@
 use substreams::errors::Error;
 use substreams_antelope_core::pb::antelope::{Block, BlockHeader, ActionTraces, BlockRootMerkle, TransactionTraces, DbOps };
 
-
 #[substreams::handlers::map]
 fn map_block(block: Block) -> Result<Block, Error> {
     Ok(block)
@@ -28,10 +27,10 @@ fn map_transaction_traces(block: Block) -> Result<TransactionTraces, Error> {
 }
 
 #[substreams::handlers::map]
-fn map_action_traces(transaction_traces: TransactionTraces) -> Result<ActionTraces, Error> {
+fn map_action_traces(block: Block) -> Result<ActionTraces, Error> {
     let mut action_traces = vec![];  
 
-    for trx in transaction_traces.transaction_traces {
+    for trx in block.clone().all_transaction_traces() {
         for trace in trx.action_traces.clone() {
             action_traces.push(trace);
         }
