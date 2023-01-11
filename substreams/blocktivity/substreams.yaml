@@ -7,7 +7,7 @@ package:
     Antelope blocktivity stats.
 
 imports:
-  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.1/antelope-v0.0.1.spkg
+  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
   database_change: https://github.com/streamingfast/substreams-database-change/releases/download/v0.1.0/substreams-database-change-v0.1.0.spkg
   entities_change: https://github.com/streamingfast/substreams-entity-change/releases/download/v0.2.0/substreams-entity-change-v0.2.0.spkg
 

@@ -6,6 +6,14 @@
 
 ```mermaid
 graph TD;
+  map_block[map: map_block]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_block
+  map_block_header[map: map_block_header]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_block_header
+  map_blockroot_merkle[map: map_blockroot_merkle]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_blockroot_merkle
+  map_transaction_traces[map: map_transaction_traces]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_transaction_traces
   map_action_traces[map: map_action_traces]
   sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_action_traces
   map_db_ops[map: map_db_ops]
@@ -14,68 +22,21 @@ graph TD;
 
 ### Substream
 
-| Name                | Version     | IPFS hash |
-|---------------------|-------------|-----------|
-| `common.spkg`       | **v0.2.0**  | `QmfE7kdRAPihhvij4ej3rUM2Sp3PcXQ9rTFCQPhPGB5dr5`
+| Name                 | IPFS hash |
+|----------------------|-----------|
+| `common-v0.3.0.spkg` | `QmdUPvbKoccXiZSHgsC5mpZMXQt6tuMsoYYf3foke2X5uV`
+| `common-v0.2.0.spkg` | `QmfE7kdRAPihhvij4ej3rUM2Sp3PcXQ9rTFCQPhPGB5dr5`
 
 ### Map Modules
 
-| Name                  | Hash
-|-----------------------|--------------|
-| `map_action_traces`   | 605a9fe0399415a2e62504a2df1f542200779e7a
-| `map_db_ops`          | a8ab7e0c8e221500e817c0173a23c812e2e6b25b
-
-### Protobuf
-
-```proto
-syntax = "proto3";
-
-package antelope.common.v1;
-
-import "google/protobuf/timestamp.proto";
-
-message ActionTraces {
-    repeated ActionTrace action_traces = 1;
-}
-
-message ActionTrace {
-    // trace information
-    uint32 block_num = 1;
-    google.protobuf.Timestamp timestamp = 2;
-    string trx_id = 3;
-    uint32 action_ordinal = 4;
-
-    // action
-    string account = 5;
-    string receiver = 6;
-    string name = 7;
-
-    // action data
-    string json_data = 8;
-}
-
-message DatabaseOperations {
-    repeated DatabaseOperation db_ops = 1;
-}
-
-message DatabaseOperation {
-    // trace information
-    uint32 block_num = 1;
-    google.protobuf.Timestamp timestamp = 2;
-    string trx_id = 3;
-    uint32 action_index = 4;
-
-    // database operation
-    string code = 5;               // contract name (ex: "eosio.token")
-    string table_name = 6;         // table name (ex: "accounts")
-    string scope = 7;              // scope name (ex: "EOS")
-    string primary_key = 8;        // primary key (ex: "myaccount")
-
-    // table data
-    bytes old_data = 9;      // old data (bytes)
-    bytes new_data = 10;      // new data (bytes)
-}
-```
+| Name                    | Hash
+|-------------------------|--------------|
+| map_block               | ceafe557414faffe8056c4ea65bcf00f25b4afb0
+| map_block_header        | a2a7c25df2ce833ff7b407489ed6171939e25e30
+| map_blockroot_merkle    | 182450c1f60f6367b7b51b4523b60edd9c359414
+| map_transaction_traces  | 21245d57356849699d0c54c679e29b64fc690c14
+| map_action_traces       | 2ca027126927ea9d38c8dc6597e9d75b0b47b475
+| map_db_ops              | b4f15fbba0faf3fabe545125a645daff82dbdb77
 
 ### Quickstart
 
