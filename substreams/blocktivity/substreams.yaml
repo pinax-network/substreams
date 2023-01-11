@@ -45,10 +45,24 @@ modules:
     inputs:
       - map: map_blocks
 
+  - name: store_max_trx_count
+    kind: store
+    updatePolicy: max
+    valueType: int64
+    inputs:
+      - map: map_blocks
+
+  - name: store_max_action_count
+    kind: store
+    updatePolicy: max
+    valueType: int64
+    inputs:
+      - map: map_blocks
+
   - name: map_hourly_stats
     kind: map
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - map: map_blocks
       - store: store_trx_count
       - store: store_act_count
     output:
@@ -57,6 +71,11 @@ modules:
   - name: db_out
     kind: map
     inputs:
+      - map: map_blocks
       - map: map_hourly_stats
+#      - store: store_max_trx_count
+#        mode: deltas
+#      - store: store_max_action_count
+#        mode: deltas
     output:
       type: proto:sf.substreams.database.v1.DatabaseChanges

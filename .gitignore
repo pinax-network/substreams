@@ -1,5 +1,6 @@
 pgdata
 .idea
+dev/
 
 ### Substreams template
 .envrc

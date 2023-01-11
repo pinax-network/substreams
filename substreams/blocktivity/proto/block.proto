@@ -7,8 +7,9 @@ import "google/protobuf/timestamp.proto";
 message BlockStats {
   uint32 block_num = 1;                     // block number
   google.protobuf.Timestamp timestamp = 2;  // block creation timestamp (UTC)
-  uint32 trx_count = 3;                     // number of successfully executed transactions in this block
-  uint32 act_count = 4;                     // number of successfully executed actions in this block
+  int64 trx_count = 3;                     // number of successfully executed transactions in this block
+  int64 act_count = 4;                     // number of successfully executed actions in this block
+  string chain = 5;                         // the blockchain we are running on
 }
 
 message HourlyStats {
