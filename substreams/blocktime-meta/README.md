@@ -1,8 +1,7 @@
 Antelope blockmeta by timestamp
 ===============================
 
-Exemplary Substream that extracts meta information from Antelope blocks and stores them into a timestamp keyed KV store.
-This allows getting block information (such as the block number or id) as well as some stats (like the number of
+Exemplary Substream that extracts meta information from Antelope blocks and stores them into a timestamp keyed KV store. This allows getting block information (such as the block number or id) as well as some stats (like the number of
 transactions) for any timestamp.
 
 ### Models

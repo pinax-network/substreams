@@ -37,32 +37,3 @@ graph TD;
 | map_transaction_traces  | 21245d57356849699d0c54c679e29b64fc690c14
 | map_action_traces       | 2ca027126927ea9d38c8dc6597e9d75b0b47b475
 | map_db_ops              | b4f15fbba0faf3fabe545125a645daff82dbdb77
-
-### Quickstart
-
-```
-$ substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_action_traces -s 284958698
-```
-
-### Build Protobuf
-
-Generate protobuf code
-
-```
-$ substreams protogen ./substreams.yaml --exclude-paths="sf/antelope,sf/substreams,google"
-```
-
-To include **/src/pb/mod.rs**
-
-```rs
-#[path = "antelope.common.v1.rs"]
-#[allow(dead_code)]
-pub mod common;
-```
-
-### Build & Pack
-
-```bash
-$ cargo build --target wasm32-unknown-unknown --release
-$ substreams pack ./substreams.yaml
-```
