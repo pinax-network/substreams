@@ -51,7 +51,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - map: map_trace_traces
+      - map: map_transaction_traces
     output:
       type: proto:sf.antelope.type.v1.ActionTraces
 
