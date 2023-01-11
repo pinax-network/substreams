@@ -39,7 +39,7 @@ modules:
     output:
       type: proto:sf.antelope.type.v1.BlockRootMerkle
 
-  - name: map_trace_traces
+  - name: map_transaction_traces
     kind: map
     initialBlock: 2
     inputs:
