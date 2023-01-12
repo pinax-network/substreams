@@ -1,10 +1,7 @@
+
+use substreams::{prelude::*, log};
 use substreams::errors::Error;
 use substreams_antelope_core::pb::antelope::{Block, BlockHeader, ActionTraces, BlockRootMerkle, TransactionTraces, DbOps };
-
-#[substreams::handlers::map]
-fn map_block(block: Block) -> Result<Block, Error> {
-    Ok(block)
-}
 
 #[substreams::handlers::map]
 fn map_header(block: Block) -> Result<BlockHeader, Error> {
@@ -48,4 +45,12 @@ fn map_db_ops(block: Block) -> Result<DbOps, Error> {
         }
     }
     Ok(DbOps { db_ops })
+}
+
+#[substreams::handlers::store]
+fn store_timestamp(block: Block, s: StoreSetInt64) {
+    let timestamp = block.header.unwrap().timestamp.unwrap().seconds.to_string();
+    let block_number = &(block.number as i64);
+    log::debug!("storing timestamp {} at block {}", timestamp, block_number);
+    s.set(1, timestamp, block_number)
 }

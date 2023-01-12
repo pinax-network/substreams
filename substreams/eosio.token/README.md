@@ -20,15 +20,26 @@ graph TD;
 |---------------------|-------------|-----------|
 | `eosio-token.spkg`  | **v0.4.0**  | `QmbttxBK9FbV8E8g8g8jp8rpYDvK8QzEwSx4bQmafngXpJ`
 
-### Map Modules
+### Modules
 
-| Name                  | Hash      |
-|-----------------------|-----------|
-| `map_transfers`       | 0d74f81ffc681dd39a247e7109aec4f5de4ab519
+```yaml
+Name: map_transfers
+Initial block: 0
+Kind: map
+Output Type: proto:antelope.eosio.token.v1.TransferEvents
+Hash: bd5fd62fceb947529d575c289ef5380a1b82d979
 
-### Stores Modules
+Name: store_accounts
+Initial block: 2
+Kind: store
+Value Type: proto:antelope.eosio.token.v1.Account
+Update Policy: UPDATE_POLICY_SET
+Hash: f6b28186daf2eb993554be0630ae29f9fc27dc82
 
-| Name             | Key                            |  Hash     |
-|------------------|--------------------------------|-----------|
-| `store_accounts` | `{owner}:{contract}:{SYMCODE}` | 62379df73df1891983f4e2d4b30e97e95ba5c384
-| `store_stat`     | `{contract}:{SYMCODE}`         | 798551e967042603c00dbc13d615b2ca56cb6511
+Name: store_stat
+Initial block: 2
+Kind: store
+Value Type: proto:antelope.eosio.token.v1.CurrencyStats
+Update Policy: UPDATE_POLICY_SET
+Hash: 209ef1e5a628af0f652cdaf1396f705b16301d67
+```

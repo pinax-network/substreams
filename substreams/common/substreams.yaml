@@ -62,3 +62,11 @@ modules:
       - source: sf.antelope.type.v2.Block
     output:
       type: proto:sf.antelope.type.v1.DBOps
+
+  - name: store_timestamp
+    kind: store
+    initialBlock: 2
+    updatePolicy: set
+    valueType: int64
+    inputs:
+      - source: sf.antelope.type.v2.Block
