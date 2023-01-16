@@ -1,0 +1,29 @@
+specVersion: v0.1.0
+package:
+  name: eosio_ibc
+  version: v0.1.0
+  url: https://github.com/EOS-Nation/substreams-antelope
+  doc: Antelope `eosio.ibc` Lightproof **block** details.
+
+imports:
+  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../../target/wasm32-unknown-unknown/release/eosio_ibc.wasm
+
+protobuf:
+  files:
+    - eosio.ibc.proto
+  importPaths:
+    - ./proto/v1
+
+modules:
+  - name: map_lightproof
+    kind: map
+    initialBlock: 2
+    inputs:
+      - source: sf.antelope.type.v2.Block
+    output:
+      type: proto:antelope.eosio.ibc.v1.Lightproof

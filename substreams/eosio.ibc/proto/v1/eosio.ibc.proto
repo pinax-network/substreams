@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package antelope.eosio.ibc.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message Lightproof {
+    uint32 number = 1;
+    string id = 2;
+    google.protobuf.Timestamp timestamp = 3;
+    repeated bytes active_nodes = 4;
+}

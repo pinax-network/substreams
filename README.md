@@ -15,7 +15,8 @@ $ substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_action_tr
 
 | Substream      | Description |
 |----------------|-------------|
-| [`eosio.tokens`](substreams/eosio.token)  | Maps & Store module for `eosio.token` events
+| [`eosio.token`](substreams/eosio.token)  | Antelope `eosio.token` based **action traces** & **database operations**.
+| [`eosio.ibc`](substreams/eosio.ibc)  | Antelope `eosio.ibc` Lightproof **block** details.
 | [`common`](substreams/common)  | Common Maps module for all events
 
 ### Endpoints
