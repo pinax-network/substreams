@@ -2,7 +2,7 @@ specVersion: v0.1.0
 package:
   name: eosio_ibc
   version: v0.1.0
-  url: https://github.com/EOS-Nation/substreams-antelope
+  url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.ibc` Lightproof **block** details.
 
 imports:

@@ -2,11 +2,11 @@ specVersion: v0.1.0
 package:
   name: eosio_token
   version: v0.4.0
-  url: https://github.com/EOS-Nation/substreams-antelope
+  url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.token` based action traces & database operations.
 
 imports:
-  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
+  antelope: https://github.com/streamingfast/substreams-template/releases/download/v0.2.0/substreams-template-v0.2.0.spkg
 
 binaries:
   default:

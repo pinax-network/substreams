@@ -2,7 +2,7 @@ specVersion: v0.1.0
 package:
   name: common
   version: v0.3.0
-  url: https://github.com/EOS-Nation/substreams-antelope
+  url: https://github.com/pinax-network/substreams
   doc: Antelope based action traces & database operations.
 
 imports:
