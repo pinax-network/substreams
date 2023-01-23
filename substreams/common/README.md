@@ -18,6 +18,8 @@ graph TD;
   sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_action_traces
   map_db_ops[map: map_db_ops]
   sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_db_ops
+  store_timestamp[store: store_timestamp]
+  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> store_timestamp
 ```
 
 ### Substream
@@ -27,42 +29,49 @@ graph TD;
 | `common-v0.3.0.spkg` | `QmdUPvbKoccXiZSHgsC5mpZMXQt6tuMsoYYf3foke2X5uV`
 | `common-v0.2.0.spkg` | `QmfE7kdRAPihhvij4ej3rUM2Sp3PcXQ9rTFCQPhPGB5dr5`
 
-### Map Modules
+### Modules
 
-| Name                    | Hash
-|-------------------------|--------------|
-| map_block               | ceafe557414faffe8056c4ea65bcf00f25b4afb0
-| map_block_header        | a2a7c25df2ce833ff7b407489ed6171939e25e30
-| map_blockroot_merkle    | 182450c1f60f6367b7b51b4523b60edd9c359414
-| map_transaction_traces  | 21245d57356849699d0c54c679e29b64fc690c14
-| map_action_traces       | 2ca027126927ea9d38c8dc6597e9d75b0b47b475
-| map_db_ops              | b4f15fbba0faf3fabe545125a645daff82dbdb77
+```yaml
+Name: map_block
+Initial block: 2
+Kind: map
+Output Type: proto:sf.antelope.type.v1.Block
+Hash: 7fa2f6dfcc529c5c6b5475c45dadcce440237d1a
 
-### Quickstart
+Name: map_block_header
+Initial block: 2
+Kind: map
+Output Type: proto:sf.antelope.type.v1.BlockHeader
+Hash: 8c5632a9f90e83154f64483515d422c48ef03633
 
-```
-$ substreams run -e eos.firehose.eosnation.io:9001 substreams.yaml map_action_traces -s 284958698
-```
+Name: map_blockroot_merkle
+Initial block: 2
+Kind: map
+Output Type: proto:sf.antelope.type.v1.BlockRootMerkle
+Hash: 616305d3627edb11b97b8c7573fa23a487976d54
 
-### Build Protobuf
+Name: map_transaction_traces
+Initial block: 2
+Kind: map
+Output Type: proto:sf.antelope.type.v1.TransactionTraces
+Hash: d49b88f6a4d44408b748f0490b43250640000762
 
-Generate protobuf code
+Name: map_action_traces
+Initial block: 2
+Kind: map
+Output Type: proto:sf.antelope.type.v1.ActionTraces
+Hash: 179fab7cdd8f362130524d5169bb95b0e481cd1b
 
-```
-$ substreams protogen ./substreams.yaml --exclude-paths="sf/antelope,sf/substreams,google"
-```
+Name: map_db_ops
+Initial block: 2
+Kind: map
+Output Type: proto:sf.antelope.type.v1.DBOps
+Hash: 0fec3d3a2a72032e94c1b2d1372f37dd45931e31
 
-To include **/src/pb/mod.rs**
-
-```rs
-#[path = "antelope.common.v1.rs"]
-#[allow(dead_code)]
-pub mod common;
-```
-
-### Build & Pack
-
-```bash
-$ cargo build --target wasm32-unknown-unknown --release
-$ substreams pack ./substreams.yaml
+Name: store_timestamp
+Initial block: 2
+Kind: store
+Value Type: int64
+Update Policy: UPDATE_POLICY_SET
+Hash: 14828f8b73f412d36aeafef255c62e29d1135f2c
 ```
