@@ -11,9 +11,9 @@ crate-type = ["cdylib"]
 wasm-bindgen = "0.2.79"
 prost = { version = "0.11.2" }
 prost-types = "0.11.2"
-substreams-database-change = "0.2.0"
-substreams-entity-change = "0.3.0"
-substreams = { workspace = true }
+substreams-database-change = "1.0.0"
+substreams-entity-change = "1.0.0"
+substreams = "0.5.1"
 substreams-antelope-core = { workspace = true }
 
 [build-dependencies]

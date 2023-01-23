@@ -32,7 +32,7 @@ fn store_act_count(blocktivity: blocktivity::BlockStats, s: StoreAddInt64) {
 #[substreams::handlers::store]
 fn store_max_trx_count(blocktivity: blocktivity::BlockStats, s: StoreMaxInt64) {
     log::debug!("block {}: storing max trx count {}", blocktivity.block_num, blocktivity.trx_count);
-    s.max(1, "get_key(blocktivity.block_num.clone()).to_string()", blocktivity.trx_count as i64);
+    s.max(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.trx_count as i64);
 }
 
 #[substreams::handlers::store]
@@ -71,8 +71,8 @@ fn map_hourly_stats(
 pub fn db_out(
     blk_stats: blocktivity::BlockStats,
     stats: blocktivity::Stats,
-    // store_max_trx_count: Deltas<DeltaInt64>,
-    // store_max_action_count: Deltas<DeltaInt64>,
+    store_max_trx_count: Deltas<DeltaInt64>,
+    store_max_action_count: Deltas<DeltaInt64>,
 ) -> Result<DatabaseChanges, substreams::errors::Error> {
     let mut database_changes: DatabaseChanges = Default::default();
 
@@ -95,31 +95,31 @@ pub fn db_out(
         .change("trx_count", (0, blk_stats.trx_count))
         .change("act_count", (0, blk_stats.act_count));
 
-    // for delta in store_max_trx_count.deltas {
-    //     // update the max_trx_block table in case we found a new trx maximum
-    //     if delta.operation == substreams::pb::substreams::store_delta::Operation::Create {
-    //         database_changes.push_change("max_trx_block", &*delta.key, 0, Operation::Create)
-    //             .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
-    //             .change("trx_count", (0, delta.new_value));
-    //     } else if delta.operation == substreams::pb::substreams::store_delta::Operation::Update {
-    //         database_changes.push_change("max_trx_block", &*delta.key, 0, Operation::Update)
-    //             .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
-    //             .change("trx_count", (delta.old_value, delta.new_value));
-    //     }
-    // }
-    //
-    // for delta in store_max_action_count.deltas {
-    //     // update the max_action_block table in case we found a new action maximum
-    //     if delta.operation == substreams::pb::substreams::store_delta::Operation::Create {
-    //         database_changes.push_change("max_action_block", &*delta.key, 0, Operation::Create)
-    //             .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
-    //             .change("act_count", (0, delta.new_value));
-    //     } else if delta.operation == substreams::pb::substreams::store_delta::Operation::Update {
-    //         database_changes.push_change("max_action_block", &*delta.key, 0, Operation::Update)
-    //             .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
-    //             .change("act_count", (delta.old_value, delta.new_value));
-    //     }
-    // }
+    for delta in store_max_trx_count.deltas {
+        // update the max_trx_block table in case we found a new trx maximum
+        if delta.operation == substreams::pb::substreams::store_delta::Operation::Create {
+            database_changes.push_change("max_trx_block", &*delta.key, 0, Operation::Create)
+                .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
+                .change("trx_count", (0, delta.new_value));
+        } else if delta.operation == substreams::pb::substreams::store_delta::Operation::Update {
+            database_changes.push_change("max_trx_block", &*delta.key, 0, Operation::Update)
+                .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
+                .change("trx_count", (delta.old_value, delta.new_value));
+        }
+    }
+
+    for delta in store_max_action_count.deltas {
+        // update the max_action_block table in case we found a new action maximum
+        if delta.operation == substreams::pb::substreams::store_delta::Operation::Create {
+            database_changes.push_change("max_action_block", &*delta.key, 0, Operation::Create)
+                .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
+                .change("act_count", (0, delta.new_value));
+        } else if delta.operation == substreams::pb::substreams::store_delta::Operation::Update {
+            database_changes.push_change("max_action_block", &*delta.key, 0, Operation::Update)
+                .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
+                .change("act_count", (delta.old_value, delta.new_value));
+        }
+    }
 
     Ok(database_changes)
 }
