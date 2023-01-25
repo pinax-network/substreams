@@ -7,7 +7,7 @@ use substreams_database_change::pb::database::{table_change::Operation, Database
 
 /// Extracts the stats from each block
 #[substreams::handlers::map]
-fn map_blocks(blk: substreams_antelope_core::pb::antelope::Block) -> Result<blocktivity::BlockStats, substreams::errors::Error> {
+fn map_blocks(blk: substreams_antelope::pb::antelope::Block) -> Result<blocktivity::BlockStats, substreams::errors::Error> {
     Ok(blocktivity::BlockStats {
         block_num: blk.number,
         chain: "EOS".parse().unwrap(),

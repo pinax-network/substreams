@@ -1,5 +1,5 @@
 use substreams::errors::Error;
-use substreams_antelope_core::pb::antelope::{Block};
+use substreams_antelope::pb::antelope::{Block};
 
 // local protobuf definitions
 mod pb;
