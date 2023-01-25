@@ -11,4 +11,4 @@ crate-type = ["cdylib"]
 prost = "0.11"
 prost-types = "0.11"
 substreams = { workspace = true }
-substreams-antelope-core = { workspace = true }
+substreams-antelope = { workspace = true }
