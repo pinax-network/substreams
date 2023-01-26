@@ -9,4 +9,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 substreams = { workspace = true }
-substreams-antelope-core = { workspace = true }
+substreams-antelope = { workspace = true }

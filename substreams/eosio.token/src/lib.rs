@@ -1,7 +1,7 @@
 use substreams::prelude::*;
 use substreams::errors::Error; 
 use substreams::pb::substreams::{Block};
-// use substreams_antelope_core::pb::antelope::{Block};
+// use substreams_antelope::pb::antelope::{Block};
 
 // local modules
 mod abi;

@@ -14,7 +14,7 @@ prost-types = "0.11.2"
 substreams-database-change = "1.0.0"
 substreams-entity-change = "1.0.0"
 substreams = "0.5.1"
-substreams-antelope-core = { workspace = true }
+substreams-antelope = { workspace = true }
 
 [build-dependencies]
 prost-build = "0.11.2"

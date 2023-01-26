@@ -1,7 +1,7 @@
 
 use substreams::{prelude::*, log};
 use substreams::errors::Error;
-use substreams_antelope_core::pb::antelope::{Block, BlockHeader, ActionTraces, BlockRootMerkle, TransactionTraces, DbOps };
+use substreams_antelope::pb::antelope::{Block, BlockHeader, ActionTraces, BlockRootMerkle, TransactionTraces, DbOps };
 
 #[substreams::handlers::map]
 fn map_header(block: Block) -> Result<BlockHeader, Error> {
