@@ -19,25 +19,25 @@ fn map_blocks(blk: substreams_antelope_core::pb::antelope::Block) -> Result<bloc
 
 #[substreams::handlers::store]
 fn store_trx_count(blocktivity: blocktivity::BlockStats, s: StoreAddInt64) {
-    log::debug!("block {}: adding transaction count {}", blocktivity.block_num, blocktivity.trx_count);
+    log::debug!("block {}: adding transaction count of {}", blocktivity.block_num, blocktivity.trx_count);
     s.add(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.trx_count.clone() as i64)
 }
 
 #[substreams::handlers::store]
 fn store_act_count(blocktivity: blocktivity::BlockStats, s: StoreAddInt64) {
-    log::debug!("block {}: adding action count {}", blocktivity.block_num, blocktivity.act_count);
+    log::debug!("block {}: adding action count of {}", blocktivity.block_num, blocktivity.act_count);
     s.add(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.act_count as i64)
 }
 
 #[substreams::handlers::store]
 fn store_max_trx_count(blocktivity: blocktivity::BlockStats, s: StoreMaxInt64) {
-    log::debug!("block {}: storing max trx count {}", blocktivity.block_num, blocktivity.trx_count);
+    log::debug!("block {}: storing max transaction count of {}", blocktivity.block_num, blocktivity.trx_count);
     s.max(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.trx_count as i64);
 }
 
 #[substreams::handlers::store]
 fn store_max_action_count(blocktivity: blocktivity::BlockStats, s: StoreMaxInt64) {
-    log::debug!("block {}: storing max action count {}", blocktivity.block_num, blocktivity.act_count);
+    log::debug!("block {}: storing max action count of {}", blocktivity.block_num, blocktivity.act_count);
     s.max(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.act_count as i64);
 }
 
