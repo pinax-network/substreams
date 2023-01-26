@@ -98,12 +98,12 @@ pub fn db_out(
     for delta in store_max_trx_count.deltas {
         // update the max_trx_block table in case we found a new trx maximum
         if delta.operation == substreams::pb::substreams::store_delta::Operation::Create {
-            database_changes.push_change("max_trx_block", &*delta.key, 0, Operation::Create)
-                .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
+            database_changes.push_change("max_trx_block", &blk_stats.chain.clone(), 0, Operation::Create)
+                .change("block_num", (0, delta.key.parse::<i64>().unwrap()))
                 .change("trx_count", (0, delta.new_value));
         } else if delta.operation == substreams::pb::substreams::store_delta::Operation::Update {
-            database_changes.push_change("max_trx_block", &*delta.key, 0, Operation::Update)
-                .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
+            database_changes.push_change("max_trx_block", &blk_stats.chain.clone(), 0, Operation::Update)
+                .change("block_num", (delta.key.parse::<i64>().unwrap(), delta.key.parse::<i64>().unwrap()))
                 .change("trx_count", (delta.old_value, delta.new_value));
         }
     }
@@ -111,12 +111,12 @@ pub fn db_out(
     for delta in store_max_action_count.deltas {
         // update the max_action_block table in case we found a new action maximum
         if delta.operation == substreams::pb::substreams::store_delta::Operation::Create {
-            database_changes.push_change("max_action_block", &*delta.key, 0, Operation::Create)
-                .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
+            database_changes.push_change("max_action_block", &blk_stats.chain.clone(), 0, Operation::Create)
+                .change("block_num", (0, delta.key.parse::<i64>().unwrap()))
                 .change("act_count", (0, delta.new_value));
         } else if delta.operation == substreams::pb::substreams::store_delta::Operation::Update {
-            database_changes.push_change("max_action_block", &*delta.key, 0, Operation::Update)
-                .change("chain", (blk_stats.chain.clone(), blk_stats.chain.clone()))
+            database_changes.push_change("max_action_block", &blk_stats.chain.clone(), 0, Operation::Update)
+                .change("block_num", (delta.key.parse::<i64>().unwrap(), delta.key.parse::<i64>().unwrap()))
                 .change("act_count", (delta.old_value, delta.new_value));
         }
     }

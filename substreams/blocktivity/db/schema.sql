@@ -18,17 +18,17 @@ create table if not exists last_block
 
 create table if not exists max_trx_block
 (
-    block_num bigint  not null
+    chain     text    not null
         constraint max_trx_block_pk primary key,
-    chain     text    not null,
+    block_num bigint  not null,
     trx_count integer not null
 );
 
 create table if not exists max_action_block
 (
-    block_num bigint  not null
+    chain     text    not null
         constraint max_action_block_pk primary key,
-    chain     text    not null,
+    block_num bigint  not null,
     act_count integer not null
 );
 

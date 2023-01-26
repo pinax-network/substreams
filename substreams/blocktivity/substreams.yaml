@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: blocktivity
-  version: v0.0.2
+  version: v0.0.3
   url: https://github.com/EOS-Nation/substreams-monorepo
   doc: |
     Antelope blocktivity stats.
