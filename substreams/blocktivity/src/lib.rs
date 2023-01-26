@@ -20,25 +20,25 @@ fn map_blocks(blk: substreams_antelope::pb::antelope::Block) -> Result<blocktivi
 #[substreams::handlers::store]
 fn store_trx_count(blocktivity: blocktivity::BlockStats, s: StoreAddInt64) {
     log::debug!("block {}: adding transaction count of {}", blocktivity.block_num, blocktivity.trx_count);
-    s.add(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.trx_count.clone() as i64)
+    s.add(0, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.trx_count.clone() as i64)
 }
 
 #[substreams::handlers::store]
 fn store_act_count(blocktivity: blocktivity::BlockStats, s: StoreAddInt64) {
     log::debug!("block {}: adding action count of {}", blocktivity.block_num, blocktivity.act_count);
-    s.add(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.act_count as i64)
+    s.add(0, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.act_count as i64)
 }
 
 #[substreams::handlers::store]
 fn store_max_trx_count(blocktivity: blocktivity::BlockStats, s: StoreMaxInt64) {
     log::debug!("block {}: storing max transaction count of {}", blocktivity.block_num, blocktivity.trx_count);
-    s.max(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.trx_count as i64);
+    s.max(0, blocktivity.block_num.clone(), blocktivity.trx_count as i64);
 }
 
 #[substreams::handlers::store]
 fn store_max_action_count(blocktivity: blocktivity::BlockStats, s: StoreMaxInt64) {
     log::debug!("block {}: storing max action count of {}", blocktivity.block_num, blocktivity.act_count);
-    s.max(1, get_key(blocktivity.block_num.clone()).to_string(), blocktivity.act_count as i64);
+    s.max(0, blocktivity.block_num.clone(), blocktivity.act_count as i64);
 }
 
 /// Emits hourly accumulated stats
@@ -53,13 +53,12 @@ fn map_hourly_stats(
     // this is the last block of the block range, emit the accumulated stats
     // todo replace this with hourly buckets based on timestamp as we can't be sure there is exactly 7200 blocks within one hour
     if (blk_stats.block_num + 1) % 7200 == 0 {
-        // log::debug!("block stats of block_num {} for key {} with trx_count {} and act_count {}", blk_stats.block_num, get_key(blk_stats.block_num), store_trx_count.get_at(1, get_key(blk_stats.block_num).to_string()).unwrap(), store_act_count.get_at(1, get_key(blk_stats.block_num).to_string()).unwrap());
         res.push(blocktivity::HourlyStats {
             block_num: get_key(blk_stats.block_num),
             chain: blk_stats.chain,
             timestamp: blk_stats.timestamp,
-            trx_count: store_trx_count.get_at(1, get_key(blk_stats.block_num).to_string()).unwrap(),
-            act_count: store_act_count.get_at(1, get_key(blk_stats.block_num).to_string()).unwrap(),
+            trx_count: store_trx_count.get_at(0, get_key(blk_stats.block_num).to_string()).unwrap(),
+            act_count: store_act_count.get_at(0, get_key(blk_stats.block_num).to_string()).unwrap(),
         })
     }
 
