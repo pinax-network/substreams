@@ -5,10 +5,10 @@ use substreams_antelope::pb::antelope::Block;
 use crate::eosmechanics::{KeyValues, KeyValue, BlockStats};
 
 #[substreams::handlers::map]
-pub fn map_block_stats(_block: Block) -> Result<BlockStats, Error> {
+pub fn map_block_stats(block: Block) -> Result<BlockStats, Error> {
     Ok(BlockStats {
-        cpu_usage: 1, // TO-DO
-        producer: "producer".to_string(), // TO-DO
+        cpu_usage: 500, // TO-DO
+        producer: block.header.unwrap().producer,
     })
 }
 

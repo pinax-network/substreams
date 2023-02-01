@@ -41,7 +41,7 @@ modules:
       - source: sf.substreams.v1.Clock
       - map: map_block_stats
 
-  - name: map_counters
+  - name: map_stores
     kind: map
     inputs:
       - store: store_cpu_usage
@@ -55,7 +55,7 @@ modules:
     kind: map
     inputs:
       # - params: string
-      - map: map_counters
+      - map: map_stores
     output:
       type: proto:sf.substreams.kv.v1.KVOperations
 

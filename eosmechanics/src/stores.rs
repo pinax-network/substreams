@@ -15,5 +15,7 @@ fn store_cpu_usage(clock: Clock, stats: BlockStats, s: StoreAddInt64) {
 fn store_producer_count(clock: Clock, stats: BlockStats, s: StoreAddInt64) {
     let seconds = clock.clone().timestamp.unwrap().seconds;
     log::debug!("clock {:?} stats {:?}", clock, stats);
-    s.add(1, keyer::get_key(stats.producer.as_str(), seconds, keyer::INTERVAL), 1);
+    if stats.cpu_usage > 0 {
+        s.add(1, keyer::get_key(stats.producer.as_str(), seconds, keyer::INTERVAL), 1);
+    }
 }

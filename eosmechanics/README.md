@@ -2,6 +2,12 @@
 
 > Block Producer Benchmarks
 
+### Quickstart
+
+```
+$ substreams run -e eos.firehose.eosnation.io:9001 map_lightproof -t +10
+```
+
 ### Mermaid graph
 
 ```mermaid
@@ -14,11 +20,11 @@ graph TD;
   store_producer_count[store: store_producer_count]
   sf.substreams.v1.Clock[source: sf.substreams.v1.Clock] --> store_producer_count
   map_block_stats --> store_producer_count
-  map_counters[map: map_counters]
-  store_cpu_usage -- deltas --> map_counters
-  store_producer_count -- deltas --> map_counters
+  map_stores[map: map_stores]
+  store_cpu_usage -- deltas --> map_stores
+  store_producer_count -- deltas --> map_stores
   kv_out[map: kv_out]
-  map_counters --> kv_out
+  map_stores --> kv_out
 ```
 
 ### Modules
@@ -33,31 +39,31 @@ Name: map_block_stats
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.BlockStats
-Hash: 838ad79d031fe613d9f1c02af6c0471eef02c5c0
+Hash: fe4dd2898771d0c0abd70426cdd2d4f8fc7166e9
 
 Name: store_cpu_usage
 Initial block: 0
 Kind: store
 Value Type: int64
 Update Policy: UPDATE_POLICY_ADD
-Hash: e8933f08c82b181852c0a466f9b69491f2a40171
+Hash: fdf23c7b1aaf2a3f27fc4ddaaf2affeca888845c
 
 Name: store_producer_count
 Initial block: 0
 Kind: store
 Value Type: int64
 Update Policy: UPDATE_POLICY_ADD
-Hash: bb16b6f2df1b3f4ae4c76779255264cb8d88f7d1
+Hash: 95aa1738876491945e99fb8e6ac884d354c5f6fe
 
-Name: map_counters
+Name: map_stores
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.KeyValues
-Hash: dd134e79de51fb1820231d53de3594ed03d83428
+Hash: 4a1d2fb53a0467b4b29456f7e39c3f0226936627
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.kv.v1.KVOperations
-Hash: 169b8f348c0bd57e3e337d7bf0d19ff202855fd0
+Hash: 6ea4ef2311bbceea8735f59c3b4758157ff938e9
 ```

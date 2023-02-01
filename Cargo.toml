@@ -16,9 +16,6 @@ substreams-sink-kv = "0.1"
 substreams-database-change = "1.0.0"
 substreams-entity-change = "1.0.0"
 
-[build]
-target = "wasm32-unknown-unknown"
-
 [profile.release]
 lto = true
 opt-level = 's'
