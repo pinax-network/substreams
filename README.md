@@ -5,14 +5,18 @@
 
 > [`Substreams`](https://substreams.streamingfast.io) built by [Pinax](https://pinax.network)
 
-## Substreams
+## Development Status
 
-| Substream      | Description |
-|----------------|-------------|
-| [`eosio.token`](substreams/eosio.token)  | Antelope `eosio.token` based **action traces** & **database operations**.
-| [`eosio.ibc`](substreams/eosio.ibc)  | Antelope `eosio.ibc` Lightproof **block** details.
-| [`common`](substreams/common)  | Antelope **Common** modules for all events.
-| [`eosmechanics`](substreams/eosmechanics)  | Antelope Block Producer Benchmarks.
+🔨 = In progress.
+🛠 = Feature complete. Additional testing required.
+✅ = Production-ready.
+
+| Substream      | Status | Description |
+|----------------|--------|-------------|
+| [`eosmechanics`](substreams/eosmechanics)     | 🔨 | Antelope Block Producer Benchmarks.
+| [`eosio.ibc`](substreams/eosio.ibc)           | 🛠 | Antelope `eosio.ibc` Lightproof **block** details.
+| [`eosio.token`](substreams/eosio.token)       | 🛠 | Antelope `eosio.token` events
+| [`common`](substreams/common)                 | ✅ | Antelope **Common** modules for all events.
 
 ### Further resources
 
