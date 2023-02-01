@@ -2,10 +2,6 @@
 
 > Block Producer Benchmarks created by [AlohaEOS](https://www.alohaeos.com/tools/benchmarks).
 
-<img width="832" alt="image" src="https://user-images.githubusercontent.com/550895/216176638-cea94a43-f95e-4eb6-ae00-527a2cb02ab7.png">
-
-<img width="841" alt="image" src="https://user-images.githubusercontent.com/550895/216177257-6dab708d-870f-4296-9d72-456e6b2f2b77.png">
-
 ### Quickstart
 
 ```
@@ -19,10 +15,8 @@ graph TD;
   map_block_stats[map: map_block_stats]
   sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_block_stats
   store_cpu_usage[store: store_cpu_usage]
-  sf.substreams.v1.Clock[source: sf.substreams.v1.Clock] --> store_cpu_usage
   map_block_stats --> store_cpu_usage
   store_producer_count[store: store_producer_count]
-  sf.substreams.v1.Clock[source: sf.substreams.v1.Clock] --> store_producer_count
   map_block_stats --> store_producer_count
   map_stores[map: map_stores]
   store_cpu_usage -- deltas --> map_stores
@@ -30,6 +24,10 @@ graph TD;
   kv_out[map: kv_out]
   map_stores --> kv_out
 ```
+
+<img width="832" alt="image" src="https://user-images.githubusercontent.com/550895/216176638-cea94a43-f95e-4eb6-ae00-527a2cb02ab7.png">
+
+<img width="841" alt="image" src="https://user-images.githubusercontent.com/550895/216177257-6dab708d-870f-4296-9d72-456e6b2f2b77.png">
 
 ### Modules
 
