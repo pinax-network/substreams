@@ -2,7 +2,12 @@
 name = "common"
 version = "0.2.0"
 description = "Antelope Common Substream"
+license = "MIT OR Apache-2.0"
 edition = "2021"
+publish = false
+
+[badges]
+maintenance = { status = "actively-developed" }
 
 [lib]
 crate-type = ["cdylib"]

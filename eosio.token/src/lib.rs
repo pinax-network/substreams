@@ -2,11 +2,14 @@ use substreams::prelude::*;
 use substreams::errors::Error; 
 use substreams_antelope::pb::antelope::Block;
 
+#[path = "pb/antelope.eosio.token.v1.rs"]
+#[allow(dead_code)]
+pub mod eosio_token;
+pub use self::eosio_token::*;
+
 // local modules
 mod abi;
-mod pb;
 mod keyer;
-use crate::pb::eosio_token::{Account, CurrencyStats, TransferEvent, TransferEvents};
 use eosio::{Asset};
 
 #[substreams::handlers::map]

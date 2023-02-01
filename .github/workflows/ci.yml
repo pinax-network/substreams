@@ -1,18 +1,36 @@
 name: CI
-
 on: [push, pull_request]
 
 jobs:
-  tests:
+  check:
+    name: Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - name: Checkout sources
+        uses: actions/checkout@v3
 
       - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
+        run: cargo check
+
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Run cargo test
+        run: cargo test
+
+  # lints:
+  #   name: Lints
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout sources
+  #       uses: actions/checkout@v3
+
+  #     - name: Run cargo fmt
+  #       run: cargo fmt --all -- --check
+
+  #     - name: Run cargo clippy
+  #       run: cargo clippy -- -D warnings

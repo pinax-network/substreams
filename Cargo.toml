@@ -1,6 +1,9 @@
 [workspace]
 members = [
-    "substreams/*",
+    "common",
+    "eosio.ibc",
+    "eosio.token",
+    "eosmechanics",
 ]
 
 [workspace.dependencies]

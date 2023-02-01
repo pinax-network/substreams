@@ -1,5 +1,5 @@
 // @generated
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Eq, PartialEq, ::prost::Message)]
 pub struct Lightproof {
     #[prost(uint32, tag="1")]
     pub number: u32,
