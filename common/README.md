@@ -22,56 +22,54 @@ graph TD;
   sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> store_timestamp
 ```
 
-### Substream
-
-| Name                 | IPFS hash |
-|----------------------|-----------|
-| `common-v0.3.0.spkg` | `QmdUPvbKoccXiZSHgsC5mpZMXQt6tuMsoYYf3foke2X5uV`
-| `common-v0.2.0.spkg` | `QmfE7kdRAPihhvij4ej3rUM2Sp3PcXQ9rTFCQPhPGB5dr5`
-
 ### Modules
 
 ```yaml
+Package name: common
+Version: v0.3.0
+Doc: Antelope based action traces & database operations.
+Modules:
+----
 Name: map_block
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.Block
-Hash: 7fa2f6dfcc529c5c6b5475c45dadcce440237d1a
+Hash: 2a7d26088ad491f76e3339665178cf78396c022d
 
 Name: map_block_header
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockHeader
-Hash: 8c5632a9f90e83154f64483515d422c48ef03633
+Hash: 77f43dd05cc7aec645929dd52848967e7a424dd4
 
 Name: map_blockroot_merkle
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockRootMerkle
-Hash: 616305d3627edb11b97b8c7573fa23a487976d54
+Hash: 91f098a3e2a00c9339d9fa055b2cf2032af9f2cb
 
 Name: map_transaction_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.TransactionTraces
-Hash: d49b88f6a4d44408b748f0490b43250640000762
+Hash: edb5f03c5353106adc0e71ededd37222e43c6e7e
 
 Name: map_action_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.ActionTraces
-Hash: 179fab7cdd8f362130524d5169bb95b0e481cd1b
+Hash: 5dc7caf51ccb43b0339fc6fb33dfe7b85d0af4b0
 
 Name: map_db_ops
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.DBOps
-Hash: 0fec3d3a2a72032e94c1b2d1372f37dd45931e31
+Hash: fbbb656225dff3d41a1e6eec8609ffbf61f7f8b5
 
 Name: store_timestamp
 Initial block: 2
 Kind: store
 Value Type: int64
 Update Policy: UPDATE_POLICY_SET
-Hash: 14828f8b73f412d36aeafef255c62e29d1135f2c
+Hash: 5fe01de39c6da27ec8997d37d462b339a8dd4daa
 ```

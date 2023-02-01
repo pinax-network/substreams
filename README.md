@@ -1,4 +1,4 @@
-# Pinax Substreams
+# Pinax `Substreams`
 
 [![Build Status](https://github.com/pinax-network/substreams/actions/workflows/ci.yml/badge.svg)](https://github.com/pinax-network/substreams/actions/workflows/ci.yml)
 ![License](https://img.shields.io/github/license/pinax-network/substreams)

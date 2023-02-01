@@ -33,31 +33,31 @@ Name: map_block_stats
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.BlockStats
-Hash: 42b762c15212d33855be4e8b388c9ee135c022ce
+Hash: 838ad79d031fe613d9f1c02af6c0471eef02c5c0
 
 Name: store_cpu_usage
 Initial block: 0
 Kind: store
 Value Type: int64
 Update Policy: UPDATE_POLICY_ADD
-Hash: 2fb7dc629d8867ff0026bf0f4eedfb5cc21b8b7b
+Hash: e8933f08c82b181852c0a466f9b69491f2a40171
 
 Name: store_producer_count
 Initial block: 0
 Kind: store
 Value Type: int64
 Update Policy: UPDATE_POLICY_ADD
-Hash: bc374061deb5025b111bf99b2efa891f0463ecf8
+Hash: bb16b6f2df1b3f4ae4c76779255264cb8d88f7d1
 
 Name: map_counters
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.KeyValues
-Hash: d13d9c9b95893b3cbffebf7395cdcf7ce56a112a
+Hash: dd134e79de51fb1820231d53de3594ed03d83428
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.kv.v1.KVOperations
-Hash: d1d3b76d5d2440dc5f06066bb35decdfafce325b
+Hash: 169b8f348c0bd57e3e337d7bf0d19ff202855fd0
 ```

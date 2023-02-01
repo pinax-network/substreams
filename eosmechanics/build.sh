@@ -1,6 +1,6 @@
 #!/bin/bash
 
-substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google" 
+substreams protogen --exclude-paths="google,sf/substreams"
 cargo build --target wasm32-unknown-unknown --release
 substreams pack
 substreams graph
