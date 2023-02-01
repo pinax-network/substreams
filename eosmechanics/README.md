@@ -1,11 +1,13 @@
 # Antelope `eosmechanics` Substream
 
-> Block Producer Benchmarks
+> Block Producer Benchmarks created by [AlohaEOS](https://www.alohaeos.com/tools/benchmarks).
+
+<img width="832" alt="image" src="https://user-images.githubusercontent.com/550895/216176638-cea94a43-f95e-4eb6-ae00-527a2cb02ab7.png">
 
 ### Quickstart
 
 ```
-$ substreams run -e eos.firehose.eosnation.io:9001 map_lightproof -t +10
+$ substreams run -e eos.firehose.eosnation.io:9001 map_stores -t +10
 ```
 
 ### Mermaid graph
