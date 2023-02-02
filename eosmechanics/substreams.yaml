@@ -13,13 +13,23 @@ binaries:
 protobuf:
   files:
     - eosmechanics.proto
+    - sink.prom.proto
   importPaths:
     - proto/v1
 
 modules:
-  - name: map_block_stats
+  - name: map_producer_usage
     kind: map
     inputs:
       - source: sf.antelope.type.v2.Block
     output:
-      type: proto:eosmechanics.v1.BlockStats
+      type: proto:eosmechanics.v1.ProducerUsage
+
+  - name: map_prom_out
+    kind: map
+    inputs:
+      - map: map_producer_usage
+    output:
+      type: proto:pinax.substreams.sink.prom.v1.PrometheusMetrics
+
+

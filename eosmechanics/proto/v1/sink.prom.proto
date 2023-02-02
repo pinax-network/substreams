@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package pinax.sinks.prom.v1;
+
+message PrometheusMetrics {
+    // TO-DO
+    // Reference https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#Gauge
+}

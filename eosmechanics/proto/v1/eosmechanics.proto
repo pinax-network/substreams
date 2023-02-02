@@ -2,11 +2,7 @@ syntax = "proto3";
 
 package eosmechanics.v1;
 
-message BlockResults {
-    repeated ProducerStats producer_stats = 1;
-}
-
-message ProducerStats {
+message ProducerUsage {
     string producer = 1;    // the name of the block producer
     int64 cpu_usage = 2;    // cpu usage of the eosmechanics transaction 
 }
