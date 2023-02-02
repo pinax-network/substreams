@@ -4,15 +4,13 @@ import { gauges, listen } from "./src/metrics.js"
 // Substreams using live data
 const spkg = "https://github.com/pinax-network/substreams/releases/download/v0.1.0/eosmechanics-v0.1.0.spkg";
 const outputModule = "map_producer_usage";
-const startBlockNum = "292100468";
-const stopBlockNum = "+100000";
+const startBlockNum = "292352668";
 const host = "eos.firehose.eosnation.io:9001"
 
 // Initialize Substreams
 const substreams = new Substreams(outputModule, {
     host,
     startBlockNum,
-    stopBlockNum,
     authorization: process.env.STREAMINGFAST_KEY // or SUBSTREAMS_API_TOKEN
 });
 
