@@ -1,6 +1,6 @@
 use substreams::errors::Error; 
 use substreams::log;
-use substreams_antelope::pb::antelope::Block;
+use substreams_antelope::Block;
 
 use crate::abi;
 use crate::eosio_token::*;
@@ -17,7 +17,7 @@ fn map_accounts(block: Block) -> Result<Block, Error> {
             let symcode = SymbolCode::from(raw_primary_key).to_string();
             let account = db_op.scope.clone();
 
-            log::debug!("account={} symcode={} new_data={:?}", account, symcode, db_op.new_data );
+            log::debug!("account={} symcode={} new_data_json={} old_data_json={}", account, symcode, db_op.new_data_json, db_op.old_data_json );
         }
     }
     Ok(Default::default())

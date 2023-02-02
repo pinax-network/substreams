@@ -1,6 +1,6 @@
 use substreams::log;
 use substreams::prelude::*;
-use substreams_antelope::pb::antelope::Block;
+use substreams_antelope::Block;
 
 use crate::keyer;
 use crate::eosio_token::*;

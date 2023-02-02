@@ -1,6 +1,6 @@
 use substreams::errors::Error;
 use substreams::{log, prelude::*};
-use substreams_antelope::pb::antelope::Block;
+use substreams_antelope::Block;
 
 use crate::eosmechanics::{KeyValues, KeyValue, BlockStats};
 

@@ -1,5 +1,5 @@
 use substreams::errors::Error;
-use substreams_antelope::pb::antelope::{Block};
+use substreams_antelope::Block;
 
 #[path = "pb/antelope.eosio.ibc.v1.rs"]
 #[allow(dead_code)]
