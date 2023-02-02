@@ -13,7 +13,6 @@ binaries:
 protobuf:
   files:
     - eosmechanics.proto
-    - kv.proto
   importPaths:
     - proto/v1
 
@@ -24,40 +23,3 @@ modules:
       - source: sf.antelope.type.v2.Block
     output:
       type: proto:eosmechanics.v1.BlockStats
-
-  - name: store_cpu_usage
-    kind: store
-    updatePolicy: add
-    valueType: int64
-    inputs:
-      - source: sf.substreams.v1.Clock
-      - map: map_block_stats
-
-  - name: store_producer_count
-    kind: store
-    updatePolicy: add
-    valueType: int64
-    inputs:
-      - source: sf.substreams.v1.Clock
-      - map: map_block_stats
-
-  - name: map_stores
-    kind: map
-    inputs:
-      - store: store_cpu_usage
-        mode: deltas
-      - store: store_producer_count
-        mode: deltas
-    output:
-      type: proto:eosmechanics.v1.KeyValues
-
-  - name: kv_out
-    kind: map
-    inputs:
-      # - params: string
-      - map: map_stores
-    output:
-      type: proto:sf.substreams.kv.v1.KVOperations
-
-params:
-  kv_out: "eos"
