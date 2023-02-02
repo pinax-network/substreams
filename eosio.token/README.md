@@ -5,7 +5,7 @@
 ### Quickstart
 
 ```
-$ substreams run -e eos.firehose.eosnation.io:9001 store_accounts -t +10
+$ substreams run -e eos.firehose.eosnation.io:9001 map_accounts -s 500 -t +10
 ```
 
 ### Mermaid graph
