@@ -27,6 +27,7 @@ listen(9102).then(async () => {
 
     substreams.on("mapOutput", output => {
         const decoded = ProducerUsage.fromBinary(output.data.mapOutput.value);
+        console.log(decoded);
         gauges.producer_usage.inc(Number(decoded.cpuUsage));
     });
 
