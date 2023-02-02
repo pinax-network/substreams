@@ -1,6 +1,12 @@
 # Antelope `eosio.token` Substream
 
-> Antelope `eosio.token` based **action traces** & **database operations**.
+> Antelope `eosio.token` token transfers
+
+### Quickstart
+
+```
+$ substreams run -e eos.firehose.eosnation.io:9001 store_accounts -t +10
+```
 
 ### Mermaid graph
 
