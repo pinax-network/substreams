@@ -17,16 +17,17 @@ const substreams = new Substreams(outputModule, {
 // Prometheus Exporter
 listen(9102).then(async () => {
     // download Substream from IPFS
-    const {modules, registry} = await download(spkg);
+    const { modules, registry } = await download(spkg);
 
     // Find Protobuf message types from registry
     const ProducerUsage = registry.findMessage("eosmechanics.v1.ProducerUsage");
-    if ( !ProducerUsage) throw new Error("Could not find ProducerUsage message type");
+    if (!ProducerUsage) throw new Error("Could not find ProducerUsage message type");
 
     substreams.on("mapOutput", output => {
         const decoded = ProducerUsage.fromBinary(output.data.mapOutput.value);
         console.log(decoded);
-        gauges.producer_usage.inc(Number(decoded.cpuUsage));
+        gauges.producers_usage.inc(Number(decoded.cpuUsage));
+        gauges.producer_usage.labels(decoded.producer).inc(Number(decoded.cpuUsage));
     });
 
     // start streaming Substream

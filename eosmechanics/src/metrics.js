@@ -6,14 +6,21 @@ const register = new client.Registry();
 const collectDefaultMetrics = client.collectDefaultMetrics;
 collectDefaultMetrics({ register });
 
+const producers_usage = new client.Gauge({
+    name: "producers_usage",
+    help: "Producers CPU Usage",
+});
+register.registerMetric(producers_usage);
+
 const producer_usage = new client.Gauge({
     name: "producer_usage",
     help: "Producer CPU Usage",
-    labelNames: ['eosmechanics']
+    labelNames: ["producer"]
 });
 register.registerMetric(producer_usage);
 
 export const gauges = {
+    producers_usage,
     producer_usage
 }
 
@@ -26,7 +33,7 @@ const server = http.createServer(async (req, res) => {
 export async function listen(port) {
     return new Promise(resolve => {
         server.listen(port, "0.0.0.0", () => {
-            console.log('starting prometheus metrics server', {port});
+            console.log('starting prometheus metrics server', { port });
             resolve();
         });
     })
