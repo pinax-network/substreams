@@ -2,10 +2,16 @@
 
 > Block Producer Benchmarks created by [AlohaEOS](https://www.alohaeos.com/tools/benchmarks).
 
-### Quickstart
+### Quickstart - **Substreams**
 
 ```
-$ substreams run -e eos.firehose.eosnation.io:9001 map_producer_usage -s 292180468 -t +1
+$ substreams run -e eos.firehose.eosnation.io:9001 map_producer_usage -s 292100468 -t +100000 -o jsonl
+```
+
+### Quickstart - **Prometheus**
+
+```
+$ npm start
 ```
 
 ### Mermaid graph
@@ -34,11 +40,11 @@ Name: map_producer_usage
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ProducerUsage
-Hash: 7c6074773130dc85c3022d6b56fca8f21f06d8cf
+Hash: ce1c6cd1b8fb5eb6a75e2d0caed00897b673bf7b
 
 Name: map_prom_out
 Initial block: 0
 Kind: map
-Output Type: proto:pinax.substreams.sinks.prom.v1.PrometheusMetrics
-Hash: a27326168962800fae976825c6173a6539cd8702
+Output Type: proto:pinax.substreams.sink.prom.v1.PrometheusMetrics
+Hash: c57a5a1cafa2f0666675ad205aae1dc62685fd4b
 ```
