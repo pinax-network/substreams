@@ -2,8 +2,6 @@ pgdata
 .idea
 dev/
 
-package-lock.json
-
 ### Substreams template
 .envrc
 /substreams-examples/*/*.yaml.pb
