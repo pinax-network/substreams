@@ -1,6 +1,6 @@
 use substreams::errors::Error;
 use substreams::log;
-use substreams_antelope::Block;
+use substreams_antelope::{Block, ProducerAuthoritySchedule};
 
 use crate::eosmechanics::ProducerUsage;
 use crate::sinks::PrometheusMetrics;
@@ -29,6 +29,11 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 
     // If no transaction trace contains `eosmechanics:cpu` action, return default value
     Ok(Default::default())
+}
+
+#[substreams::handlers::map]
+pub fn map_active_schedule(block: Block) -> Result<ProducerAuthoritySchedule, Error> {
+    Ok(block.active_schedule_v2.unwrap())
 }
 
 #[substreams::handlers::map]

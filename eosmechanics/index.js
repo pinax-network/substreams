@@ -26,8 +26,10 @@ listen(9102).then(async () => {
     substreams.on("mapOutput", output => {
         const decoded = ProducerUsage.fromBinary(output.data.mapOutput.value);
         console.log(decoded);
+
+        // Prometheus metrics
         gauges.producers_usage.inc(Number(decoded.cpuUsage));
-        gauges.producer_usage.labels(decoded.producer).inc(Number(decoded.cpuUsage));
+        gauges.producer_usage.labels(decoded.producer).set(Number(decoded.cpuUsage));
     });
 
     // start streaming Substream
