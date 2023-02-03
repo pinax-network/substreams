@@ -1,8 +1,30 @@
 syntax = "proto3";
 
-package pinax.sinks.prom.v1;
+package pinax.sink.prom.v1;
 
 message PrometheusMetrics {
     // TO-DO
     // Reference https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#Gauge
+
+    repeated PrometheusCounter prometheus_counters = 1;
+    repeated PrometheusGauge prometheus_gauges = 2;
+}
+
+message PrometheusCounter {
+    int32 value = 1;
+    repeated PrometheusCounterOperation operations = 2;
+}
+
+message PrometheusCounterOperation {
+    int32 value = 1;
+    enum Type {
+      UNSET = 0;
+      INC = 1;
+      ADD = 2;
+    }
+    Type type = 2;
+}
+
+message PrometheusGauge {
+    uint32 value = 1;
 }
