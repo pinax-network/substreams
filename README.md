@@ -13,10 +13,10 @@
 
 | Substream      | Status | Description |
 |----------------|:------:|-------------|
-| [`eosmechanics`](substreams/eosmechanics)     | 🔨 | Antelope Block Producer Benchmarks.
-| [`eosio.ibc`](substreams/eosio.ibc)           | 🛠 | Antelope `eosio.ibc` Lightproof **block** details.
-| [`eosio.token`](substreams/eosio.token)       | 🛠 | Antelope `eosio.token` token transfers
-| [`common`](substreams/common)                 | ✅ | Antelope **Common** modules for all events.
+| [`eosmechanics`](eosmechanics/)     | 🔨 | Antelope Block Producer Benchmarks.
+| [`eosio.ibc`](eosio.ibc/)           | 🛠 | Antelope `eosio.ibc` Lightproof **block** details.
+| [`eosio.token`](eosio.token/)       | 🛠 | Antelope `eosio.token` token transfers
+| [`common`](common/)                 | ✅ | Antelope **Common** modules for all events.
 
 ### Further resources
 
