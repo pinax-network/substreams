@@ -20,27 +20,27 @@ modules:
   - name: map_transfers
     kind: map
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.eosio.token.v1.TransferEvents
 
   - name: map_accounts
     kind: map
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
-      type: proto:sf.antelope.type.v2.Block
+      type: proto:sf.antelope.type.v1.Block
 
   - name: store_accounts
     kind: store
     updatePolicy: set
     valueType: proto:antelope.eosio.token.v1.Account
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
 
   - name: store_stat
     kind: store
     updatePolicy: set
     valueType: proto:antelope.eosio.token.v1.CurrencyStats
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
