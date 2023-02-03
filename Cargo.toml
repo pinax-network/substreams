@@ -4,6 +4,7 @@ members = [
     "eosio.ibc",
     "eosio.token",
     "eosmechanics",
+    "accounts",
 ]
 
 [workspace.dependencies]

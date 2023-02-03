@@ -1,0 +1,43 @@
+specVersion: v0.1.0
+package:
+  name: "accounts"
+  version: v0.1.0
+
+imports:
+  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
+
+protobuf:
+  files:
+    - accounts.proto
+  importPaths:
+    - ./proto/v1
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/accounts.wasm
+
+modules:
+  - name: map_accounts
+    kind: map
+    initialBlock: 0
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.accounts.v1.Accounts
+  - name: store_account_counter
+    kind: store
+    initialBlock: 0
+    updatePolicy: add
+    valueType: int64
+    inputs:
+      - map: map_accounts
+  - name: kv_out
+    kind: map
+    initialBlock: 0
+    inputs:
+      - map: map_accounts
+      - store: store_account_counter
+    output:
+      type: proto:sf.substreams.sink.kv.v1.KVOperations
+
