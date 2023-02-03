@@ -7,8 +7,8 @@
 
 ## Development Status
 
-🔨 = In progress.  
-🛠 = Feature complete. Additional testing required.  
+🔨 = In progress.
+🛠 = Feature complete. Additional testing required.
 ✅ = Production-ready.
 
 | Substream      | Status | Description |
@@ -16,6 +16,7 @@
 | [`eosmechanics`](eosmechanics/)     | 🔨 | Antelope Block Producer Benchmarks.
 | [`eosio.ibc`](eosio.ibc/)           | 🛠 | Antelope `eosio.ibc` Lightproof **block** details.
 | [`eosio.token`](eosio.token/)       | 🛠 | Antelope `eosio.token` token transfers
+| [`accounts`](accounts/)             | 🛠 | Antelope accounts
 | [`common`](common/)                 | ✅ | Antelope **Common** modules for all events.
 
 ### Further resources
