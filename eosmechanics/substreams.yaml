@@ -22,14 +22,14 @@ modules:
   - name: map_producer_usage
     kind: map
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:eosmechanics.v1.ProducerUsage
 
   - name: map_active_schedule
     kind: map
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v2.ProducerAuthoritySchedule
 

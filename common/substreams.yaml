@@ -19,7 +19,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.Block
 
@@ -27,7 +27,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.BlockHeader
 
@@ -35,7 +35,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.BlockRootMerkle
 
@@ -43,7 +43,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.TransactionTraces
 
@@ -51,7 +51,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.ActionTraces
 
@@ -59,7 +59,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.DBOps
 
@@ -69,4 +69,4 @@ modules:
     updatePolicy: set
     valueType: int64
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block

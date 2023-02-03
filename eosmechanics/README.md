@@ -19,7 +19,7 @@ $ npm start
 ```mermaid
 graph TD;
   map_producer_usage[map: map_producer_usage]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_producer_usage
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_producer_usage
   map_prom_out[map: map_prom_out]
   map_producer_usage --> map_prom_out
 ```

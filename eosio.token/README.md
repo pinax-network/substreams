@@ -13,11 +13,11 @@ $ substreams run -e eos.firehose.eosnation.io:9001 map_accounts -s 500 -t +10
 ```mermaid
 graph TD;
   map_transfers[map: map_transfers]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_transfers
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_transfers
   store_accounts[store: store_accounts]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> store_accounts
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> store_accounts
   store_stat[store: store_stat]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> store_stat
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> store_stat
 ```
 
 ### Modules
