@@ -25,7 +25,7 @@ modules:
     output:
       type: proto:eosmechanics.v1.ProducerUsage
 
-  - name: map_prom_out
+  - name: prom_out
     kind: map
     inputs:
       - map: map_producer_usage

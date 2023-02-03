@@ -1,10 +1,31 @@
 use substreams::errors::Error;
-use substreams::log;
 use substreams_antelope::{Block, ProducerAuthoritySchedule};
 
 use crate::eosmechanics::ProducerUsage;
-use crate::sinks::PrometheusMetrics;
 
+
+/// Map a block to a ProducerUsage struct
+/// 
+/// This function is called for every block that is received from the blockchain.
+/// It will return a ProducerUsage struct if the block contains a transaction trace
+/// that contains an `eosmechanics:cpu` action. Otherwise, it will return a default
+/// ProducerUsage struct.
+/// 
+/// The ProducerUsage struct contains the producer name, the CPU usage of the
+/// transaction trace, and the active and pending schedule.
+/// 
+/// The active and pending schedule are used to determine if the producer is in the
+/// pending schedule. If the producer is in the pending schedule, then the CPU usage
+/// is not counted towards the producer's CPU usage.
+/// 
+/// The active and pending schedule are returned as a vector of strings, where each
+/// string is the account name of the producer.
+/// 
+/// The CPU usage is returned as a i64, which is the number of microseconds of CPU
+/// used by the transaction trace.
+/// 
+/// The producer name is returned as a string, which is the account name of the
+/// producer.
 #[substreams::handlers::map]
 pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 
@@ -38,13 +59,4 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 pub fn schedule_to_accounts(schedule: ProducerAuthoritySchedule) -> Vec<String> {
     let accounts = schedule.producers.iter().map(|p| p.account_name.to_string()).collect();
     accounts
-}
-
-#[substreams::handlers::map]
-pub fn prom_out(producer_usage: ProducerUsage) -> Result<PrometheusMetrics, Error> {
-    log::debug!("producer_usage={:?}", producer_usage);
-    
-    //  TO-DO push generic prometheus changes here
-    //  this requires that we define a prometheus changes protobuf first. I (Fred) will help you on that task
-    return Ok(PrometheusMetrics::default());
 }
