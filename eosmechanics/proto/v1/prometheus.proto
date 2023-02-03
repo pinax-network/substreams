@@ -1,11 +1,9 @@
 syntax = "proto3";
 
-package pinax.sink.prom.v1;
+package pinax.substreams.sink.prometheus.v1;
 
+// Reference https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#Gauge
 message PrometheusMetrics {
-    // TO-DO
-    // Reference https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#Gauge
-
     repeated PrometheusCounter prometheus_counters = 1;
     repeated PrometheusGauge prometheus_gauges = 2;
 }

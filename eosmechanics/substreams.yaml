@@ -13,7 +13,7 @@ binaries:
 protobuf:
   files:
     - eosmechanics.proto
-    - sink.prom.proto
+    - prometheus.proto
   importPaths:
     - proto/v1
 
@@ -30,6 +30,6 @@ modules:
     inputs:
       - map: map_producer_usage
     output:
-      type: proto:pinax.substreams.sink.prom.v1.PrometheusMetrics
+      type: proto:pinax.substreams.sink.prometheus.v1.PrometheusMetrics
 
 
