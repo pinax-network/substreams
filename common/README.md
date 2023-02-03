@@ -7,19 +7,19 @@
 ```mermaid
 graph TD;
   map_block[map: map_block]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_block
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block
   map_block_header[map: map_block_header]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_block_header
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header
   map_blockroot_merkle[map: map_blockroot_merkle]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_blockroot_merkle
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_blockroot_merkle
   map_transaction_traces[map: map_transaction_traces]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_transaction_traces
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_transaction_traces
   map_action_traces[map: map_action_traces]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_action_traces
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_action_traces
   map_db_ops[map: map_db_ops]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_db_ops
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_db_ops
   store_timestamp[store: store_timestamp]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> store_timestamp
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> store_timestamp
 ```
 
 ### Modules

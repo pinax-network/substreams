@@ -21,6 +21,6 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
-      - source: sf.antelope.type.v2.Block
+      - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.eosio.ibc.v1.Lightproof

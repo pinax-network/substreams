@@ -13,7 +13,7 @@ $ substreams run -e eos.firehose.eosnation.io:9001 map_lightproof -t +10
 ```mermaid
 graph TD;
   map_lightproof[map: map_lightproof]
-  sf.antelope.type.v2.Block[source: sf.antelope.type.v2.Block] --> map_lightproof
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_lightproof
 ```
 
 ### Modules

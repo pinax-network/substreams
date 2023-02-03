@@ -10,6 +10,8 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 
     // Producer is found in the block header
     let producer = block.clone().header.unwrap().producer;
+    let active_schedule: Vec<String> = schedule_to_accounts(block.clone().active_schedule_v2.unwrap());
+    let pending_schedule: Vec<String> = schedule_to_accounts(block.clone().pending_schedule.unwrap().schedule_v2.unwrap());
     
     for trx in block.clone().all_transaction_traces() { 
         // CPU usage is found in the transaction receipt
@@ -23,6 +25,8 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
             return Ok(ProducerUsage{
                 producer,
                 cpu_usage,
+                active_schedule,
+                pending_schedule,
             })
         }
     }
@@ -31,9 +35,9 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
     Ok(Default::default())
 }
 
-#[substreams::handlers::map]
-pub fn map_active_schedule(block: Block) -> Result<ProducerAuthoritySchedule, Error> {
-    Ok(block.active_schedule_v2.unwrap())
+pub fn schedule_to_accounts(schedule: ProducerAuthoritySchedule) -> Vec<String> {
+    let accounts = schedule.producers.iter().map(|p| p.account_name.to_string()).collect();
+    accounts
 }
 
 #[substreams::handlers::map]
