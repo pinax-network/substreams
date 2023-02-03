@@ -5,7 +5,7 @@
 ### Quickstart - **Substreams**
 
 ```
-$ substreams run -e eos.firehose.eosnation.io:9001 map_producer_usage -s 292100468 -t +100000 -o jsonl
+$ substreams run -e eos.firehose.eosnation.io:9001 map_producer_usage -s 292103130 -t +100000 -o jsonl
 ```
 
 ### Quickstart - **Prometheus**
