@@ -6,8 +6,6 @@
 
 ```mermaid
 graph TD;
-  map_block[map: map_block]
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block
   map_block_header[map: map_block_header]
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header
   map_blockroot_merkle[map: map_blockroot_merkle]
@@ -30,46 +28,40 @@ Version: v0.3.0
 Doc: Antelope based action traces & database operations.
 Modules:
 ----
-Name: map_block
-Initial block: 2
-Kind: map
-Output Type: proto:sf.antelope.type.v1.Block
-Hash: 2a7d26088ad491f76e3339665178cf78396c022d
-
 Name: map_block_header
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockHeader
-Hash: 77f43dd05cc7aec645929dd52848967e7a424dd4
+Hash: 4938a193662ecc692410a826b4b4480a4a74f6e7
 
 Name: map_blockroot_merkle
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockRootMerkle
-Hash: 91f098a3e2a00c9339d9fa055b2cf2032af9f2cb
+Hash: 7b203830ca24aa79a7c396fd69d58080243401b2
 
 Name: map_transaction_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.TransactionTraces
-Hash: edb5f03c5353106adc0e71ededd37222e43c6e7e
+Hash: 7677f6fba4957f44adb34a6245df96862dac5cc1
 
 Name: map_action_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.ActionTraces
-Hash: 5dc7caf51ccb43b0339fc6fb33dfe7b85d0af4b0
+Hash: beeedfc6447b202bcdc0854631f7ebdc16bc9a53
 
 Name: map_db_ops
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.DBOps
-Hash: fbbb656225dff3d41a1e6eec8609ffbf61f7f8b5
+Hash: a46d52708fe11dc3c9cb8cd53349fdf1ea55da9d
 
 Name: store_timestamp
 Initial block: 2
 Kind: store
 Value Type: int64
 Update Policy: UPDATE_POLICY_SET
-Hash: 5fe01de39c6da27ec8997d37d462b339a8dd4daa
+Hash: 70fb3568cdfb0032b30305b21c308c926552da6c
 ```

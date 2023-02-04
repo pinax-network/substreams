@@ -15,14 +15,6 @@ binaries:
 
 modules:
 
-  - name: map_block
-    kind: map
-    initialBlock: 2
-    inputs:
-      - source: sf.antelope.type.v1.Block
-    output:
-      type: proto:sf.antelope.type.v1.Block
-
   - name: map_block_header
     kind: map
     initialBlock: 2

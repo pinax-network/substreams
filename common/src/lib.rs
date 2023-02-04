@@ -4,11 +4,6 @@ use substreams::errors::Error;
 use substreams_antelope::{Block, BlockHeader, ActionTraces, BlockRootMerkle, TransactionTraces, DbOps };
 
 #[substreams::handlers::map]
-fn map_block(block: Block) -> Result<Block, Error> {
-    Ok(block)
-}
-
-#[substreams::handlers::map]
 fn map_block_header(block: Block) -> Result<BlockHeader, Error> {
     Ok(block.header.unwrap())
 }
