@@ -30,24 +30,24 @@ use crate::eosmechanics::ProducerUsage;
 pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 
     // Producer is found in the block header
-    let producer = block.clone().header.unwrap().producer;
-    let active_schedule: Vec<String> = schedule_to_accounts(block.clone().active_schedule_v2.unwrap());
-    let pending_schedule: Vec<String> = schedule_to_accounts(block.clone().pending_schedule.unwrap().schedule_v2.unwrap());
+    let producer = block.header.clone().unwrap().producer;
+    let active_schedule: Vec<String> = schedule_to_accounts(block.active_schedule_v2.clone().unwrap());
+    let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.clone().unwrap().schedule_v2.unwrap());
     
-    for trx in block.clone().all_transaction_traces() { 
+    for trx in block.all_transaction_traces() { 
         // CPU usage is found in the transaction receipt
-        let cpu_usage = trx.clone().receipt.unwrap().cpu_usage_micro_seconds as i64;
+        let cpu_usage = trx.receipt.clone().unwrap().cpu_usage_micro_seconds as i64;
 
         // Only return a value if the transaction trace contains `eosmechanics:cpu` action
         for trace in trx.clone().action_traces {
-            let action_trace = trace.action.as_ref().unwrap().clone();
+            let action_trace = trace.action.unwrap();
             if action_trace.account != "eosmechanics" { continue; }
             if action_trace.name != "cpu"  { continue; }
             return Ok(ProducerUsage{
                 producer,
                 cpu_usage,
                 active_schedule,
-                pending_schedule,
+                pending_schedule
             })
         }
     }
