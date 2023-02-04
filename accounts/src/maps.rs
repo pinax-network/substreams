@@ -12,7 +12,7 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
 
     for trx in block.clone().all_transaction_traces() {
         for trace in &trx.action_traces {
-            let action = trace.action.as_ref().unwrap().clone();
+            let action = trace.action.as_ref().unwrap();
 
             // parse new account actions
             if action.account == "eosio" && action.name == "newaccount" {
@@ -28,9 +28,9 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
                         active: Some(Authority::default()), // TO-DO
 
                         // transaction details
-                        timestamp: block.header.clone().unwrap().timestamp,
+                        timestamp: block.header.as_ref().unwrap().timestamp.clone(),
                         trx_id: trace.transaction_id.clone(),
-                        block_num: block.clone().number,
+                        block_num: block.number,
 
                         // account details
                         ram_bytes: 0, // will be updated later
@@ -42,6 +42,7 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
             }
 
             // parse buy RAM actions (normally one transaction per new account created)
+            // TODO: instead, get the RAM usage from dbOps (this will also cover buyram)
             if action.account == "eosio" && action.name == "buyrambytes" {
                 if let Ok(params) = action.json_data.parse::<abi::BuyRamBytes>() {
                     if let Some(last) = accounts.last_mut() {
