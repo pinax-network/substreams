@@ -19,3 +19,4 @@ prost-types = { workspace = true }
 substreams = { workspace = true }
 substreams-antelope = { workspace = true }
 substreams-sink-kv = { workspace = true }
+substreams-sink-prometheus = { workspace = true }

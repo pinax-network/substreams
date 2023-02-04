@@ -2,24 +2,29 @@ use std::collections::HashSet;
 
 use substreams::errors::Error;
 use substreams::log;
+use substreams_sink_prometheus::PrometheusOperations;
 
 use crate::eosmechanics::ProducerUsage;
-use crate::prometheus::PrometheusMetrics;
 
 #[substreams::handlers::map]
-pub fn prom_out(producer_usage: ProducerUsage) -> Result<PrometheusMetrics, Error> {
+pub fn prom_out(producer_usage: ProducerUsage) -> Result<PrometheusOperations, Error> {
+    let mut prom_out = PrometheusOperations::default();
+    if producer_usage.producer.is_empty() { return Ok(prom_out); }
+
     let producer = producer_usage.producer.clone();
 
     // UNSET any producers that are no longer in the active schedule
     if producer_usage.pending_schedule.len() > 0 {
         if !producer_in_schedule(producer.clone(), producer_usage.pending_schedule) {
             log::info!("UNSET producer={}", producer);
+            prom_out.push_delete(vec![&producer]) ;
         }
     }
     // SET current producer's CPU usage
     log::info!("SET producer={} cpu_usage={}", producer, producer_usage.cpu_usage);
+    prom_out.push_set(vec![&producer], producer_usage.cpu_usage as f64);
 
-    return Ok(PrometheusMetrics::default());
+    return Ok(prom_out);
 }
 
 pub fn producer_in_schedule(producer: String, schedule: Vec<String> ) -> bool {

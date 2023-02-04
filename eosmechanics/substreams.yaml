@@ -5,6 +5,9 @@ package:
   url: https://github.com/pinax-network/substreams
   doc: Block Producer Benchmarks
 
+# import:
+#   prometheus: https://github.com/pinax-network/substreams-sink-prometheus/releases/download/v0.1.1/substreams-sink-prometheus-v0.1.1.spkg
+
 binaries:
   default:
     type: wasm/rust-v1
@@ -30,6 +33,6 @@ modules:
     inputs:
       - map: map_producer_usage
     output:
-      type: proto:pinax.substreams.sink.prometheus.v1.PrometheusMetrics
+      type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
 
 

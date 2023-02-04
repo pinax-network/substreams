@@ -2,27 +2,36 @@ syntax = "proto3";
 
 package pinax.substreams.sink.prometheus.v1;
 
+option go_package = "github.com/pinax-network/substreams-sink-prometheus/pb;pbkv";
+
+// PrometheusOperations is a list of PrometheusOperation to be applied to a Prometheus Gauge
+message PrometheusOperations {
+  repeated PrometheusOperation operations = 1;
+}
+
+// PrometheusOperation is a single operation to be applied to a Prometheus Gauge 
 // Reference https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#Gauge
-message PrometheusMetrics {
-    repeated PrometheusCounter prometheus_counters = 1;
-    repeated PrometheusGauge prometheus_gauges = 2;
-}
-
-message PrometheusCounter {
-    int32 value = 1;
-    repeated PrometheusCounterOperation operations = 2;
-}
-
-message PrometheusCounterOperation {
-    int32 value = 1;
-    enum Type {
-      UNSET = 0;
-      INC = 1;
-      ADD = 2;
-    }
-    Type type = 2;
-}
-
-message PrometheusGauge {
-    uint32 value = 1;
+message PrometheusOperation {
+  repeated string labels = 1;
+  double value = 2;
+  // uint64 ordinal = 3;
+  enum Type {
+    // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
+    UNSET = 0;
+    // Set sets the Gauge to an arbitrary value. 
+    SET = 1; // float
+    // Unsets the Gauge.
+    DELETE = 2;
+    // Inc increments the Gauge by 1. Use Add to increment it by arbitrary values.
+    INC = 3;
+    // Dec decrements the Gauge by 1. Use Sub to decrement it by arbitrary values.
+    DEC = 4;
+    // Add adds the given value to the Gauge. (The value can be negative, resulting in a decrease of the Gauge.)
+    ADD = 5; // float
+    // Sub subtracts the given value from the Gauge. (The value can be negative, resulting in an increase of the Gauge.)
+    SUB = 6; // float
+    // SetToCurrentTime sets the Gauge to the current Unix time in seconds.
+    SET_TO_CURRENT_TIME = 7;
+  }
+  Type type = 4;
 }
