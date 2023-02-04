@@ -2,13 +2,23 @@
 
 > Antelope accounts streaming
 
-### Quickstart
+### Releases:
+[v0.1.0](https://github.com/pinax-network/substreams/releases/download/accounts-v0.1.0/accounts-v0.1.0.spkg)
+
+### Running a release
+
+```
+substreams gui -e eos.firehose.eosnation.io:9001 https://github.com/pinax-network/substreams/releases/download/accounts-v0.1.0/accounts-v0.1.0.spkg map_accounts -s 1000 -t +1000
+```
+
+### Building from Source
 
 ```
 $ make codegen
 $ make build
 $ make stream
 ```
+
 
 ### Graph
 
