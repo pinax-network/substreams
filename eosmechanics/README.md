@@ -10,9 +10,8 @@ $ substreams run -e eos.firehose.eosnation.io:9001 map_producer_usage -s 2921031
 
 ### Quickstart - **Prometheus**
 
-```
-$ npm start
-```
+1. Start streaming: `$ npm start`
+2. Open the browser at [http://localhost:9102/metrics](http://localhost:9102/metrics)
 
 ### Mermaid graph
 
