@@ -1,9 +1,9 @@
 specVersion: v0.1.0
 package:
   name: "accounts"
-  version: v0.1.0
+  version: v0.2.0
   url: https://github.com/pinax-network/substreams
-  doc: Newly created accounts on Antelope
+  doc: Antelope newly created accounts
 
 protobuf:
   files:
@@ -33,3 +33,9 @@ modules:
     output:
       type: proto:sf.substreams.sink.kv.v1.KVOperations
 
+  # - name: prom_out
+  #   kind: map
+  #   inputs:
+  #     - map: map_accounts
+  #   output:
+  #     type: proto:pinax.substreams.sink.prometheus.v1.PrometheusMetrics
