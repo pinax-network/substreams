@@ -73,3 +73,105 @@ impl std::str::FromStr for BuyRamBytes {
         })
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_from_str_for_buy_ram_bytes_success() {
+        let input_string = r#"{"payer": "payer", "receiver": "receiver", "bytes": 123456}"#;
+        let expected = BuyRamBytes {
+            payer: "payer".to_string(),
+            receiver: "receiver".to_string(),
+            bytes: 123456,
+        };
+
+        let result = input_string.parse::<BuyRamBytes>();
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), expected);
+    }
+
+    #[test]
+    fn test_from_str_for_buy_ram_bytes_failure() {
+        let input_string = "not a valid json string";
+
+        let result = input_string.parse::<BuyRamBytes>();
+
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Failed to deserialize BuyRamBytes params");
+    }
+
+    #[test]
+    fn test_from_str_for_new_account() {
+        let valid_json_string = r#"{
+            "creator": "creator",
+            "name": "newaccount",
+            "owner": {
+                "threshold": 1,
+                "keys": [
+                    {
+                        "key": "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
+                        "weight": 1
+                    }
+                ],
+                "accounts": [],
+                "waits": []
+            },
+            "active": {
+                "threshold": 1,
+                "keys": [
+                    {
+                        "key": "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
+                        "weight": 1
+                    }
+                ],
+                "accounts": [],
+                "waits": []
+            }
+        }"#;
+        let expected_result = NewAccount {
+            creator: "creator".to_string(),
+            name: "newaccount".to_string(),
+            owner: Authority {
+                threshold: 1,
+                keys: vec![KeyWeight {
+                    key: "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV".to_string(),
+                    weight: 1,
+                }],
+                accounts: vec![],
+                waits: vec![],
+            },
+            active: Authority {
+                threshold: 1,
+                keys: vec![KeyWeight {
+                    key: "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV".to_string(),
+                    weight: 1,
+                }],
+                accounts: vec![],
+                waits: vec![],
+            },
+        };
+        let result = valid_json_string.parse::<NewAccount>().unwrap();
+        assert_eq!(expected_result, result);
+
+    }
+
+    #[test]
+    fn test_from_str_for_new_account_failure() {
+
+        let invalid_json_string = "{}";
+        let result = invalid_json_string.parse::<NewAccount>();
+        assert!(result.is_err());
+
+        let invalid_json_string = r#"{"creator": "creator"}"#;
+        let result = invalid_json_string.parse::<NewAccount>();
+        assert!(result.is_err());
+
+        let invalid_json_string = "just some text";
+        let result = invalid_json_string.parse::<NewAccount>();
+        assert!(result.is_err());
+    }
+}
