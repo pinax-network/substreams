@@ -1,24 +1,24 @@
 # Antelope `accounts` Substream
 
-> Antelope accounts streaming
+> Newly created accounts on Antelope
 
 ### Releases
+
 [v0.1.0](https://github.com/pinax-network/substreams/releases/tag/accounts-v0.1.0)
 
-### Running a release
+### Quickstart
 
 ```
-substreams gui -e eos.firehose.eosnation.io:9001 https://github.com/pinax-network/substreams/releases/download/accounts-v0.1.0/accounts-v0.1.0.spkg map_accounts -s 1000 -t +1000
+substreams gui -e eos.firehose.eosnation.io:9001 https://github.com/pinax-network/substreams/releases/download/accounts-v0.1.0/accounts-v0.1.0.spkg map_accounts -s 1000 -t +10000
 ```
 
-### Building and running from source
+### Build, Run & Sink from source
 
+```bash
+$ make
+$ make run
+$ make sink
 ```
-$ make codegen
-$ make build
-$ make stream
-```
-
 
 ### Graph
 
@@ -26,11 +26,8 @@ $ make stream
 graph TD;
   map_accounts[map: map_accounts]
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_accounts
-  store_account_counter[store: store_account_counter]
-  map_accounts --> store_account_counter
   kv_out[map: kv_out]
   map_accounts --> kv_out
-  store_account_counter --> kv_out
 ```
 
 ### Modules
@@ -38,24 +35,18 @@ graph TD;
 ```yaml
 Package name: accounts
 Version: v0.1.0
+Doc: Newly created accounts on Antelope
 Modules:
 ----
 Name: map_accounts
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.accounts.v1.Accounts
-Hash: 364f9549d80bae80b7ca6e30815627307108b524
-
-Name: store_account_counter
-Initial block: 0
-Kind: store
-Value Type: int64
-Update Policy: UPDATE_POLICY_ADD
-Hash: 4c5d9bf0df18c537b20aa118b501e5ef1daae105
+Hash: c2913de037b623e79746988daef50c7a97b8b546
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
-Hash: cda13af1f8b5162dbd5f68ea9cadd31f243b6c43
+Hash: 1eed02da1523ba80a21a56fdb3f137e41f366530
 ```

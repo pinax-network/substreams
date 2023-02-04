@@ -8,14 +8,55 @@ message Accounts {
   repeated Account accounts = 1;
 }
 
+message Creator {
+  string creator = 1;                             // account creator
+  optional string service = 2;                    // creator service (ENS, SignupEOS)
+                                                  //  - if not set, creator is a normal user
+  repeated PermissionLevel authorizations = 3;    // creator authorization (genialwombat@ops)
+}
+
 message Account {
-  string name = 1;                                // account name
-  string creator = 2;                             // account creator
-  google.protobuf.Timestamp timestamp = 3;        // account creation time stamp
-  string owner_public_key = 4;                    // owner permission public key
-  string active_public_key = 5;                   // active permission public key
-  uint32 ram_bytes = 6;                           // amount of RAM bought
-  string trx_id = 7;                              // transaction id
-  uint32 ordinal = 8;                             // order within the transaction
-  int64 counter = 9;                              // account global "mint number" starting with 1
+  // action details
+  Creator creator = 1;                            // account creator
+  string name = 2;                                // new account name
+  Authority owner = 3;                            // owner permission public key
+  Authority active = 4;                           // active permission public key
+
+  // transaction details
+  google.protobuf.Timestamp timestamp = 10;        // account creation timestamp
+  string trx_id = 11;                              // transaction id
+  uint32 block_num = 12;                           // block number
+
+  // account details
+  uint32 ram_bytes = 20;                           // amount of RAM bought
+  int64 stake_net_quantity = 21;                   // amount of NET staked (as quantity value)
+  int64 stake_cpu_quantity = 22;                   // amount of CPU staked (as quantity value)
+  bool transfer = 23;                             // transfer flag
+}
+
+message Authority {
+  uint32 threshold = 1;
+  repeated KeyWeight keys = 2;
+  repeated PermissionLevelWeight accounts = 3;
+  repeated WaitWeight waits = 4;
+}
+
+message KeyWeight {
+  string public_key = 1;
+  uint32 weight = 2;
+}
+
+message PermissionLevel {
+  string actor = 1;
+  string permission = 2;
+}
+
+message PermissionLevelWeight {
+  PermissionLevel permission = 1;
+  uint32 weight = 2;
+}
+
+message WaitWeight {
+  uint32 wait_sec = 1;
+  uint32 weight = 2;
 }

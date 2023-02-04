@@ -2,6 +2,7 @@ pgdata
 .idea
 dev/
 buf.gen.yaml
+*.db
 
 ### Substreams template
 .envrc

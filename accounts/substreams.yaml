@@ -2,9 +2,8 @@ specVersion: v0.1.0
 package:
   name: "accounts"
   version: v0.1.0
-
-imports:
-  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
+  url: https://github.com/pinax-network/substreams
+  doc: Newly created accounts on Antelope
 
 protobuf:
   files:
@@ -25,19 +24,12 @@ modules:
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.accounts.v1.Accounts
-  - name: store_account_counter
-    kind: store
-    initialBlock: 0
-    updatePolicy: add
-    valueType: int64
-    inputs:
-      - map: map_accounts
+
   - name: kv_out
     kind: map
     initialBlock: 0
     inputs:
       - map: map_accounts
-      - store: store_account_counter
     output:
       type: proto:sf.substreams.sink.kv.v1.KVOperations
 
