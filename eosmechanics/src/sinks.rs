@@ -5,13 +5,17 @@ use substreams_sink_prometheus::PrometheusOperations;
 use crate::eosmechanics::{ProducerUsage, ScheduleChange};
 
 #[substreams::handlers::map]
-pub fn prom_out(producer_usage: ProducerUsage, schedule_change: ScheduleChange) -> Result<PrometheusOperations, Error> {
+pub fn prom_out(
+    producer_usage: ProducerUsage,
+    schedule_change: ScheduleChange
+) -> Result<PrometheusOperations, Error> {
+
     let mut prom_out = PrometheusOperations::default();
     let producer = producer_usage.producer.clone();
 
     // SET producer CPU usage
     if !producer.is_empty() {
-        log::info!("SET producer={} cpu_usage={}", producer, producer_usage.cpu_usage);
+        log::info!("SET producer_usage={:?}", producer_usage);
         prom_out.push_set(vec![&format!("producer_usage:{}", producer)], producer_usage.cpu_usage as f64);
 
         // INC action count
