@@ -23,7 +23,6 @@ protobuf:
 modules:
   - name: map_producer_usage
     kind: map
-    initialBlock: 13389550
     inputs:
       - source: sf.antelope.type.v1.Block
     output:
@@ -31,10 +30,7 @@ modules:
 
   - name: prom_out
     kind: map
-    initialBlock: 13389550
     inputs:
       - map: map_producer_usage
     output:
       type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
-
-

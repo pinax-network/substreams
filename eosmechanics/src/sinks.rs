@@ -9,11 +9,11 @@ use crate::eosmechanics::ProducerUsage;
 #[substreams::handlers::map]
 pub fn prom_out(producer_usage: ProducerUsage) -> Result<PrometheusOperations, Error> {
     let mut prom_out = PrometheusOperations::default();
-    if producer_usage.producer.is_empty() { return Ok(prom_out); }
+    if producer_usage.producer.is_empty() { return Ok(Default::default()); }
 
     let producer = producer_usage.producer.clone();
 
-    // UNSET any producers that are no longer in the active schedule
+    // (OPTIONAL) UNSET any producers that are no longer in the active schedule
     if producer_usage.pending_schedule.len() > 0 {
         if !producer_in_schedule(producer.clone(), producer_usage.pending_schedule) {
             log::info!("UNSET producer={}", producer);

@@ -5,12 +5,26 @@
 ### Quickstart - **Substreams**
 
 ```
-$ substreams run -e eos.firehose.eosnation.io:9001 map_producer_usage -s 292103130 -t +100000 -o jsonl
+
 ```
 
-### Quickstart - **Prometheus**
+### Quickstart
 
-1. Start streaming: `$ npm run start`
+```
+substreams gui -e eos.firehose.eosnation.io:9001 https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.2.0/eosmechanics-v0.2.0.spkg map_producer_usage -s 292103130 -t +100000
+```
+
+### Build, Run & Sink from source
+
+```bash
+$ make
+$ make run
+$ make sink
+```
+
+### **Prometheus** Sink
+
+1. Start streaming: `$ npm start`
 2. Open the browser at [http://localhost:9102/metrics](http://localhost:9102/metrics)
 
 ### Mermaid graph
@@ -31,19 +45,19 @@ graph TD;
 
 ```yaml
 Package name: eosmechanics
-Version: v0.1.0
+Version: v0.2.0
 Doc: Block Producer Benchmarks
 Modules:
 ----
 Name: map_producer_usage
-Initial block: 13389550
+Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ProducerUsage
-Hash: ce1c6cd1b8fb5eb6a75e2d0caed00897b673bf7b
+Hash: 316f1dc69afeeed400e2d871111f5c2b95e69739
 
-Name: map_prom_out
-Initial block: 13389550
+Name: prom_out
+Initial block: 0
 Kind: map
-Output Type: proto:pinax.substreams.sink.prom.v1.PrometheusMetrics
-Hash: c57a5a1cafa2f0666675ad205aae1dc62685fd4b
+Output Type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
+Hash: 128226c6e9bd7cf241aac0f01ac5bd9fcc48383d
 ```

@@ -27,12 +27,12 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_accounts -s 1000000 -t +10000 -o jsonl
+	substreams run -e eos.firehose.eosnation.io:9001 map_producer_usage -s 292103130 -t +100000 -o jsonl
 
 .PHONY: gui
-run:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_accounts -s 1000000 -t +10000
+gui:
+	substreams gui -e eos.firehose.eosnation.io:9001 map_producer_usage -s 292103130 -t +100000
 
 .PHONY: sink
 sink:
-	substreams-sink-kv run badger3://badger_data.db eos.firehose.eosnation.io:9001 substreams.yaml kv_out
+	substreams-sink-prometheus run eos.firehose.eosnation.io:9001
