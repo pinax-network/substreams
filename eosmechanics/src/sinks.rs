@@ -10,7 +10,7 @@ pub fn prom_out(producer_usage: ProducerUsage, schedule_change: ScheduleChange) 
     let producer = producer_usage.producer.clone();
 
     // SET producer CPU usage
-    if producer.len() > 0 {
+    if !producer.is_empty() {
         log::info!("SET producer={} cpu_usage={}", producer, producer_usage.cpu_usage);
         prom_out.push_set(vec![&format!("producer_usage:{}", producer)], producer_usage.cpu_usage as f64);
 
@@ -19,7 +19,7 @@ pub fn prom_out(producer_usage: ProducerUsage, schedule_change: ScheduleChange) 
     }
 
     // SET schedule version
-    if schedule_change.pending_schedule.len() > 0 {
+    if !schedule_change.pending_schedule.is_empty() {
         prom_out.push_set(vec!["schedule_version"], schedule_change.schedule_version as f64);
     }
 
@@ -31,5 +31,5 @@ pub fn prom_out(producer_usage: ProducerUsage, schedule_change: ScheduleChange) 
         prom_out.push_delete(vec![&format!("producer_usage:{}", remove_producer)]) ;
     }
 
-    return Ok(prom_out);
+    Ok(prom_out)
 }

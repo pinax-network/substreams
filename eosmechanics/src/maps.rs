@@ -57,7 +57,7 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
     let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.as_ref().unwrap().schedule_v2.clone().unwrap());
 
     // If there is no pending schedule, then there is no schedule change
-    if pending_schedule.len() == 0 { return Ok(Default::default()); }
+    if pending_schedule.is_empty() { return Ok(Default::default()); }
 
     let mut add_to_schedule: Vec<String> = Default::default();
     let mut remove_from_schedule: Vec<String> = Default::default();
@@ -96,7 +96,7 @@ pub fn schedule_to_accounts(schedule: ProducerAuthoritySchedule) -> Vec<String> 
 }
 
 pub fn producer_in_schedule(producer: String, schedule: Vec<String> ) -> Option<bool> {
-    if schedule.len() == 0 { return None; }
+    if schedule.is_empty() { return None; }
     Some(schedule_to_set(schedule).contains(producer.as_str()))
 }
 
