@@ -5,6 +5,12 @@ package eosmechanics.v1;
 message ProducerUsage {
     string producer = 1;                    // the name of the block producer
     int64 cpu_usage = 2;                    // cpu usage of the eosmechanics transaction 
-    repeated string active_schedule = 3;    // active schedule of the block producers 
-    repeated string pending_schedule = 4;   // pending schedule of the block producers
+}
+
+message ScheduleChange {
+    string producer = 1;                        // current block producer
+    repeated string active_schedule = 2;        // active schedule of the block producers 
+    repeated string pending_schedule = 3;       // pending schedule of the block producers
+    repeated string remove_from_schedule = 4;   // block producers to be removed from the active schedule
+    repeated string add_to_schedule = 5;        // block producers to be added to the active schedule
 }

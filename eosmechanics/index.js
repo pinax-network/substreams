@@ -1,5 +1,5 @@
 import { Substreams, download } from "substreams";
-import { gauges, register, listen } from "./src/metrics.js"
+import { gauges, listen } from "./src/metrics.js"
 
 // Substreams using live data
 const spkg = "https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.2.0/eosmechanics-v0.2.0.spkg";

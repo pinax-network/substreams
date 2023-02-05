@@ -28,9 +28,17 @@ modules:
     output:
       type: proto:eosmechanics.v1.ProducerUsage
 
+  - name: map_schedule_change
+    kind: map
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:eosmechanics.v1.ScheduleChange
+
   - name: prom_out
     kind: map
     inputs:
       - map: map_producer_usage
+      - map: map_schedule_change
     output:
       type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations

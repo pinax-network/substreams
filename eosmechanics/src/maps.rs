@@ -1,8 +1,9 @@
+use std::collections::HashSet;
+
 use substreams::errors::Error;
 use substreams_antelope::{Block, ProducerAuthoritySchedule};
 
-use crate::eosmechanics::ProducerUsage;
-
+use crate::eosmechanics::{ProducerUsage, ScheduleChange};
 
 /// Map a block to a ProducerUsage struct
 /// 
@@ -28,11 +29,8 @@ use crate::eosmechanics::ProducerUsage;
 /// producer.
 #[substreams::handlers::map]
 pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
-
     // Producer is found in the block header
     let producer = block.header.as_ref().unwrap().producer.clone();
-    let active_schedule: Vec<String> = schedule_to_accounts(block.active_schedule_v2.clone().unwrap());
-    let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.as_ref().unwrap().schedule_v2.clone().unwrap());
 
     for trx in block.all_transaction_traces() {
         // CPU usage is found in the transaction receipt
@@ -46,16 +44,62 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
             return Ok(ProducerUsage{
                 producer,
                 cpu_usage,
-                active_schedule,
-                pending_schedule
             })
         }
     }
-
     // If no transaction trace contains `eosmechanics:cpu` action, return default value
     Ok(Default::default())
 }
 
+#[substreams::handlers::map]
+pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
+    let active_schedule: Vec<String> = schedule_to_accounts(block.active_schedule_v2.clone().unwrap());
+    let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.as_ref().unwrap().schedule_v2.clone().unwrap());
+
+    // If there is no pending schedule, then there is no schedule change
+    if pending_schedule.len() == 0 { return Ok(Default::default()); }
+
+    let mut add_to_schedule: Vec<String> = Default::default();
+    let mut remove_from_schedule: Vec<String> = Default::default();
+
+    for producer in &active_schedule {
+        match producer_in_schedule(producer.clone(), pending_schedule.clone()) {
+            Some(true) => (),
+            Some(false) => remove_from_schedule.push(producer.clone()),
+            None => (),
+        }
+    }
+
+    for producer in &pending_schedule {
+        match producer_in_schedule(producer.clone(), active_schedule.clone()) {
+            Some(true) => (),
+            Some(false) => add_to_schedule.push(producer.clone()),
+            None => (),
+        }
+    }
+
+    Ok(ScheduleChange{
+        producer: block.header.as_ref().unwrap().producer.clone(),
+        active_schedule,
+        pending_schedule,
+        add_to_schedule,
+        remove_from_schedule,
+    })
+}
+
 pub fn schedule_to_accounts(schedule: ProducerAuthoritySchedule) -> Vec<String> {
     schedule.producers.iter().map(|p| p.account_name.clone()).collect()
+}
+
+pub fn producer_in_schedule(producer: String, schedule: Vec<String> ) -> Option<bool> {
+    if schedule.len() == 0 { return None; }
+    Some(schedule_to_set(schedule).contains(producer.as_str()))
+}
+
+pub fn schedule_to_set(schedule: Vec<String>) -> HashSet<String> {
+    let mut set = HashSet::new();
+    for account in schedule {
+        set.insert(account);
+    }
+    set
 }
