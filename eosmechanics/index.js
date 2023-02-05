@@ -36,7 +36,7 @@ listen(9102).then(async () => {
         for ( const { labels, value, type } of decoded.operations ) {
             for ( const item of labels) {
                 const [gauge, label] = item.split(":");
-                console.log(block_num, { gauge, label, value, type });
+                console.log(block_num, JSON.parse(JSON.stringify({ gauge, label, value, type })));
                 // SET
                 if (type === 1) {
                     if ( label ) gauges[gauge].labels(label).set(value);
