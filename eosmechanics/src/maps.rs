@@ -30,17 +30,17 @@ use crate::eosmechanics::ProducerUsage;
 pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 
     // Producer is found in the block header
-    let producer = block.header.clone().unwrap().producer;
+    let producer = block.header.as_ref().unwrap().producer.clone();
     let active_schedule: Vec<String> = schedule_to_accounts(block.active_schedule_v2.clone().unwrap());
-    let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.clone().unwrap().schedule_v2.unwrap());
-    
-    for trx in block.all_transaction_traces() { 
+    let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.as_ref().unwrap().schedule_v2.clone().unwrap());
+
+    for trx in block.all_transaction_traces() {
         // CPU usage is found in the transaction receipt
-        let cpu_usage = trx.receipt.clone().unwrap().cpu_usage_micro_seconds as i64;
+        let cpu_usage = trx.receipt.as_ref().unwrap().cpu_usage_micro_seconds as i64;
 
         // Only return a value if the transaction trace contains `eosmechanics:cpu` action
-        for trace in trx.clone().action_traces {
-            let action_trace = trace.action.unwrap();
+        for trace in &trx.action_traces {
+            let action_trace = trace.action.as_ref().unwrap();
             if action_trace.account != "eosmechanics" { continue; }
             if action_trace.name != "cpu"  { continue; }
             return Ok(ProducerUsage{
@@ -57,6 +57,5 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 }
 
 pub fn schedule_to_accounts(schedule: ProducerAuthoritySchedule) -> Vec<String> {
-    let accounts = schedule.producers.iter().map(|p| p.account_name.to_string()).collect();
-    accounts
+    schedule.producers.iter().map(|p| p.account_name.clone()).collect()
 }
