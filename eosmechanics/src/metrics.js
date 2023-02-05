@@ -6,21 +6,28 @@ const register = new client.Registry();
 const collectDefaultMetrics = client.collectDefaultMetrics;
 collectDefaultMetrics({ register });
 
-const producers_usage = new client.Gauge({
-    name: "producers_usage",
-    help: "Producers CPU Usage",
+const action_count = new client.Gauge({
+    name: "action_count",
+    help: "Total [eosmechanics] CPU actions",
 });
-register.registerMetric(producers_usage);
+register.registerMetric(action_count);
+
+const schedule_version = new client.Gauge({
+    name: "schedule_version",
+    help: "Schedule version",
+});
+register.registerMetric(schedule_version);
 
 const producer_usage = new client.Gauge({
     name: "producer_usage",
-    help: "Producer CPU Usage",
+    help: "Producer CPU usage",
     labelNames: ["producer"]
 });
 register.registerMetric(producer_usage);
 
 export const gauges = {
-    producers_usage,
+    action_count,
+    schedule_version,
     producer_usage
 }
 

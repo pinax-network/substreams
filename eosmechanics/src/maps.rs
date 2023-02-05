@@ -78,8 +78,12 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
         }
     }
 
+    // header
+    let header = block.header.as_ref().unwrap();
+
     Ok(ScheduleChange{
-        producer: block.header.as_ref().unwrap().producer.clone(),
+        producer: header.producer.clone(),
+        schedule_version: header.schedule_version,
         active_schedule,
         pending_schedule,
         add_to_schedule,

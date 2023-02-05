@@ -4,7 +4,7 @@ import { gauges, listen } from "./src/metrics.js"
 // Substreams using live data
 const spkg = "https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.2.0/eosmechanics-v0.2.0.spkg";
 const outputModule = "prom_out";
-const startBlockNum = "292442484";
+const startBlockNum = "288786307";
 const host = "eos.firehose.eosnation.io:9001"
 
 // Initialize Substreams
@@ -34,11 +34,19 @@ listen(9102).then(async () => {
         
         // Prometheus metrics
         for ( const { labels, value, type } of decoded.operations ) {
-            console.log(block_num, { labels, value, type });
-            // SET
-            if (type === 1) gauges.producer_usage.labels(labels[0]).set(value);
-            // RESET
-            if (type === 2) gauges.producers_usage.reset(labels[0]);
+            for ( const item of labels) {
+                const [gauge, label] = item.split(":");
+                console.log(block_num, { gauge, label, value, type });
+                // SET
+                if (type === 1) {
+                    if ( label ) gauges[gauge].labels(label).set(value);
+                    else gauges[gauge].set(value);
+                }
+                // RESET
+                if (type === 2) gauges[gauge].reset(label);
+                // INC
+                if (type === 3) gauges[gauge].inc(label);
+            }
         }
     });
 

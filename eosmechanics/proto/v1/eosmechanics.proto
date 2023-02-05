@@ -9,8 +9,9 @@ message ProducerUsage {
 
 message ScheduleChange {
     string producer = 1;                        // current block producer
-    repeated string active_schedule = 2;        // active schedule of the block producers 
-    repeated string pending_schedule = 3;       // pending schedule of the block producers
-    repeated string remove_from_schedule = 4;   // block producers to be removed from the active schedule
-    repeated string add_to_schedule = 5;        // block producers to be added to the active schedule
+    uint32 schedule_version = 2;                // version of the schedule
+    repeated string active_schedule = 3;        // active schedule of the block producers 
+    repeated string pending_schedule = 4;       // pending schedule of the block producers
+    repeated string remove_from_schedule = 5;   // block producers to be removed from the active schedule
+    repeated string add_to_schedule = 6;        // block producers to be added to the active schedule
 }
