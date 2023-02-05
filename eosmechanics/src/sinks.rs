@@ -17,11 +17,11 @@ pub fn prom_out(producer_usage: ProducerUsage) -> Result<PrometheusOperations, E
     log::info!("SET producer={} cpu_usage={}", producer, producer_usage.cpu_usage);
     prom_out.push_set(vec![&producer], producer_usage.cpu_usage as f64);
 
-    // (OPTIONAL) UNSET any producers that are no longer in the active schedule
+    // (OPTIONAL) RESET any producers that are no longer in the active schedule
     // Must be declared after SET or else producer could stay in schedule indefinitely
     if producer_usage.pending_schedule.len() > 0 {
         if !producer_in_schedule(producer.clone(), producer_usage.pending_schedule) {
-            log::info!("UNSET producer={}", producer);
+            log::info!("RESET producer={}", producer);
             prom_out.push_delete(vec![&producer]) ;
         }
     }

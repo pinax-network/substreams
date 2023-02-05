@@ -2,16 +2,10 @@
 
 > Block Producer Benchmarks created by [AlohaEOS](https://www.alohaeos.com/tools/benchmarks).
 
-### Quickstart - **Substreams**
-
-```
-
-```
-
 ### Quickstart
 
-```
-substreams gui -e eos.firehose.eosnation.io:9001 https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.2.0/eosmechanics-v0.2.0.spkg map_producer_usage -s 292103130 -t +100000
+```bash
+$ substreams gui -e eos.firehose.eosnation.io:9001 https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.2.0/eosmechanics-v0.2.0.spkg map_producer_usage -s 292103130 -t +100000
 ```
 
 ### Build, Run & Sink from source
@@ -53,11 +47,11 @@ Name: map_producer_usage
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ProducerUsage
-Hash: 0a50cc9be5aa717d6624dbe45e4138d3b794ecfb
+Hash: 149a9c1a99eb990facf6ff4548487278ca3594e5
 
 Name: prom_out
 Initial block: 0
 Kind: map
 Output Type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
-Hash: ecc2b0e082cc1975392b79cff38ca5bb16931e6d
+Hash: bb656297ba7bb32b35c759d6a73173ea299a0b0b
 ```

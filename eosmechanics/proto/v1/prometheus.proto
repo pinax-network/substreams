@@ -20,8 +20,8 @@ message PrometheusOperation {
     UNSET = 0;
     // Set sets the Gauge to an arbitrary value. 
     SET = 1; // float
-    // Unsets the Gauge.
-    DELETE = 2;
+    // Reset the Gauge.
+    RESET = 2;
     // Inc increments the Gauge by 1. Use Add to increment it by arbitrary values.
     INC = 3;
     // Dec decrements the Gauge by 1. Use Sub to decrement it by arbitrary values.
