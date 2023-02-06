@@ -9,15 +9,28 @@ message PrometheusOperations {
   repeated PrometheusOperation operations = 1;
 }
 
-// PrometheusOperation is a single operation to be applied to a Prometheus Gauge 
-// Reference https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#Gauge
+// PrometheusOperation is a single operation to be applied to a Prometheus Metric 
 message PrometheusOperation {
-  repeated string labels = 1;
-  double value = 2;
-  // uint64 ordinal = 3;
+  string name = 1;
+  optional string help = 2;
+  repeated string labels = 3;
+  double value = 4;
+
+  // Defines the type of Prometheus Metric
+  enum Metric {
+    // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
+    UNSETMETRIC = 0;
+    // Prometheus metric of type 'Counter'
+    COUNTER = 1;
+    // Prometheus metric of type 'Gauge'
+    GAUGE = 2;
+  }
+  Metric metric = 5;
+
+  // Defines the type of Prometheus Operation
   enum Type {
     // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
-    UNSET = 0;
+    UNSETTYPE = 0;
     // Set sets the Gauge to an arbitrary value. 
     SET = 1; // float
     // Reset the Gauge.
@@ -33,5 +46,5 @@ message PrometheusOperation {
     // SetToCurrentTime sets the Gauge to the current Unix time in seconds.
     SET_TO_CURRENT_TIME = 7;
   }
-  Type type = 4;
+  Type type = 6;
 }

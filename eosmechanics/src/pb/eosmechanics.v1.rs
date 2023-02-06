@@ -1,5 +1,5 @@
 // @generated
-#[derive(Clone, Eq, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProducerUsage {
     /// the name of the block producer
     #[prost(string, tag="1")]
@@ -8,7 +8,7 @@ pub struct ProducerUsage {
     #[prost(int64, tag="2")]
     pub cpu_usage: i64,
 }
-#[derive(Clone, Eq, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScheduleChange {
     /// current block producer
     #[prost(string, tag="1")]
