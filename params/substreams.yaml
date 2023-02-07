@@ -13,9 +13,9 @@ modules:
     kind: map
     inputs:
       - params: string
-      - source: sf.ethereum.type.v2.Block
+      - source: sf.substreams.v1.Clock
     output:
-      type: proto:sf.ethereum.type.v2.Block
+      type: proto:sf.substreams.v1.Clock
 
 params:
   map_params: "eth"
