@@ -5,12 +5,13 @@ members = [
     "eosio.token",
     "eosmechanics",
     "accounts",
+    "params",
 ]
 
 [workspace.dependencies]
 prost = "0.11"
 prost-types = "0.11"
-substreams = "0.5.0"
+substreams = "0.5.2"
 substreams-antelope = "0.1.1"
 substreams-ethereum = "0.9"
 substreams-sink-kv = "0.1"

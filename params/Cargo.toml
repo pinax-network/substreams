@@ -1,0 +1,18 @@
+[package]
+name = "params"
+version = "0.1.0"
+authors = ["Denis <denis@pinax.network>"]
+description = "Test params"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+publish = false
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+substreams = { workspace = true }
+substreams-ethereum = { workspace = true }

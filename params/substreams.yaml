@@ -1,0 +1,21 @@
+specVersion: v0.1.0
+package:
+  name: params
+  version: v0.1.0
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/params.wasm
+
+modules:
+  - name: map_params
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:sf.ethereum.type.v2.Block
+
+params:
+  map_params: "eth"
