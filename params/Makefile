@@ -2,8 +2,6 @@
 all:
 	make build
 	make pack
-	make graph
-	make info
 
 .PHONY: build
 build:
@@ -13,18 +11,6 @@ build:
 pack:
 	substreams pack
 
-.PHONY: graph
-graph:
-	substreams graph
-
-.PHONY: info
-info:
-	substreams info
-
 .PHONY: run
 run:
-	substreams run -e api-unstable.streamingfast.io:443 map_params -t +10
-
-.PHONY: gui
-gui:
-	substreams gui -e api-unstable.streamingfast.io:443 map_params -t +10
+	substreams run -e api-unstable.streamingfast.io:443 map_params -s 2 -t +2
