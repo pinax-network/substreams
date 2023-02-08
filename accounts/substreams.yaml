@@ -5,6 +5,9 @@ package:
   url: https://github.com/pinax-network/substreams
   doc: Antelope newly created accounts
 
+imports:
+  kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v0.1.2/substreams-sink-kv-v0.1.2.spkg
+
 protobuf:
   files:
     - accounts.proto
