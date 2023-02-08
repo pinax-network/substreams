@@ -4,47 +4,47 @@ package pinax.substreams.sink.prometheus.v1;
 
 option go_package = "github.com/pinax-network/substreams-sink-prometheus/pb;pbkv";
 
-// PrometheusOperations is a list of PrometheusOperation to be applied to a Prometheus Gauge
+// List of Prometheus metrics
 message PrometheusOperations {
   repeated PrometheusOperation operations = 1;
 }
 
-// PrometheusOperation is a single operation to be applied to a Prometheus Metric 
 message PrometheusOperation {
-  string name = 1;
-  optional string help = 2;
-  repeated string labels = 3;
-  double value = 4;
+  Metrics metric = 1;             // Prometheus metric type (COUNTER, GAUGE, HISTOGRAM, SUMMARY)
+  Operations operation = 2;       // Prometheus metric operation
+  string name = 3;                // Name of the Prometheus metric
+  double value = 4;               // Value (Float) to be used in the operation
+  repeated string labels = 5;     // Labels to be used in Metric
+}
 
-  // Defines the type of Prometheus Metric
-  enum Metric {
-    // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
-    UNSETMETRIC = 0;
-    // Prometheus metric of type 'Counter'
-    COUNTER = 1;
-    // Prometheus metric of type 'Gauge'
-    GAUGE = 2;
-  }
-  Metric metric = 5;
+enum Metrics {
+  // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
+  METRICS_UNSPECIFIED = 0;
+  // Prometheus metric of type 'Counter'
+  METRICS_COUNTER = 1;
+  // Prometheus metric of type 'Gauge'
+  METRICS_GAUGE = 2;
+  // Prometheus metric of type 'Histogram'
+  METRICS_HISTOGRAM = 3;
+  // Prometheus metric of type 'Summary'
+  METRICS_SUMMARY = 4;
+}
 
-  // Defines the type of Prometheus Operation
-  enum Type {
-    // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
-    UNSETTYPE = 0;
-    // Set sets the Gauge to an arbitrary value. 
-    SET = 1; // float
-    // Reset the Gauge.
-    RESET = 2;
-    // Inc increments the Gauge by 1. Use Add to increment it by arbitrary values.
-    INC = 3;
-    // Dec decrements the Gauge by 1. Use Sub to decrement it by arbitrary values.
-    DEC = 4;
-    // Add adds the given value to the Gauge. (The value can be negative, resulting in a decrease of the Gauge.)
-    ADD = 5; // float
-    // Sub subtracts the given value from the Gauge. (The value can be negative, resulting in an increase of the Gauge.)
-    SUB = 6; // float
-    // SetToCurrentTime sets the Gauge to the current Unix time in seconds.
-    SET_TO_CURRENT_TIME = 7;
-  }
-  Type type = 6;
+enum Operations {
+  // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
+  OPERATIONS_UNSPECIFIED = 0;
+  // Set sets the Gauge to an arbitrary value. 
+  OPERATIONS_SET = 1; // float
+  // Inc increments the Gauge by 1. Use Add to increment it by arbitrary values.
+  OPERATIONS_INC = 2;
+  // Dec decrements the Gauge by 1. Use Sub to decrement it by arbitrary values.
+  OPERATIONS_DEC = 3;
+  // Add adds the given value to the Gauge. (The value can be negative, resulting in a decrease of the Gauge.)
+  OPERATIONS_ADD = 4; // float
+  // Sub subtracts the given value from the Gauge. (The value can be negative, resulting in an increase of the Gauge.)
+  OPERATIONS_SUB = 5; // float
+  // SetToCurrentTime sets the Gauge to the current Unix time in seconds.
+  OPERATIONS_SET_TO_CURRENT_TIME = 7;
+  // Reset metric
+  OPERATIONS_RESET = 8;
 }

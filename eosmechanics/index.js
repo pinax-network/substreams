@@ -2,7 +2,8 @@ import { Substreams, download } from "substreams";
 import { gauges, listen } from "./src/metrics.js"
 
 // Substreams using live data
-const spkg = "https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.2.0/eosmechanics-v0.2.0.spkg";
+const version = "v0.3.0";
+const spkg = `https://github.com/pinax-network/substreams/releases/download/eosmechanics-${version}/eosmechanics-${version}.spkg`;
 const outputModule = "prom_out";
 const startBlockNum = "288786307";
 const host = "eos.firehose.eosnation.io:9001"
@@ -33,20 +34,17 @@ listen(9102).then(async () => {
         const decoded = PrometheusOperations.fromBinary(output.data.mapOutput.value);
         
         // Prometheus metrics
-        for ( const { labels, value, type } of decoded.operations ) {
-            for ( const item of labels) {
-                const [gauge, label] = item.split(":");
-                console.log(block_num, JSON.parse(JSON.stringify({ gauge, label, value, type })));
-                // SET
-                if (type === 1) {
-                    if ( label ) gauges[gauge].labels(label).set(value);
-                    else gauges[gauge].set(value);
-                }
-                // RESET
-                if (type === 2) gauges[gauge].reset(label);
-                // INC
-                if (type === 3) gauges[gauge].inc(label);
+        for ( const  { metric, name, operation, value, labels } of decoded.operations ) {
+            console.log({metric, operation, name, value, labels });
+            // SET
+            if (operation === 1) {
+                if ( labels.length ) gauges[name].labels({producer: labels[0]}).set(value);
+                else gauges[name].set(value);
             }
+            // INC
+            if (operation === 2) gauges[name].inc();
+            // // RESET
+            // if (type === 2) gauges[metric].inc(label);
         }
     });
 

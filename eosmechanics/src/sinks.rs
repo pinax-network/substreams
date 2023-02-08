@@ -16,15 +16,15 @@ pub fn prom_out(
     // SET producer CPU usage
     if !producer.is_empty() {
         log::info!("SET producer_usage={:?}", producer_usage);
-        prom_out.push_set(vec![&format!("producer_usage:{}", producer)], producer_usage.cpu_usage as f64);
+        prom_out.push_set("producer_usage", producer_usage.cpu_usage as f64, vec![producer.as_str()]);
 
         // INC action count
-        prom_out.push_inc(vec!["action_count"]);
+        prom_out.push_inc("action_count", vec![]);
     }
 
     // SET schedule version
     if !schedule_change.pending_schedule.is_empty() {
-        prom_out.push_set(vec!["schedule_version"], schedule_change.schedule_version as f64);
+        prom_out.push_set("schedule_version", schedule_change.schedule_version as f64, vec![]);
     }
 
     // RESET remove producer
@@ -32,7 +32,7 @@ pub fn prom_out(
     // must be declared after SET or else producer could stay in schedule indefinitely
     for remove_producer in schedule_change.remove_from_schedule {
         log::info!("RESET remove_producer={}", remove_producer);
-        prom_out.push_delete(vec![&format!("producer_usage:{}", remove_producer)]) ;
+        // prom_out.push_reset("producer_usage", vec!["remove_producer"]) ;
     }
 
     Ok(prom_out)
