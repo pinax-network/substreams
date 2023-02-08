@@ -28,25 +28,28 @@ graph TD;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_accounts
   kv_out[map: kv_out]
   map_accounts --> kv_out
+  prom_out[map: prom_out]
+  map_accounts --> prom_out
 ```
 
 ### Modules
 
-```yaml
-Package name: accounts
-Version: v0.2.0
-Doc: Antelope newly created accounts
-Modules:
-----
+```
 Name: map_accounts
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.accounts.v1.Accounts
-Hash: 7caf4768b99635f7cece3853ddf0a98c2d222dca
+Hash: cf0ca8345f56774a4fb8891997bb799c52f91337
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
-Hash: 37066d5ef69e1426d419af44ae6514bcde21fa2d
+Hash: 79cf43959571be1c7745881d51abd48053de81d4
+
+Name: prom_out
+Initial block: 0
+Kind: map
+Output Type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
+Hash: 11c6de5a7f0c176225f149450b06ddf58996bfbb
 ```

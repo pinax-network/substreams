@@ -7,6 +7,7 @@ package:
 
 imports:
   kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v0.1.2/substreams-sink-kv-v0.1.2.spkg
+  prom: https://github.com/pinax-network/substreams-sink-prometheus/releases/download/v0.1.2/substreams-sink-prometheus-v0.1.2.spkg
 
 protobuf:
   files:
@@ -22,7 +23,6 @@ binaries:
 modules:
   - name: map_accounts
     kind: map
-    initialBlock: 0
     inputs:
       - source: sf.antelope.type.v1.Block
     output:
@@ -30,15 +30,14 @@ modules:
 
   - name: kv_out
     kind: map
-    initialBlock: 0
     inputs:
       - map: map_accounts
     output:
       type: proto:sf.substreams.sink.kv.v1.KVOperations
 
-  # - name: prom_out
-  #   kind: map
-  #   inputs:
-  #     - map: map_accounts
-  #   output:
-  #     type: proto:pinax.substreams.sink.prometheus.v1.PrometheusMetrics
+  - name: prom_out
+    kind: map
+    inputs:
+      - map: map_accounts
+    output:
+      type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations

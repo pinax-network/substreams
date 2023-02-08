@@ -1,6 +1,7 @@
 use substreams::{log, proto};
 use substreams_sink_kv::pb::kv::KvOperations;
 use substreams::errors::Error;
+use substreams_sink_prometheus::PrometheusOperations;
 
 use crate::accounts::Accounts;
 
@@ -17,5 +18,15 @@ pub fn kv_out( accounts: Accounts) -> Result<KvOperations, Error> {
     Ok(kv_ops)
 }
 
-// TO-DO - Prometheus Sink (counter for newly created accounts)
-// use EOSMechanics as example
+#[substreams::handlers::map]
+pub fn prom_out(accounts: Accounts) -> Result<PrometheusOperations, Error> {
+
+    let mut prom_out = PrometheusOperations::default();
+
+    if accounts.accounts.len() > 0 {
+        log::info!("New accounts: {}", accounts.accounts.len());
+        prom_out.push_add("accounts_counter", accounts.accounts.len() as f64, vec![]);
+    }
+
+    Ok(prom_out)
+}
