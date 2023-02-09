@@ -26,7 +26,7 @@ pub fn prom_out(accounts: Accounts) -> Result<PrometheusOperations, Error> {
 
     if total > 0.0 {
         log::info!("New accounts: {}", total);
-        prom_out.push(Gauge::new("accounts_counter").add(total));
+        prom_out.push(Gauge::from("accounts_counter").add(total));
     }
 
     Ok(prom_out)

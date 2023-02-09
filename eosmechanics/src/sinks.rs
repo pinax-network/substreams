@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use substreams::errors::Error;
 use substreams::log;
 use substreams_sink_prometheus::{PrometheusOperations, Counter, Gauge};
@@ -16,17 +18,17 @@ pub fn prom_out(
     // SET producer CPU usage
     if !producer.is_empty() {
         log::info!("SET producer_usage={:?}", producer_usage);
-        let mut gauge = Gauge::new("producer_usage");
-        gauge.set_label(producer.as_str());
+        let labels = HashMap::from([("producer".to_string(), producer)]);
+        let mut gauge = Gauge::from("producer_usage").with(labels);
         prom_out.push(gauge.set(producer_usage.cpu_usage as f64));
 
         // INC action count
-        prom_out.push(Counter::new("action_count").inc());
+        prom_out.push(Counter::from("action_count").inc());
     }
 
     // SET schedule version
     if !schedule_change.pending_schedule.is_empty() {
-        prom_out.push(Gauge::new("schedule_version").set(schedule_change.schedule_version as f64));
+        prom_out.push(Gauge::from("schedule_version").set(schedule_change.schedule_version as f64));
     }
 
     // RESET remove producer
