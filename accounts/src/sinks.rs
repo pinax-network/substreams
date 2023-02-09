@@ -1,7 +1,7 @@
 use substreams::{log, proto};
 use substreams_sink_kv::pb::kv::KvOperations;
 use substreams::errors::Error;
-use substreams_sink_prometheus::PrometheusOperations;
+use substreams_sink_prometheus::{PrometheusOperations, Gauge};
 
 use crate::accounts::Accounts;
 
@@ -22,10 +22,11 @@ pub fn kv_out( accounts: Accounts) -> Result<KvOperations, Error> {
 pub fn prom_out(accounts: Accounts) -> Result<PrometheusOperations, Error> {
 
     let mut prom_out = PrometheusOperations::default();
+    let total = accounts.accounts.len() as f64;
 
-    if accounts.accounts.len() > 0 {
-        log::info!("New accounts: {}", accounts.accounts.len());
-        prom_out.push_add("accounts_counter", accounts.accounts.len() as f64, vec![]);
+    if total > 0.0 {
+        log::info!("New accounts: {}", total);
+        prom_out.push(Gauge::new("accounts_counter").add(total));
     }
 
     Ok(prom_out)

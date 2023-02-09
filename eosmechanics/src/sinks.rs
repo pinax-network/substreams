@@ -1,6 +1,6 @@
 use substreams::errors::Error;
 use substreams::log;
-use substreams_sink_prometheus::PrometheusOperations;
+use substreams_sink_prometheus::{PrometheusOperations, Counter, Gauge};
 
 use crate::eosmechanics::{ProducerUsage, ScheduleChange};
 
@@ -16,15 +16,17 @@ pub fn prom_out(
     // SET producer CPU usage
     if !producer.is_empty() {
         log::info!("SET producer_usage={:?}", producer_usage);
-        prom_out.push_set("producer_usage", producer_usage.cpu_usage as f64, vec![producer.as_str()]);
+        let mut gauge = Gauge::new("producer_usage");
+        gauge.set_label(producer.as_str());
+        prom_out.push(gauge.set(producer_usage.cpu_usage as f64));
 
         // INC action count
-        prom_out.push_inc("action_count", vec![]);
+        prom_out.push(Counter::new("action_count").inc());
     }
 
     // SET schedule version
     if !schedule_change.pending_schedule.is_empty() {
-        prom_out.push_set("schedule_version", schedule_change.schedule_version as f64, vec![]);
+        prom_out.push(Gauge::new("schedule_version").set(schedule_change.schedule_version as f64));
     }
 
     // RESET remove producer

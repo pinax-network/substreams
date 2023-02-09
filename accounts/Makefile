@@ -31,7 +31,7 @@ run:
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_accounts -s 1000000 -t +10000
+	substreams gui -e eos.firehose.eosnation.io:9001 prom_out -s 1000000 -t +10000
 
 .PHONY: sink
 sink:

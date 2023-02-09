@@ -7,4 +7,4 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-substreams = "0.5.2"
+substreams = { workspace = true }
