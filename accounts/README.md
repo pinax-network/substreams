@@ -26,7 +26,7 @@ graph TD;
 
 ### Modules
 
-```
+```yaml
 Package name: accounts
 Version: v0.3.2
 Doc: Antelope newly created accounts
