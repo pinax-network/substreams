@@ -2,13 +2,9 @@
 
 > Block Producer Benchmarks created by [AlohaEOS](https://www.alohaeos.com/tools/benchmarks).
 
+### [Latest Releases](https://github.com/pinax-network/substreams/releases)
+
 ### Quickstart
-
-```bash
-$ substreams gui -e eos.firehose.eosnation.io:9001 https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.2.0/eosmechanics-v0.2.0.spkg map_producer_usage -s 292103130 -t +100000
-```
-
-### Build, Run & Sink from source
 
 ```bash
 $ make
@@ -18,8 +14,9 @@ $ make sink
 
 ### **Prometheus** Sink
 
-1. Start streaming: `$ npm start`
-2. Open the browser at [http://localhost:9102/metrics](http://localhost:9102/metrics)
+1. Install `npm install -g substreams-sink-prometheus`
+2. Run Sink `substreams-sink-prometheus run [<manifest>] [<module_name>] [flags]`
+3. Open the browser at [http://localhost:9102/metrics](http://localhost:9102/metrics)
 
 ### Mermaid graph
 
@@ -27,8 +24,11 @@ $ make sink
 graph TD;
   map_producer_usage[map: map_producer_usage]
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_producer_usage
-  map_prom_out[map: map_prom_out]
-  map_producer_usage --> map_prom_out
+  map_schedule_change[map: map_schedule_change]
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_schedule_change
+  prom_out[map: prom_out]
+  map_producer_usage --> prom_out
+  map_schedule_change --> prom_out
 ```
 
 <img width="832" alt="image" src="https://user-images.githubusercontent.com/550895/216176638-cea94a43-f95e-4eb6-ae00-527a2cb02ab7.png">
@@ -39,7 +39,7 @@ graph TD;
 
 ```yaml
 Package name: eosmechanics
-Version: v0.2.0
+Version: v0.3.1
 Doc: Block Producer Benchmarks
 Modules:
 ----
@@ -47,17 +47,17 @@ Name: map_producer_usage
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ProducerUsage
-Hash: 1742a15a00cbf7cecf424ec41c9eb8d9d4f29ee1
+Hash: 3b54ddcfa9fae5d9a0d8eb85bb3d98b13f406f95
 
 Name: map_schedule_change
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ScheduleChange
-Hash: 18b92abaab7ba1255b798ca63cd44200b84f42f9
+Hash: c3b2a001069f03a9d688a13ab9a2ac4e83bec57f
 
 Name: prom_out
 Initial block: 0
 Kind: map
 Output Type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
-Hash: 10f8cea3b6e308437c5d912269956eebecdd41e5
+Hash: 5d9aa31b7cd01a44baacf0a327c474df517430a6
 ```

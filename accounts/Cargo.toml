@@ -1,6 +1,6 @@
 [package]
 name = "accounts"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["Yaro <yaro@pinax.network>", "Denis <denis@pinax.network>"]
 description = "Antelope newly created accounts"
 license = "MIT OR Apache-2.0"
