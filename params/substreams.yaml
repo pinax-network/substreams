@@ -13,10 +13,9 @@ modules:
     kind: map
     inputs:
       - params: string
-        default: "foo"
       - source: sf.substreams.v1.Clock
     output:
       type: proto:sf.substreams.v1.Clock
 
-# params:
-#   map_params: "🎉 custom params 🎉"
+params:
+  map_params: "🎉 custom params 🎉"
