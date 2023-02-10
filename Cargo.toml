@@ -6,6 +6,7 @@ members = [
     "eosmechanics",
     "accounts",
     "params",
+    "atomicmarket",
 ]
 
 [workspace.dependencies]
