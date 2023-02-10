@@ -2,6 +2,15 @@
 
 > Antelope **action traces** & **database operations**.
 
+### [Latest Releases](https://github.com/pinax-network/substreams/releases)
+
+### Quickstart
+
+```bash
+$ make
+$ make run
+```
+
 ## Mermaid graph
 
 ```mermaid

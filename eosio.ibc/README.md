@@ -2,10 +2,13 @@
 
 > Antelope `eosio.ibc` Lightproof **block** details.
 
+### [Latest Releases](https://github.com/pinax-network/substreams/releases)
+
 ### Quickstart
 
-```
-$ substreams run -e eos.firehose.eosnation.io:9001 map_lightproof -t +10
+```bash
+$ make
+$ make run
 ```
 
 ### Graph

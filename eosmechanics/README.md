@@ -12,11 +12,8 @@ $ make run
 $ make sink
 ```
 
-### **Prometheus** Sink
-
-1. Install `npm install -g substreams-sink-prometheus`
-2. Run Sink `substreams-sink-prometheus run [<manifest>] [<module_name>] [flags]`
-3. Open the browser at [http://localhost:9102/metrics](http://localhost:9102/metrics)
+### Sinks
+- [Prometheus](https://github.com/pinax-network/substreams-sink-prometheus)
 
 ### Mermaid graph
 
