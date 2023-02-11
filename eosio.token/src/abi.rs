@@ -64,6 +64,35 @@ pub fn is_transfer(json_data: &str) -> bool {
     }
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(deny_unknown_fields)]
+pub struct Balance {
+    pub balance: String,
+}
+
+pub fn parse_balance(data_json: &str) -> Option<Balance> {
+    match serde_json::from_str(data_json) {
+        Ok(data) => Some(data),
+        Err(_) => None,
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(deny_unknown_fields)]
+pub struct CurrencyStats {
+    pub issuer: String,
+    pub max_supply: String,
+    pub supply: String,
+}
+
+pub fn parse_currency_stats(data_json: &str) -> Option<CurrencyStats> {
+    match serde_json::from_str(data_json) {
+        Ok(data) => Some(data),
+        Err(_) => None,
+    }
+}
+
+
 // pub fn is_issue(json_data: &str) -> bool {
 //     let json: Result<Issue> = serde_json::from_str(json_data);
 //     match json {

@@ -1,5 +1,4 @@
 use substreams::errors::Error; 
-use substreams::log;
 use substreams_antelope::Block;
 
 use crate::abi;
@@ -8,7 +7,8 @@ use eosio::Asset;
 use antelope::{Name, SymbolCode};
 
 #[substreams::handlers::map]
-fn map_accounts(block: Block) -> Result<Block, Error> {
+fn map_accounts(block: Block) -> Result<Accounts, Error> {
+    let mut items = vec![];
     for trx in block.clone().all_transaction_traces() {
         for db_op in &trx.db_ops {
             if db_op.table_name != "accounts" { continue; }
@@ -16,11 +16,50 @@ fn map_accounts(block: Block) -> Result<Block, Error> {
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;            
             let symcode = SymbolCode::from(raw_primary_key).to_string();
             let account = db_op.scope.clone();
+            let balance = abi::parse_balance(&db_op.new_data_json);
 
-            log::debug!("account={} symcode={} new_data_json={} old_data_json={}", account, symcode, db_op.new_data_json, db_op.old_data_json );
+            match balance {
+                Some(data) => {
+                    items.push(Account {
+                        account,
+                        symcode,
+                        balance: data.balance,
+                    });
+                },
+                None => continue,
+            }
         }
     }
-    Ok(Default::default())
+    Ok(Accounts{items})
+}
+
+#[substreams::handlers::map]
+fn map_stat(block: Block) -> Result<Stats, Error> {
+    let mut items = vec![];
+    for trx in block.clone().all_transaction_traces() {
+        for db_op in &trx.db_ops {
+            if db_op.table_name != "stat" { continue; }
+
+            let contract = db_op.clone().code;
+            let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;            
+            let symcode = SymbolCode::from(raw_primary_key).to_string();
+            let currency_stats = abi::parse_currency_stats(&db_op.new_data_json);
+
+            match currency_stats {
+                Some(data) => {
+                    items.push(Stat {
+                        contract,
+                        symcode,
+                        issuer: data.issuer,
+                        max_supply: data.max_supply,
+                        supply: data.supply,
+                    });
+                },
+                None => continue,
+            }
+        }
+    }
+    Ok(Stats{items})
 }
 
 #[substreams::handlers::map]
@@ -41,8 +80,6 @@ fn map_transfers(block: Block) -> Result<TransferEvents, Error> {
 
             response.push(TransferEvent {
                 // trace information
-                block_num: block.number,
-                timestamp: block.header.clone().unwrap().timestamp,
                 trx_id: trx.id.clone(),
                 action_ordinal: trace.action_ordinal.clone(),
 

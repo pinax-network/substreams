@@ -6,4 +6,3 @@ pub use self::eosio_token::*;
 mod abi;
 mod keyer;
 mod maps;
-mod stores;

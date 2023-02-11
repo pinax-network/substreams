@@ -29,10 +29,18 @@ modules:
     inputs:
       - source: sf.antelope.type.v1.Block
     output:
-      type: proto:sf.antelope.type.v1.Block
+      type: proto:antelope.eosio.token.v1.Accounts
+
+  - name: map_stat
+    kind: map
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.token.v1.Stats
 
   - name: store_accounts
     kind: store
+    initialBlock: 293805928
     updatePolicy: set
     valueType: proto:antelope.eosio.token.v1.Account
     inputs:

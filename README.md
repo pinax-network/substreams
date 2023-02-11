@@ -16,8 +16,8 @@
 | [`common`](common/)                 | ✅ | Antelope **Common** modules for all events.
 | [`eosmechanics`](eosmechanics/)     | ✅ | Antelope Block Producer Benchmarks.
 | [`eosio.ibc`](eosio.ibc/)           | 🛠 | Antelope `eosio.ibc` Lightproof **block** details.
-| [`eosio.token`](eosio.token/)       | 🛠 | Antelope `eosio.token` token transfers
 | [`accounts`](accounts/)             | 🛠 | Antelope accounts
+| [`eosio.token`](eosio.token/)       | 🔨 | Antelope `eosio.token` token transfers
 | [`atomicmarket`](atomicmarket/)     | 🔨 | Metrics for [AtomicHub Market](https://eos.atomichub.io/)
 
 ### Further resources

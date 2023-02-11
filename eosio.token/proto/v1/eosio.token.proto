@@ -4,12 +4,26 @@ package antelope.eosio.token.v1;
 
 import "google/protobuf/timestamp.proto";
 
-message Account {
-    bytes account = 1;
+message Accounts {
+    repeated Account items = 1;
 }
 
-message CurrencyStats {
-    bytes currency_stats = 1;
+message Account {
+    string account = 1;
+    string symcode = 2;
+    string balance = 3;
+}
+
+message Stats {
+    repeated Stat items = 1;
+}
+
+message Stat {
+    string contract = 1;
+    string symcode = 2;
+    string issuer = 3;
+    string max_supply = 4;
+    string supply = 5;
 }
 
 message TransferEvents {
@@ -17,18 +31,13 @@ message TransferEvents {
 }
   
 message TransferEvent {
-    // trace information
-    uint32 block_num = 1;
-    google.protobuf.Timestamp timestamp = 2;
-    string trx_id = 3;
-    uint32 action_ordinal = 4;
-
-    // action data
-    string account = 5;
-    string symcode = 6;
-    uint32 precision = 7;
-    string from = 8;
-    string to = 9;
-    int64 amount = 10;
-    string memo = 11;
+    string trx_id = 1;
+    uint32 action_ordinal = 2;
+    string account = 3;
+    string symcode = 4;
+    uint32 precision = 5;
+    string from = 6;
+    string to = 7;
+    int64 amount = 8;
+    string memo = 9;
 }
