@@ -27,11 +27,11 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_actions -s 292442484 -t +100000 -o jsonl
+	substreams run -e eos.firehose.eosnation.io:9001 prom_out -s 293744564 -t +100000 --production-mode
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_actions -s 292103130 -t +100000
+	substreams gui -e eos.firehose.eosnation.io:9001 prom_out -s 293744564 -t +100000 --production-mode
 
 .PHONY: sink
 sink:
