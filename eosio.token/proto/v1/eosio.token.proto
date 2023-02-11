@@ -9,9 +9,10 @@ message Accounts {
 }
 
 message Account {
-    string account = 1;
+    string contract = 1;
     string symcode = 2;
-    string balance = 3;
+    string account = 3;
+    string balance = 4;
 }
 
 message Stats {

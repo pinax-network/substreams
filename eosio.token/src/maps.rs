@@ -13,6 +13,7 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
         for db_op in &trx.db_ops {
             if db_op.table_name != "accounts" { continue; }
 
+            let contract = db_op.clone().code;
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;            
             let symcode = SymbolCode::from(raw_primary_key).to_string();
             let account = db_op.scope.clone();
@@ -21,6 +22,7 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
             match balance {
                 Some(data) => {
                     items.push(Account {
+                        contract,
                         account,
                         symcode,
                         balance: data.balance,
