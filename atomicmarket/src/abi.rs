@@ -1,5 +1,5 @@
 use substreams_antelope::ActionTrace;
-use eosio::Asset;
+use antelope::Asset;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -26,6 +26,6 @@ pub fn parse_lognewsale(action_trace: &ActionTrace) -> Option<NewSale> {
     let data: LogNewSale = serde_json::from_str(&action.json_data).unwrap();
     Some(NewSale {
         collection_name: data.collection_name,
-        listen_price: data.listing_price.parse::<Asset>().unwrap().amount,
+        listen_price: Asset::from(data.listing_price.as_str()).amount,
     })
 }
