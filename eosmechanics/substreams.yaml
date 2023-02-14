@@ -1,12 +1,12 @@
 specVersion: v0.1.0
 package:
   name: eosmechanics
-  version: v0.3.3
+  version: v0.3.4
   url: https://github.com/pinax-network/substreams
   doc: Block Producer Benchmarks
 
 imports:
-  prometheus: https://github.com/pinax-network/substreams-sink-prometheus/releases/download/v0.1.5/substreams-sink-prometheus-v0.1.5.spkg
+  prometheus: https://github.com/pinax-network/substreams-sink-prometheus/releases/download/v0.1.8/substreams-sink-prometheus-v0.1.8.spkg
 
 binaries:
   default:

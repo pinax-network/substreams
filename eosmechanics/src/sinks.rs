@@ -14,20 +14,22 @@ pub fn prom_out(
 
     let mut prom_out = PrometheusOperations::default();
     let producer = producer_usage.producer.clone();
+    let labels = HashMap::from([("producer".to_string(), producer.clone())]);
 
     // SET producer CPU usage
     if !producer.is_empty() {
         log::info!("SET producer_usage={:?}", producer_usage);
-        let labels = HashMap::from([("producer".to_string(), producer)]);
-        let mut gauge = Gauge::from("producer_usage").with(labels);
+        let mut gauge = Gauge::from("producer_usage").with(labels.clone());
         prom_out.push(gauge.set(producer_usage.cpu_usage as f64));
 
         // INC action count
-        prom_out.push(Counter::from("action_count").inc());
+        prom_out.push(Counter::from("cpu_actions").inc());
+        prom_out.push(Counter::from("cpu_actions").with(labels.clone()).inc());
     }
 
     // SET schedule version
     if !schedule_change.pending_schedule.is_empty() {
+        prom_out.push(Counter::from("schedule_changes").inc());
         prom_out.push(Gauge::from("schedule_version").set(schedule_change.schedule_version as f64));
     }
 
@@ -36,7 +38,7 @@ pub fn prom_out(
     // must be declared after SET or else producer could stay in schedule indefinitely
     for remove_producer in schedule_change.remove_from_schedule {
         log::info!("RESET remove_producer={}", remove_producer);
-        // prom_out.push_reset("producer_usage", vec!["remove_producer"]) ;
+        prom_out.push(Gauge::from("producer_usage").remove(labels.clone()));
     }
 
     Ok(prom_out)
