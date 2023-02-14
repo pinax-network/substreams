@@ -44,17 +44,17 @@ Name: map_producer_usage
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ProducerUsage
-Hash: cc0c407e5461249631a1c69d4ce3eedba90da7e3
+Hash: 4c74215a363f0f40413132a61464bb7a7ebe4e39
 
 Name: map_schedule_change
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ScheduleChange
-Hash: ddf720bdcd3b100ac12e05fd515edb9b00411172
+Hash: 6e50d4674abdb3c3c0766e394decdb11ebfd2f94
 
 Name: prom_out
 Initial block: 0
 Kind: map
 Output Type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
-Hash: d32481f5604ec29ce1410a3f6383f26e0c37c81e
+Hash: b08bc360f9ebceeee0ddc58e7d428c2d88d41aff
 ```
