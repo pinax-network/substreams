@@ -32,7 +32,7 @@ graph TD;
 
 ```yaml
 Package name: accounts
-Version: v0.3.2
+Version: v0.3.3
 Doc: Antelope newly created accounts
 Modules:
 ----
@@ -40,17 +40,17 @@ Name: map_accounts
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.accounts.v1.Accounts
-Hash: 05b16295bbbf27fd3d7420fddcfad0380fe04347
+Hash: d6b84a74fb68cf373e34706f03106972a9c2fe26
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
-Hash: 56d880831ca44b8f3d37cc6784008622f1084623
+Hash: 58e3e9e646dee281fb4c54ccc956b9ff4a39238d
 
 Name: prom_out
 Initial block: 0
 Kind: map
 Output Type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
-Hash: 75e8befd77bf6dc791c95272d40c2e5d0e41526b
+Hash: abbadd50799ade00ee2e5aeb66faa25795f9eb10
 ```

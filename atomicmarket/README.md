@@ -29,7 +29,7 @@ graph TD;
 
 ```yaml
 Package name: atomicmarket
-Version: v0.1.0
+Version: v0.1.1
 Doc: Metrics for AtomicHub Market
 Modules:
 ----
@@ -37,11 +37,11 @@ Name: map_actions
 Initial block: 0
 Kind: map
 Output Type: proto:sf.antelope.type.v1.ActionTraces
-Hash: d3148b95376b0a7ddd2fcffd26fac596ab673132
+Hash: cc7116ce98ea091f5e798316b3d0143b2fd94dc3
 
 Name: prom_out
 Initial block: 0
 Kind: map
 Output Type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
-Hash: c02185915646414b8d5f59d15ec50e8bd8e9ef5e
+Hash: 4143650f22862f694a50d88a1acfc002b88d71cc
 ```

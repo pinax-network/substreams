@@ -16,10 +16,10 @@ substreams = "0.5.2"
 substreams-antelope = "0.1.1"
 substreams-ethereum = "0.9"
 substreams-sink-kv = "0.1"
-substreams-sink-prometheus = "0.1"
+substreams-sink-prometheus = "0.1.5"
 substreams-database-change = "1.0.0"
 substreams-entity-change = "1.0.0"
-antelope = "0.0.10"
+antelope = "0.0.11"
 
 [profile.release]
 lto = true
