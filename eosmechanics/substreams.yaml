@@ -6,7 +6,7 @@ package:
   doc: Block Producer Benchmarks
 
 imports:
-  prometheus: https://github.com/pinax-network/substreams-sink-prometheus/releases/download/v0.1.4/substreams-sink-prometheus-v0.1.4.spkg
+  prometheus: https://github.com/pinax-network/substreams-sink-prometheus/releases/download/v0.1.5/substreams-sink-prometheus-v0.1.5.spkg
 
 binaries:
   default:
