@@ -23,7 +23,7 @@ pub fn prom_out(
         prom_out.push(gauge.set(producer_usage.cpu_usage as f64));
 
         // INC action count
-        prom_out.push(Counter::from("total_cpu_actions").inc());
+        prom_out.push(Counter::from("cpu_actions_total").inc());
         prom_out.push(Counter::from("cpu_actions").with(labels.clone()).inc());
     }
 
