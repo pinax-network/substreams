@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use substreams::errors::Error;
 use substreams::log;
-use substreams_sink_prometheus::{PrometheusOperations, Counter, Gauge};
+use substreams_sink_prometheus::{PrometheusOperations, Counter, Gauge, Histogram, Summary};
 
 use crate::eosmechanics::{ProducerUsage, ScheduleChange};
 
@@ -18,9 +18,16 @@ pub fn prom_out(
 
     // SET producer CPU usage
     if !producer.is_empty() {
-        log::info!("SET producer_usage={:?}", producer_usage);
+        log::info!("producer_usage={:?}", producer_usage);
         let mut gauge = Gauge::from("producer_usage").with(labels.clone());
         prom_out.push(gauge.set(producer_usage.cpu_usage as f64));
+
+        // Histogram & Summary
+        let mut histogram = Histogram::from("histogram_producer_usage");
+        prom_out.push(histogram.observe(producer_usage.cpu_usage as f64));
+
+        let mut summary = Summary::from("summary_producer_usage");
+        prom_out.push(summary.observe(producer_usage.cpu_usage as f64));
 
         // INC action count
         prom_out.push(Counter::from("cpu_actions_total").inc());
@@ -29,6 +36,7 @@ pub fn prom_out(
 
     // SET schedule version
     if !schedule_change.pending_schedule.is_empty() {
+        log::info!("schedule_change={:?}", schedule_change);
         prom_out.push(Counter::from("schedule_changes").inc());
         prom_out.push(Gauge::from("schedule_version").set(schedule_change.schedule_version as f64));
     }

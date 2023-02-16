@@ -7,4 +7,5 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-substreams = { workspace = true }
+# substreams = { workspace = true }
+substreams = { path = "/Users/denis/Github/substreams-rs/substreams"}

@@ -36,7 +36,7 @@ graph TD;
 
 ```yaml
 Package name: eosmechanics
-Version: v0.3.4
+Version: v0.3.5
 Doc: Block Producer Benchmarks
 Modules:
 ----
@@ -44,17 +44,17 @@ Name: map_producer_usage
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ProducerUsage
-Hash: daaafefb647b0238139a48f2e54c1ef423b42406
+Hash: 79d347ce956757310bebc0cde1bed9606edab871
 
 Name: map_schedule_change
 Initial block: 0
 Kind: map
 Output Type: proto:eosmechanics.v1.ScheduleChange
-Hash: b9deac907bccc0f249dddd00614109e7b8fc834b
+Hash: bd732c1b9c0755ebb848c9adac8dd7ebb030e3c5
 
 Name: prom_out
 Initial block: 0
 Kind: map
 Output Type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations
-Hash: fe1c9145a7a314dc668e94896ef148d0dd434945
+Hash: 086515ddb61488e7feeb2763dc20e0868eeac32b
 ```
