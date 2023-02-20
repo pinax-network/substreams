@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package antelope.eosio.token.v1;
 
-import "google/protobuf/timestamp.proto";
-
 message Accounts {
     repeated Account items = 1;
 }
@@ -32,13 +30,21 @@ message TransferEvents {
 }
   
 message TransferEvent {
+    // transaction
     string trx_id = 1;
     uint32 action_ordinal = 2;
+
+    // contract & scope
     string account = 3;
     string symcode = 4;
-    uint32 precision = 5;
-    string from = 6;
-    string to = 7;
-    int64 amount = 8;
-    string memo = 9;
+
+    // data payload
+    string from = 5;
+    string to = 6;
+    string quantity = 7;
+    string memo = 8;
+
+    // extras
+    int64 amount = 9;
+    uint32 precision = 10;
 }

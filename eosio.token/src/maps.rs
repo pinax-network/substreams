@@ -9,7 +9,7 @@ use antelope::{Name, SymbolCode};
 #[substreams::handlers::map]
 fn map_accounts(block: Block) -> Result<Accounts, Error> {
     let mut items = vec![];
-    for trx in block.clone().all_transaction_traces() {
+    for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
             if db_op.table_name != "accounts" { continue; }
 
@@ -38,7 +38,7 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
 #[substreams::handlers::map]
 fn map_stat(block: Block) -> Result<Stats, Error> {
     let mut items = vec![];
-    for trx in block.clone().all_transaction_traces() {
+    for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
             if db_op.table_name != "stat" { continue; }
 
@@ -68,7 +68,7 @@ fn map_stat(block: Block) -> Result<Stats, Error> {
 fn map_transfers(block: Block) -> Result<TransferEvents, Error> {
     let mut response = vec![];
 
-    for trx in block.clone().all_transaction_traces() {
+    for trx in block.all_transaction_traces() {
         // action traces
         for trace in &trx.action_traces {
             let action_trace = trace.action.as_ref().unwrap().clone();
@@ -83,16 +83,21 @@ fn map_transfers(block: Block) -> Result<TransferEvents, Error> {
             response.push(TransferEvent {
                 // trace information
                 trx_id: trx.id.clone(),
-                action_ordinal: trace.action_ordinal.clone(),
+                action_ordinal: trace.action_ordinal,
 
-                // action data
+                // contract & scope
                 account: action_trace.account,
                 symcode: quantity.symbol.code().to_string(),
-                precision: quantity.symbol.precision().into(),
+
+                // payload
                 from: data.from,
                 to: data.to,
-                amount: quantity.amount,
+                quantity: quantity.to_string(),
                 memo: data.memo,
+
+                // extras
+                precision: quantity.symbol.precision().into(),
+                amount: quantity.amount,
             });
         }
     }
