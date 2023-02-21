@@ -1,12 +1,13 @@
 specVersion: v0.1.0
 package:
   name: eosio_token
-  version: v0.4.1
+  version: v0.4.2
   url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.token` based action traces & database operations.
 
 imports:
   winston: https://github.com/pinax-network/substreams-sink-winston/releases/download/v0.1.2/substreams-sink-winston-v0.1.2.spkg
+  database_change: https://github.com/pinax-network/substreams/releases/download/eosio.token-v0.4.2/substreams-database-change-v1.0.0.spkg
 
 binaries:
   default:
@@ -47,3 +48,10 @@ modules:
       - map: map_transfers
     output:
       type: proto:pinax.substreams.sink.winston.v1.LoggerOperations
+
+  - name: db_out
+    kind: map
+    inputs:
+      - map: map_transfers
+    output:
+      type: proto:sf.substreams.sink.database.v1.DatabaseChanges
