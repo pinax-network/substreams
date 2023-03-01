@@ -35,4 +35,5 @@ gui:
 
 .PHONY: sink
 sink:
-	substreams-sink-prometheus run eos.firehose.eosnation.io:9001
+	substreams-sink-prometheus run -e eos.firehose.eosnation.io:9001 https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.3.5/eosmechanics-v0.3.5.spkg -s 292103130
+
