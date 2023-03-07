@@ -27,7 +27,7 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_accounts -s 1000000 -t +10000 -o jsonl
+	substreams run -e eos.firehose.eosnation.io:9001 map_accounts -s 1000026 -t +1
 
 .PHONY: gui
 gui:
