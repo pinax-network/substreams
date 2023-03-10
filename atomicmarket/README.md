@@ -5,7 +5,7 @@
 ### [Latest Releases](https://github.com/pinax-network/substreams/releases)
 
 ### Sinks
-- [Prometheus](https://github.com/pinax-network/substreams-sink-prometheus)
+- [Prometheus](https://github.com/pinax-network/substreams-sink-prometheus.rs)
 
 ### Quickstart
 

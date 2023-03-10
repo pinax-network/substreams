@@ -7,7 +7,7 @@ package:
 
 imports:
   kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v0.1.2/substreams-sink-kv-v0.1.2.spkg
-  prom: https://github.com/pinax-network/substreams-sink-prometheus/releases/download/v0.1.8/substreams-sink-prometheus-v0.1.8.spkg
+  prom: https://github.com/pinax-network/substreams-sink-prometheus.rs/releases/download/v0.1.8/substreams-sink-prometheus-v0.1.8.spkg
 
 protobuf:
   files:

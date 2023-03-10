@@ -13,7 +13,7 @@ $ make sink
 ```
 
 ### Sinks
-- [Prometheus](https://github.com/pinax-network/substreams-sink-prometheus)
+- [Prometheus](https://github.com/pinax-network/substreams-sink-prometheus.rs)
 
 ### Mermaid graph
 
