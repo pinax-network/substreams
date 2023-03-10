@@ -1,13 +1,13 @@
 specVersion: v0.1.0
 package:
   name: "accounts"
-  version: v0.3.3
+  version: v0.4.0
   url: https://github.com/pinax-network/substreams
   doc: Antelope newly created accounts
 
 imports:
   kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v0.1.2/substreams-sink-kv-v0.1.2.spkg
-  prom: https://github.com/pinax-network/substreams-sink-prometheus.rs/releases/download/v0.1.8/substreams-sink-prometheus-v0.1.8.spkg
+  prom: https://github.com/pinax-network/substreams-sink-prometheus.rs/releases/download/v0.1.9/substreams-sink-prometheus-v0.1.9.spkg
 
 protobuf:
   files:

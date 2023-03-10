@@ -3,11 +3,11 @@ use substreams::errors::Error;
 use substreams_antelope::Block;
 
 use crate::abi;
-use crate::accounts::{Accounts, Account, Creator, Authority};
+use crate::accounts;
 
 /// Extracts new account events from the contract
 #[substreams::handlers::map]
-fn map_accounts(block: Block) -> Result<Accounts, Error> {
+fn map_accounts(block: Block) -> Result<accounts::Accounts, Error> {
     let mut accounts = vec![];
 
     for trx in block.clone().all_transaction_traces() {
@@ -18,31 +18,28 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
             if action.account == "eosio" && action.name == "newaccount" {
                 if let Ok(params) = action.json_data.parse::<abi::NewAccount>() {
                     log::debug!("newaccount={:?}", params);
-                    let creator = Some(Creator::default()); // TO-DO
-
-                    accounts.push(Account {
-                        // action details
-                        creator,
+                    let creator = accounts::Creator {
+                        creator: params.creator.clone(),
+                        service: None,
+                        authorizations: vec![],
+                    };
+                    let owner = accounts::Authority::from(params.owner);
+                    let active = accounts::Authority::from(params.active);
+                    accounts.push(accounts::Account {
+                        creator: Some(creator),
                         name: params.name,
-                        owner: Some(Authority::default()), // TO-DO
-                        active: Some(Authority::default()), // TO-DO
-
-                        // transaction details
+                        owner: Some(owner),
+                        active: Some(active),
                         timestamp: block.header.as_ref().unwrap().timestamp.clone(),
                         trx_id: trace.transaction_id.clone(),
                         block_num: block.number,
-
-                        // account details
-                        ram_bytes: 0, // will be updated later
-                        stake_net_quantity: 0, // will be updated later
-                        stake_cpu_quantity: 0, // will be updated later
-                        transfer: false, // will be updated later
+                        ..Default::default()
                     });
                 }
             }
 
             // parse buy RAM actions (normally one transaction per new account created)
-            // TODO: instead, get the RAM usage from dbOps (this will also cover buyram)
+            // TODO: instead, get the RAM usage and CPU/NET staked from dbOps (this will also cover buyram) BLOCKED: need to replay the blockchain to get decoded JSONs for dbOps
             if action.account == "eosio" && action.name == "buyrambytes" {
                 if let Ok(params) = action.json_data.parse::<abi::BuyRamBytes>() {
                     if let Some(last) = accounts.last_mut() {
@@ -55,5 +52,5 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
             }
         }
     }
-    Ok(Accounts { accounts })
+    Ok(accounts::Accounts { accounts })
 }
