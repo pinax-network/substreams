@@ -33,7 +33,7 @@ modules:
     inputs:
       - map: map_accounts
     output:
-      type: proto:sf.substreams.sink.kv.v1.KVOperations
+      type: proto:substreams.sink.kv.v1.KVOperations
 
   - name: prom_out
     kind: map

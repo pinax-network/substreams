@@ -9,10 +9,12 @@ use crate::accounts::Accounts;
 pub fn kv_out( accounts: Accounts) -> Result<KvOperations, Error> {
     let mut kv_ops: KvOperations = Default::default();
 
+    let mut ordinal = 1;
     for account in accounts.accounts {
         log::debug!("account={:?}", account);
         let value = proto::encode(&account).unwrap();
-        kv_ops.push_new(account.name, value, 1);
+        kv_ops.push_new(account.name, value, ordinal);
+        ordinal += 1;
     }
 
     Ok(kv_ops)
