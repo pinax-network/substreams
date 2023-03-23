@@ -7,6 +7,7 @@ members = [
     "accounts",
     "params",
     "atomicmarket",
+    "pomelo",
 ]
 
 [workspace.dependencies]
