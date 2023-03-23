@@ -1,5 +1,5 @@
 use substreams::{log, proto};
-use substreams_sink_kv::pb::kv::KvOperations;
+use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
 use substreams::errors::Error;
 use substreams_sink_prometheus::{PrometheusOperations, Gauge};
 
