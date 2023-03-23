@@ -27,11 +27,11 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 entity_out -s 296787657 -t +100000
+	substreams run -e eos.firehose.eosnation.io:9001 entity_out -s 300090411 -t +100000
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 entity_out -s 296787657 -t +100000
+	substreams gui -e eos.firehose.eosnation.io:9001 entity_out -s 300090411 -t +100000
 
 .PHONY: sink
 sink:
