@@ -16,7 +16,7 @@ pub fn entity_out( block: Block) -> Result<EntityChanges, Error> {
             if db_op.code == "app.pomelo" {
                 match db_op.table_name.as_str() {
                     "grants" => {
-                        let grant = abi::GrantsRow::from(db_op.new_data_json.as_str());
+                        let grant = abi::GrantsRow::try_from(db_op.new_data_json.as_str()).unwrap();
                         let op = from_dbop_to_entityop(&db_op.operation());
                         log::info!("Op: {:?}, Grant={:?}", op, grant);
                         entity_changes.push_change("Grant", &grant.id, 1, op)
@@ -29,7 +29,7 @@ pub fn entity_out( block: Block) -> Result<EntityChanges, Error> {
                             .change("trx_id", trx.id.clone());
                     }
                     "transfers" => {
-                        let transfer = abi::TransfersRow::from(db_op.new_data_json.as_str());
+                        let transfer = abi::TransfersRow::try_from(db_op.new_data_json.as_str()).unwrap();
                         let op = from_dbop_to_entityop(&db_op.operation());
                         let transfer_id = format!("{}-{}", transfer.round_id, transfer.transfer_id);
                         log::info!("Op: {:?}, Transfer={:?}", op, transfer);
