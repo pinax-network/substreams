@@ -39,18 +39,31 @@ fn map_accounts(block: Block) -> Result<accounts::Accounts, Error> {
             }
 
             // parse buy RAM actions (normally one transaction per new account created)
-            // TODO: instead, get the RAM usage and CPU/NET staked from dbOps (this will also cover buyram)
+            // TODO: instead, get the RAM usage and CPU/NET staked from dbOps (uncomment below) BLOCKED: need to replay blockchain to get dbOps
             if action.account == "eosio" && action.name == "buyrambytes" {
                 if let Ok(params) = abi::Buyrambytes::try_from(action.json_data.as_str()) {
-                    if let Some(last) = accounts.last_mut() {
+                    for acc in accounts.iter_mut() {
                         log::debug!("buyrambytes={:?}", params);
-                        if last.name == params.receiver {
-                            last.ram_bytes += params.bytes;
+                        if acc.name == params.receiver {
+                            acc.ram_bytes += params.bytes
                         }
                     }
                 }
             }
         }
+
+        // for db_op in &trx.db_ops {
+        //     if db_op.code == "eosio" && db_op.table_name == "userres" {
+        //         log::info!("db_op={:?}", db_op);
+        //         if let Ok(params) = abi::UserResources::try_from(db_op.new_data_json.as_str()) {
+        //             for acc in accounts.iter_mut() {
+        //                 if acc.name == params.owner {
+        //                     acc.ram_bytes = params.ram_bytes as u32
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
     }
     Ok(accounts::Accounts { accounts })
 }

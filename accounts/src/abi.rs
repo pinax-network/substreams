@@ -7,6 +7,7 @@ type Name = String;
 type PublicKey = String;
 type Uint16 = u16;
 type Uint32 = u32;
+type Int64 = i64;
 
 
 macro_rules! impl_try_from_str {
@@ -90,6 +91,16 @@ pub struct WaitWeight {
     pub weight: Uint16,
 }
 impl_try_from_str!(WaitWeight);
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(deny_unknown_fields)]
+pub struct UserResources {
+    pub owner: Name,
+    pub net_weight: Asset,
+    pub cpu_weight: Asset,
+    pub ram_bytes: Int64,
+}
+impl_try_from_str!(UserResources);
 
 
 #[cfg(test)]
