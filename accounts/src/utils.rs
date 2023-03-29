@@ -12,7 +12,7 @@ impl From<abi::Authority> for accounts::Authority {
             }).collect(),
             accounts: authority.accounts.iter().map(|plw| accounts::PermissionLevelWeight {
                 permission: Some(accounts::PermissionLevel {
-                    actor: plw.permission.account.clone(),
+                    actor: plw.permission.actor.clone(),
                     permission: plw.permission.permission.clone(),
                 }),
                 weight: plw.weight as u32,

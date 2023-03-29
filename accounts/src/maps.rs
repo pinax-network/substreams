@@ -16,7 +16,7 @@ fn map_accounts(block: Block) -> Result<accounts::Accounts, Error> {
 
             // parse new account actions
             if action.account == "eosio" && action.name == "newaccount" {
-                if let Ok(params) = action.json_data.parse::<abi::NewAccount>() {
+                if let Ok(params) = abi::Newaccount::try_from(action.json_data.as_str()) {
                     log::debug!("newaccount={:?}", params);
                     let creator = accounts::Creator {
                         creator: params.creator.clone(),
@@ -39,9 +39,9 @@ fn map_accounts(block: Block) -> Result<accounts::Accounts, Error> {
             }
 
             // parse buy RAM actions (normally one transaction per new account created)
-            // TODO: instead, get the RAM usage and CPU/NET staked from dbOps (this will also cover buyram) BLOCKED: need to replay the blockchain to get decoded JSONs for dbOps
+            // TODO: instead, get the RAM usage and CPU/NET staked from dbOps (this will also cover buyram)
             if action.account == "eosio" && action.name == "buyrambytes" {
-                if let Ok(params) = action.json_data.parse::<abi::BuyRamBytes>() {
+                if let Ok(params) = abi::Buyrambytes::try_from(action.json_data.as_str()) {
                     if let Some(last) = accounts.last_mut() {
                         log::debug!("buyrambytes={:?}", params);
                         if last.name == params.receiver {
