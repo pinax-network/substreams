@@ -27,11 +27,11 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_accounts -s 1000026 -t +1
+	substreams run -e eos.firehose.eosnation.io:9001 map_accounts -s 241176757 -t +1
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 prom_out -s 1000000 -t +10000
+	substreams gui -e eos.firehose.eosnation.io:9001 map_accounts -s 241176757 -t +10000
 
 .PHONY: sink
 sink:

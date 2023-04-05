@@ -13,7 +13,7 @@ type Uint32 = u32;
 type Uint64 = u64;
 type Float64 = String;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ExtendedAsset {
     pub quantity: Name,
@@ -34,16 +34,16 @@ macro_rules! impl_try_from_str {
 }
 
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Cleartable {
     pub table_name: Name,
-    pub round_id: Uint16,
-    pub max_rows: Uint64,
+    pub round_id: Option<Uint16>,
+    pub max_rows: Option<Uint64>,
 }
 impl_try_from_str!(Cleartable);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Collapse {
     pub user_ids: Vec<Name>,
@@ -52,7 +52,7 @@ pub struct Collapse {
 }
 impl_try_from_str!(Collapse);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ContributionT {
     pub id: Name,
@@ -60,14 +60,14 @@ pub struct ContributionT {
 }
 impl_try_from_str!(ContributionT);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Deltoken {
     pub symcode: SymbolCode,
 }
 impl_try_from_str!(Deltoken);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct GlobalsRow {
     pub season_id: Uint16,
@@ -78,7 +78,7 @@ pub struct GlobalsRow {
 }
 impl_try_from_str!(GlobalsRow);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct GrantsRow {
     pub id: Name,
@@ -92,7 +92,7 @@ pub struct GrantsRow {
 }
 impl_try_from_str!(GrantsRow);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Joinround {
     pub grant_id: Name,
@@ -100,7 +100,7 @@ pub struct Joinround {
 }
 impl_try_from_str!(Joinround);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct MatchRow {
     pub grant_id: Name,
@@ -114,7 +114,7 @@ pub struct MatchRow {
 }
 impl_try_from_str!(MatchRow);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Removeuser {
     pub user_ids: Vec<Name>,
@@ -122,7 +122,7 @@ pub struct Removeuser {
 }
 impl_try_from_str!(Removeuser);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct RoundsRow {
     pub round_id: Uint16,
@@ -140,7 +140,7 @@ pub struct RoundsRow {
 }
 impl_try_from_str!(RoundsRow);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct SeasonsRow {
     pub season_id: Uint16,
@@ -156,18 +156,18 @@ pub struct SeasonsRow {
 }
 impl_try_from_str!(SeasonsRow);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Setconfig {
-    pub season_id: Uint16,
-    pub grant_fee: Uint64,
-    pub bounty_fee: Uint64,
-    pub login_contract: Name,
-    pub fee_account: Name,
+    pub season_id: Option<Uint16>,
+    pub grant_fee: Option<Uint64>,
+    pub bounty_fee: Option<Uint64>,
+    pub login_contract: Option<Name>,
+    pub fee_account: Option<Name>,
 }
 impl_try_from_str!(Setconfig);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Setfunding {
     pub grant_id: Name,
@@ -175,7 +175,7 @@ pub struct Setfunding {
 }
 impl_try_from_str!(Setfunding);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Setgrant {
     pub author_id: Name,
@@ -185,7 +185,7 @@ pub struct Setgrant {
 }
 impl_try_from_str!(Setgrant);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Setgrantid {
     pub grant_id: Name,
@@ -193,7 +193,7 @@ pub struct Setgrantid {
 }
 impl_try_from_str!(Setgrantid);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Setproject {
     pub author_id: Name,
@@ -204,30 +204,30 @@ pub struct Setproject {
 }
 impl_try_from_str!(Setproject);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Setround {
     pub round_id: Uint16,
     pub season_id: Uint16,
-    pub description: String,
-    pub match_value: Float64,
+    pub description: Option<String>,
+    pub match_value: Option<Float64>,
 }
 impl_try_from_str!(Setround);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Setseason {
     pub season_id: Uint16,
-    pub start_at: TimePointSec,
-    pub end_at: TimePointSec,
-    pub submission_start_at: TimePointSec,
-    pub submission_end_at: TimePointSec,
-    pub description: String,
-    pub match_value: Float64,
+    pub start_at: Option<TimePointSec>,
+    pub end_at: Option<TimePointSec>,
+    pub submission_start_at: Option<TimePointSec>,
+    pub submission_end_at: Option<TimePointSec>,
+    pub description: Option<String>,
+    pub match_value: Option<Float64>,
 }
 impl_try_from_str!(Setseason);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Setstate {
     pub project_id: Name,
@@ -235,7 +235,7 @@ pub struct Setstate {
 }
 impl_try_from_str!(Setstate);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct StatusRow {
     pub counters: Vec<Uint32>,
@@ -243,7 +243,7 @@ pub struct StatusRow {
 }
 impl_try_from_str!(StatusRow);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Token {
     pub sym: Symbol,
@@ -253,7 +253,7 @@ pub struct Token {
 }
 impl_try_from_str!(Token);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct TokensRow {
     pub sym: Symbol,
@@ -263,7 +263,7 @@ pub struct TokensRow {
 }
 impl_try_from_str!(TokensRow);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct TransfersRow {
     pub transfer_id: Uint64,
@@ -283,7 +283,7 @@ pub struct TransfersRow {
 }
 impl_try_from_str!(TransfersRow);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Unjoinround {
     pub grant_id: Name,
@@ -291,7 +291,7 @@ pub struct Unjoinround {
 }
 impl_try_from_str!(Unjoinround);
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct UsersRow {
     pub user_id: Name,
@@ -302,3 +302,74 @@ pub struct UsersRow {
     pub updated_at: TimePointSec,
 }
 impl_try_from_str!(UsersRow);
+
+
+
+#[cfg(test)]
+mod tests {
+    use crate::abi::*;
+
+    #[test]
+    fn test_nullable() {
+        let input_string = r#"{
+            "season_id": 5,
+            "match_value": "170730.00000000000000000",
+            "description": null,
+            "end_at": null,
+            "start_at": null,
+            "submission_end_at": null,
+            "submission_start_at": null
+         }"#;
+        let expected = Setseason {
+            season_id: 5,
+            match_value: Some("170730.00000000000000000".to_owned()),
+            description: None,
+            end_at: None,
+            start_at: None,
+            submission_end_at: None,
+            submission_start_at: None,
+        };
+
+        let result = Setseason::try_from(input_string);
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), expected);
+    }
+
+    #[test]
+    fn test_binary_extension() {
+        let input_string = r#"{
+            "table_name": "table",
+            "round_id": 111,
+            "max_rows": 123
+         }"#;
+        let expected = Cleartable {
+            table_name: "table".to_owned(),
+            round_id: Some(111),
+            max_rows: Some(123)
+        };
+
+        let result = Cleartable::try_from(input_string);
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), expected);
+    }
+
+    #[test]
+    fn test_binary_extension2() {
+        let input_string = r#"{
+            "table_name": "table",
+            "round_id": 111
+         }"#;
+        let expected = Cleartable {
+            table_name: "table".to_owned(),
+            round_id: Some(111),
+            max_rows: None
+        };
+
+        let result = Cleartable::try_from(input_string);
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), expected);
+    }
+}
