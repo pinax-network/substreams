@@ -46,7 +46,8 @@ pub fn prom_out(
     // must be declared after SET or else producer could stay in schedule indefinitely
     for remove_producer in schedule_change.remove_from_schedule {
         log::info!("RESET remove_producer={}", remove_producer);
-        prom_out.push(Gauge::from("producer_usage").remove(labels.clone()));
+        let remove_labels = HashMap::from([("producer".to_string(), remove_producer.clone())]);
+        prom_out.push(Gauge::from("producer_usage").remove(remove_labels.clone()));
     }
 
     Ok(prom_out)
