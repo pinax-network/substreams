@@ -27,11 +27,11 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 prom_out -s 292442484 -t +100000 -o jsonl
+	substreams run -e telos.firehose.eosnation.io:9001 prom_out -s 273976005 -o jsonl
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 prom_out -s 292103130 -t +100000
+	substreams gui -e telos.firehose.eosnation.io:9001 map_schedule_change -s 273976005 -t +10
 
 .PHONY: sink
 sink:
