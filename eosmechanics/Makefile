@@ -31,7 +31,7 @@ run:
 
 .PHONY: gui
 gui:
-	substreams gui -e telos.firehose.eosnation.io:9001 map_schedule_change -s 273976005 -t +10
+	substreams gui -e telos.firehose.eosnation.io:9001 prom_out -s 273976005 -t +1000
 
 .PHONY: sink
 sink:

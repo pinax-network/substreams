@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: eosmechanics
-  version: v0.3.5
+  version: v0.3.6
   url: https://github.com/pinax-network/substreams
   doc: Block Producer Benchmarks
 
