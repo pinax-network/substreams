@@ -8,6 +8,7 @@ members = [
     "params",
     "atomicmarket",
     "pomelo",
+    "erc721"
 ]
 
 [workspace.dependencies]

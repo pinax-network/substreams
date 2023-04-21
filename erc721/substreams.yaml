@@ -1,0 +1,49 @@
+specVersion: v0.1.0
+package:
+  name: "erc721"
+  version: v0.1.0
+
+imports:
+  eth: https://github.com/streamingfast/sf-ethereum/releases/download/v0.10.2/ethereum-v0.10.4.spkg
+
+protobuf:
+  files:
+    - erc721.proto
+  importPaths:
+    - ./proto
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/erc721.wasm
+
+modules:
+  - name: map_transfers
+    kind: map
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:eth.erc721.v1.Transfers
+
+  - name: map_approvals
+    kind: map
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:eth.erc721.v1.Approvals
+
+  - name: map_approval_for_all
+    kind: map
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:eth.erc721.v1.ApprovalForAlls
+
+  - name: graph_out
+    kind: map
+    inputs:
+      - map: map_transfers
+      - map: map_approvals
+      - map: map_approval_for_all
+    output:
+      type: proto:sf.substreams.entity.v1.EntityChanges

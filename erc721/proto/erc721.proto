@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package eth.erc721.v1;
+
+message Transfers {
+  repeated Transfer transfers = 1;
+}
+
+message Transfer {
+  string from = 1;
+  string to = 2;
+  string token_id = 3;
+  string contract_address = 4;
+  string trx_hash = 5;
+  uint64 ordinal = 6;
+}
+
+
+message Approvals {
+  repeated Approval approval = 1;
+}
+
+message Approval {
+  string owner = 1;
+  string approved = 2;
+  string token_id = 3;
+  string contract_address = 4;
+  string trx_hash = 5;
+  uint64 ordinal = 6;
+}
+
+
+
+message ApprovalForAlls {
+  repeated ApprovalForAll approvalall = 1;
+}
+
+message ApprovalForAll {
+  string owner = 1;
+  string operator = 2;
+  bool   approved = 3;
+  string contract_address = 4;
+  string trx_hash = 5;
+  uint64 ordinal = 6;
+}
