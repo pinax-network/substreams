@@ -22,5 +22,6 @@ prost = { workspace = true }
 prost-types = { workspace = true }
 substreams = { workspace = true }
 substreams-database-change = { workspace = true }
+substreams-sink-kv = { workspace = true }
 substreams-sink-winston = { workspace = true }
 substreams-antelope = { workspace = true }

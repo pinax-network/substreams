@@ -1,31 +1,32 @@
 use substreams::errors::Error;
-use substreams_sink_winston::{Logger, Meta, LoggerOperations};
-use substreams_database_change::pb::database::{DatabaseChanges, table_change::Operation};
+use substreams_database_change::pb::database::{table_change::Operation, DatabaseChanges};
+use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
+use substreams_sink_winston::{Logger, LoggerOperations, Meta};
 
-use crate::TransferEvents;
+use crate::eosio_token::{Accounts, TransferEvents};
 
 #[substreams::handlers::map]
 pub fn db_out(map_transfers: TransferEvents) -> Result<DatabaseChanges, Error> {
-
     let mut db_out = DatabaseChanges::default();
 
     for transfer in map_transfers.items {
         let pk = format!("{}-{}", transfer.trx_id, transfer.action_ordinal);
-        db_out.push_change("transfer", pk.as_str(), 0, Operation::Create)
+        db_out
+            .push_change("transfer", pk.as_str(), 0, Operation::Create)
             // transaction
             .change("trx_id", ("", transfer.trx_id.as_str()))
-            .change("action_ordinal", ("", transfer.action_ordinal.to_string().as_str()))
-
+            .change(
+                "action_ordinal",
+                ("", transfer.action_ordinal.to_string().as_str()),
+            )
             // contract & scope
             .change("account", ("", transfer.account.as_str()))
             .change("symcode", ("", transfer.symcode.as_str()))
-
             // data payload
             .change("from", ("", transfer.from.as_str()))
             .change("to", ("", transfer.to.as_str()))
             .change("memo", ("", transfer.memo.as_str()))
             .change("quantity", ("", transfer.quantity.as_str()))
-
             // extras
             .change("amount", ("", transfer.amount.to_string().as_str()))
             .change("precision", ("", transfer.precision.to_string().as_str()));
@@ -36,7 +37,6 @@ pub fn db_out(map_transfers: TransferEvents) -> Result<DatabaseChanges, Error> {
 
 #[substreams::handlers::map]
 pub fn log_out(map_transfers: TransferEvents) -> Result<LoggerOperations, Error> {
-
     let mut log_out = LoggerOperations::default();
 
     let logger = Logger::new("eosio.token");
@@ -45,7 +45,10 @@ pub fn log_out(map_transfers: TransferEvents) -> Result<LoggerOperations, Error>
 
         // transaction
         meta.insert("trx_id", transfer.trx_id.as_str());
-        meta.insert("action_ordinal", transfer.action_ordinal.to_string().as_str());
+        meta.insert(
+            "action_ordinal",
+            transfer.action_ordinal.to_string().as_str(),
+        );
 
         // contract & scope
         meta.insert("account", transfer.account.as_str());
@@ -65,4 +68,21 @@ pub fn log_out(map_transfers: TransferEvents) -> Result<LoggerOperations, Error>
     }
 
     Ok(log_out)
+}
+
+#[substreams::handlers::map]
+pub fn kv_out(map_accounts: Accounts) -> Result<KvOperations, Error> {
+    let mut kv_ops: KvOperations = Default::default();
+
+    let mut ordinal = 1;
+    for account in map_accounts.items {
+        let k = format!(
+            "{}:{}:{}",
+            account.contract, account.symcode, account.account
+        );
+        kv_ops.push_new(k, account.balance, ordinal);
+        ordinal += 1;
+    }
+
+    Ok(kv_ops)
 }
