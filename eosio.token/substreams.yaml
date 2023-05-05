@@ -61,5 +61,6 @@ modules:
     kind: map
     inputs:
       - map: map_accounts
+      - map: map_stat
     output:
       type: proto:sf.substreams.sink.kv.v1.KVOperations

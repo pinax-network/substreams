@@ -4,7 +4,7 @@ use substreams_database_change::pb::database::{table_change::Operation, Database
 use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
 use substreams_sink_winston::{Logger, LoggerOperations, Meta};
 
-use crate::eosio_token::{Accounts, TransferEvents};
+use crate::eosio_token::{Accounts, Stats, TransferEvents};
 
 #[substreams::handlers::map]
 pub fn db_out(map_transfers: TransferEvents) -> Result<DatabaseChanges, Error> {
@@ -72,13 +72,24 @@ pub fn log_out(map_transfers: TransferEvents) -> Result<LoggerOperations, Error>
 }
 
 #[substreams::handlers::map]
-pub fn kv_out(map_accounts: Accounts) -> Result<KvOperations, Error> {
+pub fn kv_out(map_accounts: Accounts, map_stat: Stats) -> Result<KvOperations, Error> {
     let mut kv_ops: KvOperations = Default::default();
 
     let mut ordinal = 1;
     for account in map_accounts.items {
         let asset = Asset::from(account.balance.as_str());
-        let key = format!("{}:{}:{}", account.contract, asset.symbol, account.account);
+        let key = format!(
+            "accounts:{}:{}:{}",
+            account.contract, asset.symbol, account.account
+        );
+        kv_ops.push_new(key, asset.amount.to_string(), ordinal);
+        ordinal += 1;
+    }
+
+    ordinal = 1;
+    for stat in map_stat.items {
+        let asset = Asset::from(stat.supply.as_str());
+        let key = format!("stat:{}:{}", stat.contract, asset.symbol);
         kv_ops.push_new(key, asset.amount.to_string(), ordinal);
         ordinal += 1;
     }
