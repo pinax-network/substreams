@@ -1,4 +1,5 @@
 use substreams::errors::Error;
+use substreams::log;
 use substreams_antelope::Block;
 
 use crate::abi;
@@ -64,8 +65,10 @@ fn map_stat(block: Block) -> Result<Stats, Error> {
 }
 
 #[substreams::handlers::map]
-fn map_transfers(block: Block) -> Result<TransferEvents, Error> {
+fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> {
     let mut response = vec![];
+    let accounts: Vec<&str> = params.split(";").collect();
+    log::debug!("map_params: {:?}", accounts);
 
     for trx in block.all_transaction_traces() {
         // action traces
@@ -74,30 +77,33 @@ fn map_transfers(block: Block) -> Result<TransferEvents, Error> {
             if action_trace.account != trace.receiver { continue; }
             if action_trace.name != "transfer"  { continue; }
 
-            match abi::Transfer::try_from(action_trace.json_data.as_str()) {
-                Ok(transfer) => {
-                    let quantity = Asset::from(transfer.quantity.as_str());
-                    response.push(TransferEvent {
-                        // trace information
-                        trx_id: trx.id.clone(),
-                        action_ordinal: trace.action_ordinal,
-
-                        // contract & scope
-                        account: action_trace.account.clone(),
-                        symcode: quantity.symbol.code().to_string(),
-
-                        // payload
-                        from: transfer.from,
-                        to: transfer.to,
-                        quantity: quantity.to_string(),
-                        memo: transfer.memo,
-
-                        // extras
-                        precision: quantity.symbol.precision().into(),
-                        amount: quantity.amount,
-                    });
-                },
+            let transfer = match abi::Transfer::try_from(action_trace.json_data.as_str()) {
+                Ok(action) => action,
                 Err(_) => continue,
+            };
+
+
+            if params == "all" || accounts.iter().any(|&i| i == transfer.from) || accounts.iter().any(|&i| i == transfer.to) {
+                let quantity = Asset::from(transfer.quantity.as_str());
+                response.push(TransferEvent {
+                    // trace information
+                    trx_id: trx.id.clone(),
+                    action_ordinal: trace.action_ordinal,
+
+                    // contract & scope
+                    account: action_trace.account.clone(),
+                    symcode: quantity.symbol.code().to_string(),
+
+                    // payload
+                    from: transfer.from,
+                    to: transfer.to,
+                    quantity: quantity.to_string(),
+                    memo: transfer.memo,
+
+                    // extras
+                    precision: quantity.symbol.precision().into(),
+                    amount: quantity.amount,
+                });
             }
         }
     }
