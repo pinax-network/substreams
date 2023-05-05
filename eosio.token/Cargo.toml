@@ -1,6 +1,6 @@
 [package]
 name = "eosio_token"
-version = "0.4.2"
+version = "0.6.0"
 authors = ["Denis <denis@pinax.network>", "Yaro <yaro@pinax.network>"]
 description = "Antelope `eosio.token` token transfers"
 license = "MIT OR Apache-2.0"
@@ -16,7 +16,6 @@ crate-type = ["cdylib"]
 [dependencies]
 serde_json = "1"
 serde = { version = "1", features = ["derive"] }
-eosio = "0.3.1"
 antelope = { workspace = true }
 prost = { workspace = true }
 prost-types = { workspace = true }

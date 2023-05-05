@@ -18,17 +18,28 @@ message Stats {
 }
 
 message Stat {
-    string contract = 1;
-    string symcode = 2;
-    string issuer = 3;
-    string max_supply = 4;
-    string supply = 5;
+    // trace information
+    string trx_id = 1;
+    uint32 action_index = 2;
+
+    // contract & scope
+    string contract = 3;
+    string symcode = 4;
+
+    // data payload
+    string issuer = 5;
+    string max_supply = 6;
+    string supply = 7;
+
+    // extras
+    int64 amount = 9;
+    uint32 precision = 10;
 }
 
 message TransferEvents {
     repeated TransferEvent items = 1;
 }
-  
+
 message TransferEvent {
     // transaction
     string trx_id = 1;
