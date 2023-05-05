@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: eosio_token
-  version: v0.5.0
+  version: v0.6.0
   url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.token` based action traces & database operations.
 
@@ -24,6 +24,7 @@ modules:
   - name: map_transfers
     kind: map
     inputs:
+      - params: string
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.eosio.token.v1.TransferEvents
@@ -55,3 +56,6 @@ modules:
       - map: map_transfers
     output:
       type: proto:sf.substreams.sink.database.v1.DatabaseChanges
+
+params:
+  map_transfers: "all"
