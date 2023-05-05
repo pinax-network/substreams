@@ -17,9 +17,7 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
             let symcode = SymbolCode::from(raw_primary_key).to_string();
             let account = db_op.scope.clone();
-            let balance = abi::Account::try_from(db_op.new_data_json.as_str());
-
-            match balance {
+            match abi::Account::try_from(db_op.new_data_json.as_str()) {
                 Ok(data) => {
                     items.push(Account {
                         contract,
@@ -45,16 +43,26 @@ fn map_stat(block: Block) -> Result<Stats, Error> {
             let contract = db_op.code.clone();
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
             let symcode = SymbolCode::from(raw_primary_key).to_string();
-            let currency_stats = abi::CurrencyStats::try_from(db_op.new_data_json.as_str());
-
-            match currency_stats {
+            match abi::CurrencyStats::try_from(db_op.new_data_json.as_str()) {
                 Ok(data) => {
+                    let supply = Asset::from(data.supply.as_str());
                     items.push(Stat {
+                        // trace information
+                        trx_id: trx.id.clone(),
+                        action_index: db_op.action_index,
+
+                        // contract & scope
                         contract,
                         symcode,
+
+                        // payload
                         issuer: data.issuer,
                         max_supply: data.max_supply,
                         supply: data.supply,
+
+                        // extras
+                        precision: supply.symbol.precision().into(),
+                        amount: supply.amount,
                     });
                 },
                 Err(_) => continue,
@@ -76,7 +84,6 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
             let action_trace = trace.action.as_ref().unwrap();
             if action_trace.account != trace.receiver { continue; }
             if action_trace.name != "transfer"  { continue; }
-
             let transfer = match abi::Transfer::try_from(action_trace.json_data.as_str()) {
                 Ok(action) => action,
                 Err(_) => continue,
