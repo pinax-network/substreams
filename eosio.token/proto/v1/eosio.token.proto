@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package eosio.token.v1;
+package antelope.eosio.token.v1;
 
 message Accounts {
     repeated Account items = 1;
