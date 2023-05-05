@@ -7,8 +7,14 @@ use crate::utils;
 use antelope::{Asset, Name, SymbolCode};
 
 #[substreams::handlers::map]
-fn map_accounts(block: Block) -> Result<Accounts, Error> {
+fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
     let mut items = vec![];
+
+    // query-params
+    let filter_account = utils::create_filters(params.as_str(), "account");
+    let filter_symcode = utils::create_filters(params.as_str(), "symcode");
+    let filter_contract = utils::create_filters(params.as_str(), "contract");
+
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
             if db_op.table_name != "accounts" { continue; }
@@ -17,6 +23,11 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
             let symcode = SymbolCode::from(raw_primary_key).to_string();
             let account = db_op.scope.clone();
+
+            // filter by params
+            if !filter_account.is_empty() && !filter_account.contains(&account) { continue; }
+            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
+            if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
 
             match abi::Account::try_from(db_op.new_data_json.as_str()) {
                 Ok(data) => {
@@ -35,20 +46,30 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
 }
 
 #[substreams::handlers::map]
-fn map_stat(block: Block) -> Result<Stats, Error> {
+fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
     let mut items = vec![];
+
+    // query-params
+    let filter_symcode = utils::create_filters(params.as_str(), "symcode");
+    let filter_contract = utils::create_filters(params.as_str(), "contract");
+
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
-            if db_op.table_name != "stat" {
-                continue;
-            }
+            if db_op.table_name != "stat" { continue; }
 
             let contract = db_op.code.clone();
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
             let symcode = SymbolCode::from(raw_primary_key).to_string();
+
+            // filter by params
+            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
+            if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
+
             match abi::CurrencyStats::try_from(db_op.new_data_json.as_str()) {
                 Ok(data) => {
                     let supply = Asset::from(data.supply.as_str());
+
+
                     items.push(Stat {
                         // trace information
                         trx_id: trx.id.clone(),
