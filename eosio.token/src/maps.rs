@@ -75,8 +75,13 @@ fn map_stat(block: Block) -> Result<Stats, Error> {
 #[substreams::handlers::map]
 fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> {
     let mut response = vec![];
-    let accounts: Vec<&str> = params.split(";").collect();
-    log::debug!("map_params: {:?}", accounts);
+
+    // TO-DO Yaro
+    // Build query-params
+    // "to=swap.defi,swap.rome&symcode=EOS"
+    // all EOS symcode transfers to these two accounts
+    // let accounts: Vec<&str> = params.split(";").collect();
+    // log::debug!("map_params: {:?}", accounts);
 
     for trx in block.all_transaction_traces() {
         // action traces
@@ -84,33 +89,41 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
             let action_trace = trace.action.as_ref().unwrap();
             if action_trace.account != trace.receiver { continue; }
             if action_trace.name != "transfer"  { continue; }
-            let transfer = match abi::Transfer::try_from(action_trace.json_data.as_str()) {
-                Ok(action) => action,
+
+            // if params == "all" || accounts.iter().any(|&i| i == transfer.from) || accounts.iter().any(|&i| i == transfer.to) {
+            match abi::Transfer::try_from(action_trace.json_data.as_str()) {
+                Ok(data) => {
+                    let quantity = Asset::from(data.quantity.as_str());
+                    let symcode = quantity.symbol.code().to_string();
+                    let precision = quantity.symbol.precision().into();
+                    let amount = quantity.amount;
+                    let account = action_trace.account.clone();
+
+                    // TO-DO Yaro
+                    // filter by params
+                    // prevent push if does not match query-param
+
+                    response.push(TransferEvent {
+                        // trace information
+                        trx_id: trx.id.clone(),
+                        action_ordinal: trace.action_ordinal,
+
+                        // contract & scope
+                        account,
+                        symcode,
+
+                        // payload
+                        from: data.from,
+                        to: data.to,
+                        quantity: data.quantity,
+                        memo: data.memo,
+
+                        // extras
+                        precision,
+                        amount,
+                    });
+                },
                 Err(_) => continue,
-            };
-
-
-            if params == "all" || accounts.iter().any(|&i| i == transfer.from) || accounts.iter().any(|&i| i == transfer.to) {
-                let quantity = Asset::from(transfer.quantity.as_str());
-                response.push(TransferEvent {
-                    // trace information
-                    trx_id: trx.id.clone(),
-                    action_ordinal: trace.action_ordinal,
-
-                    // contract & scope
-                    account: action_trace.account.clone(),
-                    symcode: quantity.symbol.code().to_string(),
-
-                    // payload
-                    from: transfer.from,
-                    to: transfer.to,
-                    quantity: quantity.to_string(),
-                    memo: transfer.memo,
-
-                    // extras
-                    precision: quantity.symbol.precision().into(),
-                    amount: quantity.amount,
-                });
             }
         }
     }
