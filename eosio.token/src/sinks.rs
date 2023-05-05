@@ -1,3 +1,4 @@
+use antelope::Asset;
 use substreams::errors::Error;
 use substreams_database_change::pb::database::{table_change::Operation, DatabaseChanges};
 use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
@@ -76,11 +77,9 @@ pub fn kv_out(map_accounts: Accounts) -> Result<KvOperations, Error> {
 
     let mut ordinal = 1;
     for account in map_accounts.items {
-        let k = format!(
-            "{}:{}:{}",
-            account.contract, account.symcode, account.account
-        );
-        kv_ops.push_new(k, account.balance, ordinal);
+        let asset = Asset::from(account.balance.as_str());
+        let key = format!("{}:{}:{}", account.contract, asset.symbol, account.account);
+        kv_ops.push_new(key, asset.amount.to_string(), ordinal);
         ordinal += 1;
     }
 
