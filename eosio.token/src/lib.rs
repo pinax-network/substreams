@@ -1,4 +1,4 @@
-#[path = "pb/antelope.eosio.token.v1.rs"]
+#[path = "pb/eosio.token.v1.rs"]
 #[allow(dead_code)]
 pub mod eosio_token;
 pub use self::eosio_token::*;
