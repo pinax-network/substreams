@@ -8,7 +8,7 @@
 
 ```bash
 $ make
-$ make run
+$ make gui
 ```
 
 ### Mermaid graph
@@ -31,7 +31,7 @@ graph TD;
 
 ```yaml
 Package name: eosio_token
-Version: v0.4.2
+Version: v0.5.0
 Doc: Antelope `eosio.token` based action traces & database operations.
 Modules:
 ----
@@ -39,29 +39,29 @@ Name: map_transfers
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.TransferEvents
-Hash: 3bf80ccd75e75c9769569c61072df71c759d0837
+Hash: 5b2c65e956866a100603b90c3ec7d942fb0f2420
 
 Name: map_accounts
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.Accounts
-Hash: 23fb29a4da7fccd0b050cdbeb9444ab21d1778f5
+Hash: 6e213a53383aeba7003aee28656f357873cdb4ba
 
 Name: map_stat
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.Stats
-Hash: 0c872e759c25f039c40b6012f35e7ad9315c3ce6
+Hash: 2045e91f250d51ec3194896c493b37e547824852
 
 Name: log_out
 Initial block: 0
 Kind: map
 Output Type: proto:pinax.substreams.sink.winston.v1.LoggerOperations
-Hash: 54088d32a300dc7966321f4f49db4fef3da730d8
+Hash: 8231e3c662273469a332897c2c7f88952b449fb1
 
 Name: db_out
 Initial block: 0
 Kind: map
-Output Type: proto:sf.substreams.database.v1.DatabaseChanges
-Hash: 7f9bad0c12abbf83719b020648c739621eb48312
+Output Type: proto:sf.substreams.sink.database.v1.DatabaseChanges
+Hash: 7484b30b46c532749936988d1826f4f5001447d6
 ```
