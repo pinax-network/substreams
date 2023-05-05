@@ -36,7 +36,7 @@ graph TD;
 
 ```yaml
 Package name: eosio_token
-Version: v0.7.0
+Version: v0.7.1
 Doc: Antelope `eosio.token` based action traces & database operations.
 Modules:
 ----
@@ -44,35 +44,35 @@ Name: map_transfers
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.TransferEvents
-Hash: b6ef404f2e10055d96675fc1050fff0096fd7e68
+Hash: 36f292f14c08f4dd5e4291c3daed6c9a9297659f
 
 Name: map_accounts
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.Accounts
-Hash: 599cfd62f88ba42b91da5116203939a169fe4879
+Hash: 710aab7fd7768400b3c4ae870e0a815cedca9992
 
 Name: map_stat
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.Stats
-Hash: 6410da38054c9e33c2cfecff09b5027140511986
+Hash: 3faba8f892fcd63225d41f94e11b58c4aaeb690a
 
 Name: log_out
 Initial block: 0
 Kind: map
 Output Type: proto:pinax.substreams.sink.winston.v1.LoggerOperations
-Hash: 75b483baa168c2d95ed3e3de769e81a4c0cb4436
+Hash: 0b049e5a7c4e4c435a8081b9e333b6d468bc677c
 
 Name: db_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.database.v1.DatabaseChanges
-Hash: 867d38761adc34081aa168755c583e952e6f3fe9
+Hash: d80ee7c7c41a3fad8d9d6ded35423b61cffd2e56
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
-Hash: 365bacadad89c5408a99456580e51175cd9043c6
+Hash: 1fabc19180314c3bc1781bd3e9dfae7be14674ac
 ```

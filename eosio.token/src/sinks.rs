@@ -80,7 +80,7 @@ pub fn kv_out(map_accounts: Accounts, map_stat: Stats) -> Result<KvOperations, E
         let asset = Asset::from(account.balance.as_str());
         let key = format!(
             "accounts:{}:{}:{}",
-            account.contract, asset.symbol, account.account
+            account.account, account.contract, asset.symbol
         );
         kv_ops.push_new(key, asset.amount.to_string(), ordinal);
         ordinal += 1;
