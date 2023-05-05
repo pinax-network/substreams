@@ -1,10 +1,9 @@
-use substreams::errors::Error; 
+use substreams::errors::Error;
 use substreams_antelope::Block;
 
 use crate::abi;
 use crate::eosio_token::*;
-use eosio::Asset;
-use antelope::{Name, SymbolCode};
+use antelope::{Asset, Name, SymbolCode};
 
 #[substreams::handlers::map]
 fn map_accounts(block: Block) -> Result<Accounts, Error> {
@@ -14,13 +13,13 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
             if db_op.table_name != "accounts" { continue; }
 
             let contract = db_op.clone().code;
-            let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;            
+            let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
             let symcode = SymbolCode::from(raw_primary_key).to_string();
             let account = db_op.scope.clone();
-            let balance = abi::parse_balance(&db_op.new_data_json);
+            let balance = abi::Account::try_from(db_op.new_data_json.as_str());
 
             match balance {
-                Some(data) => {
+                Ok(data) => {
                     items.push(Account {
                         contract,
                         account,
@@ -28,7 +27,7 @@ fn map_accounts(block: Block) -> Result<Accounts, Error> {
                         balance: data.balance,
                     });
                 },
-                None => continue,
+                Err(_) => continue,
             }
         }
     }
@@ -43,12 +42,12 @@ fn map_stat(block: Block) -> Result<Stats, Error> {
             if db_op.table_name != "stat" { continue; }
 
             let contract = db_op.clone().code;
-            let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;            
+            let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
             let symcode = SymbolCode::from(raw_primary_key).to_string();
-            let currency_stats = abi::parse_currency_stats(&db_op.new_data_json);
+            let currency_stats = abi::CurrencyStats::try_from(db_op.new_data_json.as_str());
 
             match currency_stats {
-                Some(data) => {
+                Ok(data) => {
                     items.push(Stat {
                         contract,
                         symcode,
@@ -57,7 +56,7 @@ fn map_stat(block: Block) -> Result<Stats, Error> {
                         supply: data.supply,
                     });
                 },
-                None => continue,
+                Err(_) => continue,
             }
         }
     }
@@ -74,31 +73,33 @@ fn map_transfers(block: Block) -> Result<TransferEvents, Error> {
             let action_trace = trace.action.as_ref().unwrap().clone();
             if action_trace.account != trace.receiver { continue; }
             if action_trace.name != "transfer"  { continue; }
-            if !abi::is_transfer(&action_trace.json_data) { continue; }
+            let transfer = abi::Transfer::try_from(action_trace.json_data.as_str());
 
-            // parse action data
-            let data: abi::Transfer = serde_json::from_str(&action_trace.json_data).unwrap();
-            let quantity = data.quantity.parse::<Asset>().unwrap();
+            match (transfer) {
+                Ok(data) => {
+                    let quantity = Asset::from(data.quantity.as_str());
+                    response.push(TransferEvent {
+                        // trace information
+                        trx_id: trx.id.clone(),
+                        action_ordinal: trace.action_ordinal,
 
-            response.push(TransferEvent {
-                // trace information
-                trx_id: trx.id.clone(),
-                action_ordinal: trace.action_ordinal,
+                        // contract & scope
+                        account: action_trace.account,
+                        symcode: quantity.symbol.code().to_string(),
 
-                // contract & scope
-                account: action_trace.account,
-                symcode: quantity.symbol.code().to_string(),
+                        // payload
+                        from: data.from,
+                        to: data.to,
+                        quantity: quantity.to_string(),
+                        memo: data.memo,
 
-                // payload
-                from: data.from,
-                to: data.to,
-                quantity: quantity.to_string(),
-                memo: data.memo,
-
-                // extras
-                precision: quantity.symbol.precision().into(),
-                amount: quantity.amount,
-            });
+                        // extras
+                        precision: quantity.symbol.precision().into(),
+                        amount: quantity.amount,
+                    });
+                },
+                Err(_) => continue,
+            }
         }
     }
     Ok(TransferEvents { items: response })
