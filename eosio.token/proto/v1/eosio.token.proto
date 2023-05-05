@@ -46,7 +46,7 @@ message TransferEvent {
     uint32 action_ordinal = 2;
 
     // contract & scope
-    string account = 3;
+    string contract = 3;
     string symcode = 4;
 
     // data payload
