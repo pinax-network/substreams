@@ -43,7 +43,7 @@ gui:
 
 .PHONY: param
 param:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s 292103130 -t +1000000 -p "swap.defi"
+	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s 292103130 -t +1000000 -p "map_transfers=swap.defi"
 
 .PHONY: sink
 sink:
