@@ -83,8 +83,8 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
     // Build query-params
     // "to=swap.defi,swap.rome&symcode=EOS"
     // all EOS symcode transfers to these two accounts
-    // let accounts: Vec<&str> = params.split(";").collect();
     // log::debug!("map_params: {:?}", accounts);
+    // let from = params.split(";").collect::<Vec<&str>>()[0];
 
     for trx in block.all_transaction_traces() {
         // action traces

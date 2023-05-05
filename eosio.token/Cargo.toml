@@ -1,7 +1,11 @@
 [package]
 name = "eosio_token"
-version = "0.6.0"
-authors = ["Denis <denis@pinax.network>", "Yaro <yaro@pinax.network>"]
+version = "0.7.1"
+authors = [
+    "Denis <denis@pinax.network>",
+    "Yaro <yaro@pinax.network>",
+    "Charles <charles@pinax.network>"
+]
 description = "Antelope `eosio.token` token transfers"
 license = "MIT OR Apache-2.0"
 edition = "2021"
