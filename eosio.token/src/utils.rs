@@ -14,7 +14,7 @@ pub fn create_filters(params: &str, key: &str) -> HashSet<String> {
         if ( kv.len() != 2 ) || ( kv[0] != key ) {
             continue;
         }
-        for item in kv[1].split("+").collect::<Vec<&str>>() {
+        for item in kv[1].split(",").collect::<Vec<&str>>() {
             filter.insert(item.as_string());
         }
     }
