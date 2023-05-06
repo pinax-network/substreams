@@ -58,5 +58,3 @@ modules:
       - map: map_stat
     output:
       type: proto:sf.substreams.sink.kv.v1.KVOperations
-params:
-  map_transfers: "all"
