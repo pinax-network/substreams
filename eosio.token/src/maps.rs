@@ -105,6 +105,7 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
     let filter_to = utils::create_filters(params.as_str(), "to");
     let filter_symcode = utils::create_filters(params.as_str(), "symcode");
     let filter_contract = utils::create_filters(params.as_str(), "contract");
+    let filter_tofrom = utils::create_filters(params.as_str(), "to_or_from");
 
     for trx in block.all_transaction_traces() {
         // action traces
@@ -126,6 +127,7 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
                     if !filter_to.is_empty() && !filter_to.contains(&data.to) { continue; }
                     if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
                     if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
+                    if !filter_tofrom.is_empty() && !(filter_tofrom.contains(&data.to) || filter_tofrom.contains(&data.from)) { continue; }
 
                     response.push(TransferEvent {
                         // trace information
