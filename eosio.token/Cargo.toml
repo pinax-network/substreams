@@ -28,3 +28,4 @@ substreams-database-change = { workspace = true }
 substreams-sink-kv = { workspace = true }
 substreams-sink-winston = { workspace = true }
 substreams-antelope = { workspace = true }
+substreams-entity-change = { workspace = true }

@@ -49,6 +49,6 @@ param:
 sink:
 	substreams run -e eos.firehose.eosnation.io:9001 log_out -s 292442484 -t +1000000 -o jsonl
 
-.PHONY: db_out
-db_out:
-	substreams gui -e eos.firehose.eosnation.io:9001 db_out -s 292442484 -t +1000000
+.PHONY: graph_out
+graph_out:
+	substreams gui -e eos.firehose.eosnation.io:9001 graph_out -s 292442484 -t +1000000
