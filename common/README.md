@@ -15,7 +15,6 @@ $ make run
 
 ```mermaid
 graph TD;
-graph TD;
   map_block_header[map: map_block_header];
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header;
   map_blockroot_merkle[map: map_blockroot_merkle];
