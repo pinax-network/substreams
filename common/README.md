@@ -11,6 +11,11 @@ $ make
 $ make run
 ```
 
+### KV
+
+- `block.id:<block.number>`
+- `block.timestamp:<block.number>`
+
 ## Mermaid graph
 
 ```mermaid
