@@ -15,25 +15,26 @@ $ make run
 
 ```mermaid
 graph TD;
-  map_block_header[map: map_block_header]
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header
-  map_blockroot_merkle[map: map_blockroot_merkle]
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_blockroot_merkle
-  map_transaction_traces[map: map_transaction_traces]
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_transaction_traces
-  map_action_traces[map: map_action_traces]
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_action_traces
-  map_db_ops[map: map_db_ops]
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_db_ops
-  store_timestamp[store: store_timestamp]
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> store_timestamp
+graph TD;
+  map_block_header[map: map_block_header];
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header;
+  map_blockroot_merkle[map: map_blockroot_merkle];
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_blockroot_merkle;
+  map_transaction_traces[map: map_transaction_traces];
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_transaction_traces;
+  map_action_traces[map: map_action_traces];
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_action_traces;
+  map_db_ops[map: map_db_ops];
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_db_ops;
+  kv_out[map: kv_out];
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> kv_out;
 ```
 
 ### Modules
 
 ```yaml
 Package name: common
-Version: v0.3.0
+Version: v0.4.0
 Doc: Antelope based action traces & database operations.
 Modules:
 ----
@@ -41,36 +42,35 @@ Name: map_block_header
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockHeader
-Hash: 4938a193662ecc692410a826b4b4480a4a74f6e7
+Hash: a4eee3c6fc858a0a3405058fa274bed05edb545e
 
 Name: map_blockroot_merkle
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockRootMerkle
-Hash: 7b203830ca24aa79a7c396fd69d58080243401b2
+Hash: 4eaaf97298d358943598cb8c61d7cd8b106a0d59
 
 Name: map_transaction_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.TransactionTraces
-Hash: 7677f6fba4957f44adb34a6245df96862dac5cc1
+Hash: 26040054e21d78bcfe0110bd80404cf721a86d93
 
 Name: map_action_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.ActionTraces
-Hash: beeedfc6447b202bcdc0854631f7ebdc16bc9a53
+Hash: 511b5b43b716576f11515457cd671598fca471ee
 
 Name: map_db_ops
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.DBOps
-Hash: a46d52708fe11dc3c9cb8cd53349fdf1ea55da9d
+Hash: e2ad291a121935e8ff3fa58f53bf475b4a4cd4a5
 
-Name: store_timestamp
-Initial block: 2
-Kind: store
-Value Type: int64
-Update Policy: UPDATE_POLICY_SET
-Hash: 70fb3568cdfb0032b30305b21c308c926552da6c
+Name: kv_out
+Initial block: 0
+Kind: map
+Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
+Hash: 6f1ef3777bd995d8803baf4dbd2c4ca2a9958bfa
 ```

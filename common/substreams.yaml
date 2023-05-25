@@ -1,11 +1,12 @@
 specVersion: v0.1.0
 package:
   name: common
-  version: v0.3.0
+  version: v0.4.0
   url: https://github.com/pinax-network/substreams
   doc: Antelope based action traces & database operations.
 
 imports:
+  kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v2.1.4/substreams-sink-kv-v2.1.4.spkg
   antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
 
 binaries:
@@ -55,10 +56,9 @@ modules:
     output:
       type: proto:sf.antelope.type.v1.DBOps
 
-  - name: store_timestamp
-    kind: store
-    initialBlock: 2
-    updatePolicy: set
-    valueType: int64
+  - name: kv_out
+    kind: map
     inputs:
       - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:sf.substreams.sink.kv.v1.KVOperations

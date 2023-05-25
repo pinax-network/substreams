@@ -1,6 +1,6 @@
 [package]
 name = "common"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["Denis <denis@pinax.network>"]
 description = "Antelope Common Substream"
 license = "MIT OR Apache-2.0"
@@ -16,3 +16,4 @@ crate-type = ["cdylib"]
 [dependencies]
 substreams = { workspace = true }
 substreams-antelope = { workspace = true }
+substreams-sink-kv = { workspace = true }
