@@ -26,7 +26,8 @@ pub fn graph_out(map_transfers: TransferEvents) -> Result<EntityChanges, Error> 
             .change("quantity", transfer.quantity)
             // extras
             .change("amount", transfer.amount.to_string())
-            .change("precision", transfer.precision.to_string());
+            .change("precision", transfer.precision.to_string())
+            .change("value", transfer.value.to_string());
     }
 
     Ok(entity_changes)
@@ -82,7 +83,8 @@ pub fn db_out(map_transfers: TransferEvents) -> Result<DatabaseChanges, Error> {
             .change("quantity", ("", transfer.quantity.as_str()))
             // extras
             .change("amount", ("", transfer.amount.to_string().as_str()))
-            .change("precision", ("", transfer.precision.to_string().as_str()));
+            .change("precision", ("", transfer.precision.to_string().as_str()))
+            .change("value", ("", transfer.value.to_string().as_str()));
     }
 
     Ok(db_out)

@@ -34,6 +34,7 @@ message Stat {
     // extras
     int64 amount = 9;
     uint32 precision = 10;
+    double value = 11;
 }
 
 message TransferEvents {
@@ -58,4 +59,5 @@ message TransferEvent {
     // extras
     int64 amount = 9;
     uint32 precision = 10;
+    double value = 11;
 }

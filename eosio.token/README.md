@@ -37,8 +37,10 @@ graph TD;
   map_transfers:params[params] --> map_transfers;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_transfers;
   map_accounts[map: map_accounts];
+  map_accounts:params[params] --> map_accounts;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_accounts;
   map_stat[map: map_stat];
+  map_stat:params[params] --> map_stat;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_stat;
   graph_out[map: graph_out];
   map_transfers --> graph_out;
@@ -53,7 +55,7 @@ graph TD;
 
 ```yaml
 Package name: eosio_token
-Version: v0.11.0
+Version: v0.12.0
 Doc: Antelope `eosio.token` based action traces & database operations.
 Modules:
 ----
@@ -61,35 +63,35 @@ Name: map_transfers
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.TransferEvents
-Hash: 0a39637b4c8c5fb2300e3bbb0655a27de5ef78a0
+Hash: c2ddeec2dba7004b4a3d44fb1ee9f2e8f995de10
 
 Name: map_accounts
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.Accounts
-Hash: 3a648fbb9db0b4f330c9b97d096d1e63744ff32c
+Hash: 4c9b69a46775b3cb48f516bf97d2e4e62e2050a7
 
 Name: map_stat
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.Stats
-Hash: 1f06ed9106b5e7990d4e413005721852d2360e68
+Hash: 72f9694a2ec4c9f92bdaa52ffae5be3615549e1a
 
 Name: graph_out
 Initial block: 0
 Kind: map
 Output Type: proto:substreams.entity.v1.EntityChanges
-Hash: bb6878235c0ee77321f286e5b2369d0696af4e87
+Hash: 9f6bb5e02d226a92ea288396c6d65c4bafe8e916
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
-Hash: 38fb1424d9f845367babb424f3fab910f1fecbe4
+Hash: 4a80a82300d3ca63fe9183e3fbbf84ef21f184cb
 
 Name: db_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.database.v1.DatabaseChanges
-Hash: 1ba842ba4d4b861dbdbf973729e08852a2e73c61
+Hash: 062e8bdda04d569a44bdd14c7bcc2308f37529fc
 ```

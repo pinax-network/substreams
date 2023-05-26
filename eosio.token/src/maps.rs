@@ -68,7 +68,7 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
             match abi::CurrencyStats::try_from(db_op.new_data_json.as_str()) {
                 Ok(data) => {
                     let supply = Asset::from(data.supply.as_str());
-
+                    let precision = supply.symbol.precision().into();
 
                     items.push(Stat {
                         // trace information
@@ -85,8 +85,10 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
                         supply: data.supply,
 
                         // extras
-                        precision: supply.symbol.precision().into(),
+                        precision,
                         amount: supply.amount,
+                        value: supply.amount as f64 / 10_i64.pow(precision) as f64,
+
                     });
                 }
                 Err(_) => continue,
@@ -147,6 +149,7 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
                         // extras
                         precision,
                         amount,
+                        value: amount as f64 / 10_i64.pow(precision) as f64,
                     });
                 }
                 Err(_) => continue,
