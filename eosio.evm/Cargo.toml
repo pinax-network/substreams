@@ -1,12 +1,11 @@
 [package]
 name = "eosio_evm"
-version = "0.12.0"
+version = "0.0.1"
 authors = [
     "Denis <denis@pinax.network>",
-    "Yaro <yaro@pinax.network>",
-    "Charles <charles@pinax.network>"
+    "Hau <hau@pinax.network>",
 ]
-description = "Antelope `eosio.evm` gas fees"
+description = "Antelope `eosio.evm` contract"
 license = "MIT OR Apache-2.0"
 edition = "2021"
 publish = false
@@ -26,6 +25,5 @@ prost-types = { workspace = true }
 substreams = { workspace = true }
 substreams-database-change = { workspace = true }
 substreams-sink-kv = { workspace = true }
-substreams-sink-winston = { workspace = true }
 substreams-antelope = { workspace = true }
 substreams-entity-change = { workspace = true }

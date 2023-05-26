@@ -6,4 +6,3 @@ pub use self::eosio_evm::*;
 mod abi;
 mod maps;
 mod sinks;
-mod utils;

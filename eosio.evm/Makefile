@@ -11,7 +11,7 @@ build:
 
 .PHONY: protogen
 protogen:
-	substreams protogen --exclude-paths sf/substreams,google
+	substreams protogen --exclude-paths sf/antelope/type,sf/substreams,google
 
 .PHONY: pack
 pack:
@@ -27,32 +27,8 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_transfers -s 292442484 -t +1000000 -o jsonl
-
-.PHONY: map_accounts
-map_accounts:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_accounts -s 292442484 -t +1000000
-
-.PHONY: map_stat
-map_stat:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_stat -s 292442484 -t +1000000
+	substreams run -e eos.firehose.eosnation.io:9001 map_pushtx -s 311800000 -t +1000000 -o jsonl
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s 292103130 -t +1000000
-
-.PHONY: param
-param:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s 292103130 -t +1000000 -p map_transfers="to=swap.defi&symcode=EOS"
-
-.PHONY: sink
-sink:
-	substreams run -e eos.firehose.eosnation.io:9001 log_out -s 292442484 -t +1000000 -o jsonl
-
-.PHONY: graph_out
-graph_out:
-	substreams gui -e eos.firehose.eosnation.io:9001 graph_out -s 292442484 -t +1000000
-
-.PHONY: db_out
-db_out:
-	substreams gui -e eos.firehose.eosnation.io:9001 db_out -s 292442484 -t +1000000
+	substreams gui -e eos.firehose.eosnation.io:9001 map_pushtx -s 311800000 -t +1000000
