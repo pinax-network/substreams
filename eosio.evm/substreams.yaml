@@ -1,0 +1,70 @@
+specVersion: v0.1.0
+package:
+  name: eosio_evm
+  version: v0.11.1
+  url: https://github.com/pinax-network/substreams
+  doc: Antelope `eosio.evm` based action traces & database operations.
+
+imports:
+  winston: https://github.com/pinax-network/substreams-sink-winston/releases/download/v0.1.2/substreams-sink-winston-v0.1.2.spkg
+  entities: https://github.com/streamingfast/substreams-entity-change/releases/download/v0.2.1/substreams-entity-change-v0.2.1.spkg
+  kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v0.1.2/substreams-sink-kv-v0.1.2.spkg
+  database_change: https://github.com/streamingfast/substreams-database-change/releases/download/v1.0.0/substreams-database-change-v1.0.0.spkg
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/eosio_evm.wasm
+
+protobuf:
+  files:
+    - eosio.evm.proto
+  importPaths:
+    - ./proto/v1
+
+modules:
+  - name: map_transfers
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.evm.v1.TransferEvents
+
+  - name: map_accounts
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.evm.v1.Accounts
+
+  - name: map_stat
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.evm.v1.Stats
+
+  - name: graph_out
+    kind: map
+    inputs:
+      - map: map_transfers
+    output:
+      type: proto:substreams.entity.v1.EntityChanges
+
+  - name: kv_out
+    kind: map
+    inputs:
+      - map: map_accounts
+      - map: map_stat
+    output:
+      type: proto:sf.substreams.sink.kv.v1.KVOperations
+
+  - name: db_out
+    kind: map
+    inputs:
+      - map: map_transfers
+    output:
+      type: proto:sf.substreams.sink.database.v1.DatabaseChanges

@@ -1,0 +1,31 @@
+[package]
+name = "eosio_evm"
+version = "0.12.0"
+authors = [
+    "Denis <denis@pinax.network>",
+    "Yaro <yaro@pinax.network>",
+    "Charles <charles@pinax.network>"
+]
+description = "Antelope `eosio.evm` gas fees"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+publish = false
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+serde_json = "1"
+serde = { version = "1", features = ["derive"] }
+antelope = { workspace = true }
+prost = { workspace = true }
+prost-types = { workspace = true }
+substreams = { workspace = true }
+substreams-database-change = { workspace = true }
+substreams-sink-kv = { workspace = true }
+substreams-sink-winston = { workspace = true }
+substreams-antelope = { workspace = true }
+substreams-entity-change = { workspace = true }
