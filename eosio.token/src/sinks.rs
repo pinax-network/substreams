@@ -13,17 +13,22 @@ pub fn graph_out(map_transfers: TransferEvents) -> Result<EntityChanges, Error> 
     for transfer in map_transfers.items {
         entity_changes
             .push_change("transfer", transfer.trx_id.as_str(), 0, entity_change::Operation::Create)
+
             // transaction
             .change("trx_id", transfer.trx_id)
             .change("action_ordinal", transfer.action_ordinal.to_string())
+
             // contract & scope
             .change("contract", transfer.contract)
+            .change("action", transfer.action)
             .change("symcode", transfer.symcode)
+
             // data payload
             .change("from", transfer.from)
             .change("to", transfer.to)
             .change("memo", transfer.memo)
             .change("quantity", transfer.quantity)
+
             // extras
             .change("amount", transfer.amount.to_string())
             .change("precision", transfer.precision.to_string())
@@ -69,18 +74,19 @@ pub fn db_out(map_transfers: TransferEvents) -> Result<DatabaseChanges, Error> {
             .push_change("transfer", pk.as_str(), 0, table_change::Operation::Create)
             // transaction
             .change("trx_id", ("", transfer.trx_id.as_str()))
-            .change(
-                "action_ordinal",
-                ("", transfer.action_ordinal.to_string().as_str()),
-            )
+            .change("action_ordinal", ("", transfer.action_ordinal.to_string().as_str()))
+
             // contract & scope
             .change("contract", ("", transfer.contract.as_str()))
+            .change("action", ("", transfer.action.as_str()))
             .change("symcode", ("", transfer.symcode.as_str()))
+
             // data payload
             .change("from", ("", transfer.from.as_str()))
             .change("to", ("", transfer.to.as_str()))
             .change("memo", ("", transfer.memo.as_str()))
             .change("quantity", ("", transfer.quantity.as_str()))
+
             // extras
             .change("amount", ("", transfer.amount.to_string().as_str()))
             .change("precision", ("", transfer.precision.to_string().as_str()))

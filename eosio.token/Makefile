@@ -39,7 +39,7 @@ map_stat:
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s 292103130 -t +1000000
+	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s 248820796 --production-mode
 
 .PHONY: param
 param:

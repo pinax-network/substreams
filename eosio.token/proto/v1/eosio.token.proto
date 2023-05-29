@@ -48,16 +48,17 @@ message TransferEvent {
 
     // contract & scope
     string contract = 3;
-    string symcode = 4;
+    string action = 4;
+    string symcode = 5;
 
     // data payload
-    string from = 5;
-    string to = 6;
-    string quantity = 7;
-    string memo = 8;
+    string from = 6;
+    string to = 7;
+    string quantity = 8;
+    string memo = 9;
 
     // extras
-    int64 amount = 9;
-    uint32 precision = 10;
-    double value = 11;
+    int64 amount = 10;
+    uint32 precision = 11;
+    double value = 12;
 }

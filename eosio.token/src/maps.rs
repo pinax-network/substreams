@@ -138,6 +138,7 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
 
                         // contract & scope
                         contract,
+                        action: action_trace.name.clone(),
                         symcode,
 
                         // payload
