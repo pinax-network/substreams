@@ -1,6 +1,6 @@
 [package]
 name = "eosio_token"
-version = "0.12.0"
+version = "0.12.1"
 authors = [
     "Denis <denis@pinax.network>",
     "Yaro <yaro@pinax.network>",
