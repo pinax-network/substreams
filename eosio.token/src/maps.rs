@@ -108,6 +108,8 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
     let filter_symcode = utils::create_filters(params.as_str(), "symcode");
     let filter_contract = utils::create_filters(params.as_str(), "contract");
     let filter_tofrom = utils::create_filters(params.as_str(), "to_or_from");
+    let filter_amountlt = utils::create_filters(params.as_str(), "amount_lt");
+    let filter_amountgt = utils::create_filters(params.as_str(), "amount_gt");
 
     for trx in block.all_transaction_traces() {
         // action traces
@@ -130,6 +132,27 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
                     if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
                     if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
                     if !filter_tofrom.is_empty() && !(filter_tofrom.contains(&data.to) || filter_tofrom.contains(&data.from)) { continue; }
+                    // if amount is greater than filter_amountlt, skip
+                    if !filter_amountlt.is_empty() {
+                        // convert filter_amountlt to i64
+                        let filter_amoutlt_number: Result<i64, _> = filter_amountlt.iter().next().unwrap().parse();
+                        if let Ok(filter_amoutlt_number) = filter_amoutlt_number {
+                            if amount > filter_amoutlt_number {continue;}
+                        } else {
+                            // Handle the error case
+                            println!("filter_amountlt is not a number");
+                        }
+                    } 
+                    if !filter_amountgt.is_empty() {
+                        // convert filter_amountgt to i64
+                        let filter_amoutgt_number: Result<i64, _> = filter_amountgt.iter().next().unwrap().parse();
+                        if let Ok(filter_amoutgt_number) = filter_amoutgt_number {
+                            if amount < filter_amoutgt_number {continue;}
+                        } else {
+                            // Handle the error case
+                            println!("filter_amountgt is not a number");
+                        }
+                    }
 
                     response.push(TransferEvent {
                         // trace information
