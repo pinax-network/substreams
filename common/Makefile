@@ -27,8 +27,12 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 kv_out -s 292442484 -t +100000 -o jsonl --production-mode
+	substreams run -e eos.firehose.eosnation.io:9001 map_action_traces -s -1
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 kv_out -s 292103130 -t +100000 --production-mode
+	substreams gui -e eos.firehose.eosnation.io:9001 map_action_traces -s -1
+
+.PHONY: params
+params:
+	substreams run -e eos.firehose.eosnation.io:9001 map_action_traces -s -1 -p map_action_traces=receiver=eosio.token

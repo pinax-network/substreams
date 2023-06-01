@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: common
-  version: v0.4.0
+  version: v0.5.0
   url: https://github.com/pinax-network/substreams
   doc: Antelope based action traces & database operations.
 
@@ -36,6 +36,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
+      - params: string
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.TransactionTraces
@@ -44,6 +45,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
+      - params: string
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.ActionTraces
@@ -52,6 +54,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
+      - params: string
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:sf.antelope.type.v1.DBOps
