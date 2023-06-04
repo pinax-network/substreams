@@ -14,6 +14,8 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
     let filter_account = utils::create_filters(params.as_str(), "account");
     let filter_symcode = utils::create_filters(params.as_str(), "symcode");
     let filter_contract = utils::create_filters(params.as_str(), "contract");
+    let filter_balancelt = utils::create_filters(params.as_str(), "balance_lt");
+    let filter_balancegt = utils::create_filters(params.as_str(), "balance_gt");
 
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
@@ -31,6 +33,10 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
 
             match abi::Account::try_from(db_op.new_data_json.as_str()) {
                 Ok(data) => {
+                    // filter by params
+                    if !filter_balancelt.is_empty() && !utils::is_balance_lt(&data.balance, &filter_balancelt) { continue; }
+                    if !filter_balancegt.is_empty() && !utils::is_balance_gt(&data.balance, &filter_balancegt) { continue; }
+
                     items.push(Account {
                         contract,
                         account,
@@ -52,6 +58,8 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
     // query-params
     let filter_symcode = utils::create_filters(params.as_str(), "symcode");
     let filter_contract = utils::create_filters(params.as_str(), "contract");
+    let filter_amountlt = utils::create_filters(params.as_str(), "amount_lt");
+    let filter_amountgt = utils::create_filters(params.as_str(), "amount_gt");
 
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
@@ -65,10 +73,16 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
             if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
             if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
 
+
             match abi::CurrencyStats::try_from(db_op.new_data_json.as_str()) {
                 Ok(data) => {
                     let supply = Asset::from(data.supply.as_str());
                     let precision = supply.symbol.precision().into();
+
+                    // filter by params
+                    if !filter_amountlt.is_empty() && !utils::is_amount_lt(supply.amount, &filter_amountlt) { continue; }
+                    if !filter_amountgt.is_empty() && !utils::is_amount_gt(supply.amount, &filter_amountgt) { continue; }
+                    
 
                     items.push(Stat {
                         // trace information
@@ -133,26 +147,9 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
                     if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
                     if !filter_tofrom.is_empty() && !(filter_tofrom.contains(&data.to) || filter_tofrom.contains(&data.from)) { continue; }
                     // if amount is greater than filter_amountlt, skip
-                    if !filter_amountlt.is_empty() {
-                        // convert filter_amountlt to i64
-                        let filter_amoutlt_number: Result<i64, _> = filter_amountlt.iter().next().unwrap().parse();
-                        if let Ok(filter_amoutlt_number) = filter_amoutlt_number {
-                            if amount > filter_amoutlt_number {continue;}
-                        } else {
-                            // Handle the error case
-                            println!("filter_amountlt is not a number");
-                        }
-                    } 
-                    if !filter_amountgt.is_empty() {
-                        // convert filter_amountgt to i64
-                        let filter_amoutgt_number: Result<i64, _> = filter_amountgt.iter().next().unwrap().parse();
-                        if let Ok(filter_amoutgt_number) = filter_amoutgt_number {
-                            if amount < filter_amoutgt_number {continue;}
-                        } else {
-                            // Handle the error case
-                            println!("filter_amountgt is not a number");
-                        }
-                    }
+                    if !filter_amountgt.is_empty() && !utils::is_amount_gt(amount, &filter_amountgt) { continue; }
+                    // if amount is less than filter_amountlt, skip
+                    if !filter_amountlt.is_empty() && !utils::is_amount_lt(amount, &filter_amountlt) { continue; }
 
                     response.push(TransferEvent {
                         // trace information
