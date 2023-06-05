@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: eosio_evm
-  version: v0.0.1
+  version: v0.0.2
   url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.evm` contract.
 

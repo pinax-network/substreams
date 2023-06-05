@@ -1,5 +1,6 @@
 use substreams::errors::Error;
 use substreams_antelope::Block;
+use substreams::log;
 
 use crate::eosio_evm;
 use crate::abi;
@@ -24,6 +25,15 @@ fn map_pushtx(block: Block) -> Result<eosio_evm::Pushtxs, Error> {
                 Err(_) => continue,
             }
         }
+
+        for db_op in &trx.db_ops {
+            let contract = db_op.code.clone();
+    
+            if contract == "eosio.evm" &&  db_op.table_name == "balances" {
+                log::debug!("new_data_json={:?}", db_op.new_data_json);
+            }
+        }
     }
+
     Ok(eosio_evm::Pushtxs { events })
 }
