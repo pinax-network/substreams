@@ -46,6 +46,14 @@ modules:
     output:
       type: proto:antelope.eosio.token.v1.Stats
 
+  - name: map_balance_delta
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.token.v1.Accounts
+
   - name: graph_out
     kind: map
     inputs:
@@ -58,6 +66,7 @@ modules:
     inputs:
       - map: map_accounts
       - map: map_stat
+      - map: map_balance_delta
     output:
       type: proto:sf.substreams.sink.kv.v1.KVOperations
 

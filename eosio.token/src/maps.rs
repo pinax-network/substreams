@@ -1,5 +1,6 @@
 use substreams::errors::Error;
 use substreams_antelope::Block;
+use substreams::log;
 
 use crate::abi;
 use crate::eosio_token::*;
@@ -178,4 +179,56 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
         }
     }
     Ok(TransferEvents { items: response })
+}
+
+#[substreams::handlers::map]
+fn map_balance_delta(params: String, block: Block) -> Result<Accounts, Error> {
+    
+    let mut items = vec![];
+
+    let mut balance_changes: Vec<f64> = Vec::new();
+    for trx in block.all_transaction_traces() {
+        for db_op in &trx.db_ops {            
+            let table_name = db_op.clone().table_name;
+            if table_name != "accounts" { continue; }
+
+            let contract = db_op.code.clone();
+            let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
+            let symcode = SymbolCode::from(raw_primary_key).to_string();
+            let account = db_op.scope.clone();
+
+            match abi::Account::try_from(db_op.old_data_json.as_str()) {
+                Ok(data) => {
+                    let old_balance_numeric: String = data.balance.chars().filter(|c| c.is_numeric() || *c == '.').collect();
+                    let old_balance: Result<f64, _> = old_balance_numeric.parse();
+                    if old_balance.is_err() { continue; }
+
+                    balance_changes.push(old_balance.unwrap());
+                }
+                Err(_) => { continue;}
+            }
+
+            match abi::Account::try_from(db_op.new_data_json.as_str()) {
+                Ok(data) => {
+                    let new_balance_numeric: String = data.balance.chars().filter(|c| c.is_numeric() || *c == '.').collect();
+                    let new_balance: Result<f64, _> = new_balance_numeric.parse();
+                    if new_balance.is_err() { continue; }
+                    
+                    balance_changes.push(new_balance.unwrap());
+
+                    let balance_delta = balance_changes.last().unwrap() - balance_changes.first().unwrap();
+
+                    items.push(Account {
+                        contract,
+                        account,
+                        symcode,
+                        balance: balance_delta.to_string(),
+                    });
+                }
+                Err(_) => continue,
+            }
+        }
+    }
+
+    Ok(Accounts { items })
 }
