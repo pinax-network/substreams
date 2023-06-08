@@ -17,16 +17,13 @@ message Account {
 
     // data payload
     string account = 5;
-    optional string old_balance = 6;
-    optional string new_balance = 7;
+    string balance = 6;
+    int64 balance_delta = 7;
 
     // extras
     uint32 precision = 10;
-    optional int64 old_amount = 11;
-    optional double old_value = 12;
-    optional int64 new_amount = 13;
-    optional double new_value = 14;
-    optional int64 delta_amount = 15;
+    int64 amount = 11;
+    double value = 12;
 }
 
 message Stats {
@@ -46,6 +43,7 @@ message Stat {
     string issuer = 5;
     string max_supply = 6;
     string supply = 7;
+    int64 supply_delta = 8;
 
     // extras
     uint32 precision = 10;

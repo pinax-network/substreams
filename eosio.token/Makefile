@@ -40,3 +40,7 @@ params:
 .PHONY: accounts
 accounts:
 	substreams gui -e eos.firehose.eosnation.io:9001 map_accounts -s -1
+
+.PHONY: stat
+stat:
+	substreams gui -e eos.firehose.eosnation.io:9001 map_stat -s -10000

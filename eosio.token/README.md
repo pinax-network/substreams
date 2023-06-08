@@ -24,18 +24,14 @@ Params allow to filter messages and can be supplied to modules in the form of UR
   - `account` - account
   - `symcode` - symbol code
   - `contract` - token contract
-  - `new_balance_lt` - new balance amount **less than**
-  - `new_balance_lte` - new balance amount **less than or equal to**
-  - `new_balance_gt` - new balance amount **greater than**
-  - `new_balance_gte` - new balance amount **greater than or equal to**
-  - `old_balance_lt` - old balance amount **less than**
-  - `old_balance_lte` - old balance amount **less than or equal to**
-  - `old_balance_gt` - old balance amount **greater than**
-  - `old_balance_gte` - old balance amount **greater than or equal to**
-  - `delta_balance_lt` - delta balance amount **less than**
-  - `delta_balance_lte` - delta balance amount **less than or equal to**
-  - `delta_balance_gt` - delta balance amount **greater than**
-  - `delta_balance_gte` - delta balance amount **greater than or equal to**
+  - `balance_lt` - balance amount **less than**
+  - `balance_lte` - balance amount **less than or equal to**
+  - `balance_gt` - balance amount **greater than**
+  - `balance_gte` - balance amount **greater than or equal to**
+  - `balance_delta_lt` - balance delta amount **less than**
+  - `balance_delta_lte` - balance delta amount **less than or equal to**
+  - `balance_delta_gt` - balance delta amount **greater than**
+  - `balance_delta_gte` - balance delta amount **greater than or equal to**
 - `map_stat` - filter token stats
   - `symcode` - symbol code
   - `contract` - token contract
@@ -43,6 +39,10 @@ Params allow to filter messages and can be supplied to modules in the form of UR
   - `supply_lte` - supply amount **less than or equal to**
   - `supply_gt` - supply amount **greater than**
   - `supply_gte` - supply amount **greater than or equal to**
+  - `supply_delta_lt` - supply delta amount **less than**
+  - `supply_delta_lte` - supply delta amount **less than or equal to**
+  - `supply_delta_gt` - supply delta amount **greater than**
+  - `supply_delta_gte` - supply delta amount **greater than or equal to**
 
 ### Quickstart
 

@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: eosio_token
-  version: v0.12.1
+  version: v0.13.0
   url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.token` based action traces & database operations.
 

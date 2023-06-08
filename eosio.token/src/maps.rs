@@ -1,3 +1,4 @@
+use antelope::Symbol;
 use substreams::errors::Error;
 use substreams_antelope::Block;
 
@@ -15,20 +16,15 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
     let filter_symcode = utils::create_filters(params.as_str(), "symcode");
     let filter_contract = utils::create_filters(params.as_str(), "contract");
 
-    let filter_old_balance_lt = utils::create_i64_filter(params.as_str(), "old_balance_lt");
-    let filter_old_balance_gt = utils::create_i64_filter(params.as_str(), "old_balance_gt");
-    let filter_old_balance_lte = utils::create_i64_filter(params.as_str(), "old_balance_lte");
-    let filter_old_balance_gte = utils::create_i64_filter(params.as_str(), "old_balance_gte");
+    let filter_balance_lt = utils::create_i64_filter(params.as_str(), "balance_lt");
+    let filter_balance_gt = utils::create_i64_filter(params.as_str(), "balance_gt");
+    let filter_balance_lte = utils::create_i64_filter(params.as_str(), "balance_lte");
+    let filter_balance_gte = utils::create_i64_filter(params.as_str(), "balance_gte");
 
-    let filter_new_balance_lt = utils::create_i64_filter(params.as_str(), "new_balance_lt");
-    let filter_new_balance_gt = utils::create_i64_filter(params.as_str(), "new_balance_gt");
-    let filter_new_balance_lte = utils::create_i64_filter(params.as_str(), "new_balance_lte");
-    let filter_new_balance_gte = utils::create_i64_filter(params.as_str(), "new_balance_gte");
-
-    let filter_delta_balance_lt = utils::create_i64_filter(params.as_str(), "delta_balance_lt");
-    let filter_delta_balance_gt = utils::create_i64_filter(params.as_str(), "delta_balance_gt");
-    let filter_delta_balance_lte = utils::create_i64_filter(params.as_str(), "delta_balance_lte");
-    let filter_delta_balance_gte = utils::create_i64_filter(params.as_str(), "delta_balance_gte");
+    let filter_balance_delta_lt = utils::create_i64_filter(params.as_str(), "balance_delta_lt");
+    let filter_balance_delta_gt = utils::create_i64_filter(params.as_str(), "balance_delta_gt");
+    let filter_balance_delta_lte = utils::create_i64_filter(params.as_str(), "balance_delta_lte");
+    let filter_balance_delta_gte = utils::create_i64_filter(params.as_str(), "balance_delta_gte");
 
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
@@ -36,77 +32,51 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
 
             let contract = db_op.code.clone();
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
-            let symcode = SymbolCode::from(raw_primary_key).to_string();
+            let symcode = SymbolCode::from(raw_primary_key);
             let account = db_op.scope.clone();
 
             // filter by params
             if !filter_account.is_empty() && !filter_account.contains(&account) { continue; }
-            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
+            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode.to_string()) { continue; }
             if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
 
             let old_data = abi::Account::try_from(db_op.old_data_json.as_str()).ok();
             let new_data = abi::Account::try_from(db_op.new_data_json.as_str()).ok();
-            if old_data.is_none() && new_data.is_none() { continue; } // no accounts data
+            if old_data.is_none() && new_data.is_none() { continue; } // no data
 
-            let old_balance_str: Option<String> = match old_data {
-                Some(data) => Some(data.balance.as_str().into()),
+            let old_balance = match &old_data {
+                Some(data) => Some(Asset::from(data.balance.as_str())),
                 None => None,
             };
-            let new_balance_str: Option<String> = match new_data {
-                Some(data) => Some(data.balance.as_str().into()),
+            let new_balance = match &new_data {
+                Some(data) => Some(Asset::from(data.balance.as_str())),
                 None => None,
             };
-            let old_balance = match &old_balance_str {
-                Some(data) => Some(Asset::from(data.as_str())),
-                None => None,
+            let precision = match new_balance.is_some() {
+                true => new_balance.unwrap().symbol.precision(),
+                false => old_balance.unwrap().symbol.precision(),
             };
-            let new_balance = match &new_balance_str {
-                Some(data) => Some(Asset::from(data.as_str())),
-                None => None,
+            let sym = Symbol::from_precision(symcode, precision);
+            let balance = match new_balance.is_some() {
+                true => new_balance.unwrap(),
+                false => Asset::from_amount(0, sym),
             };
-            let old_amount = match old_balance {
-                Some(data) => Some(data.amount),
-                None => None,
-            };
-            let new_amount = match new_balance {
-                Some(data) => Some(data.amount),
-                None => None,
-            };
-            let old_value = match old_balance {
-                Some(data) => Some(utils::to_value(data)),
-                None => None,
-            };
-            let new_value = match new_balance {
-                Some(data) => Some(utils::to_value(data)),
-                None => None,
-            };
-            let precision = match old_balance.is_some() {
-                true => old_balance.unwrap().symbol.precision(),
-                false => new_balance.unwrap().symbol.precision(),
-            };
-            let delta_amount = match new_amount.is_some() {
-                true => match old_amount.is_some() {
-                    true => Some(new_amount.unwrap() - old_amount.unwrap()),
-                    false => new_amount,
-                },
-                false => Some(old_amount.unwrap() * -1),
+
+            let balance_delta = match old_balance.is_some() {
+                true => balance.amount - old_balance.unwrap().amount,
+                false => balance.amount,
             };
 
             // filter by params
-            if old_balance.is_some() && filter_old_balance_lt.is_some() && !(old_balance.unwrap().amount < filter_old_balance_lt.unwrap()) { continue; }
-            if old_balance.is_some() && filter_old_balance_gt.is_some() && !(old_balance.unwrap().amount > filter_old_balance_gt.unwrap()) { continue; }
-            if old_balance.is_some() && filter_old_balance_lte.is_some() && !(old_balance.unwrap().amount <= filter_old_balance_lte.unwrap()) { continue; }
-            if old_balance.is_some() && filter_old_balance_gte.is_some() && !(old_balance.unwrap().amount >= filter_old_balance_gte.unwrap()) { continue; }
+            if filter_balance_lt.is_some() && !(balance.amount < filter_balance_lt.unwrap()) { continue; }
+            if filter_balance_gt.is_some() && !(balance.amount > filter_balance_gt.unwrap()) { continue; }
+            if filter_balance_lte.is_some() && !(balance.amount <= filter_balance_lte.unwrap()) { continue; }
+            if filter_balance_gte.is_some() && !(balance.amount >= filter_balance_gte.unwrap()) { continue; }
 
-            if new_balance.is_some() && filter_new_balance_lt.is_some() && !(new_balance.unwrap().amount < filter_new_balance_lt.unwrap()) { continue; }
-            if new_balance.is_some() && filter_new_balance_gt.is_some() && !(new_balance.unwrap().amount > filter_new_balance_gt.unwrap()) { continue; }
-            if new_balance.is_some() && filter_new_balance_lte.is_some() && !(new_balance.unwrap().amount <= filter_new_balance_lte.unwrap()) { continue; }
-            if new_balance.is_some() && filter_new_balance_gte.is_some() && !(new_balance.unwrap().amount >= filter_new_balance_gte.unwrap()) { continue; }
-
-            if delta_amount.is_some() && filter_delta_balance_lt.is_some() && !(delta_amount.unwrap() < filter_delta_balance_lt.unwrap()) { continue; }
-            if delta_amount.is_some() && filter_delta_balance_gt.is_some() && !(delta_amount.unwrap() > filter_delta_balance_gt.unwrap()) { continue; }
-            if delta_amount.is_some() && filter_delta_balance_lte.is_some() && !(delta_amount.unwrap() <= filter_delta_balance_lte.unwrap()) { continue; }
-            if delta_amount.is_some() && filter_delta_balance_gte.is_some() && !(delta_amount.unwrap() >= filter_delta_balance_gte.unwrap()) { continue; }
+            if filter_balance_delta_lt.is_some() && !(balance_delta < filter_balance_delta_lt.unwrap()) { continue; }
+            if filter_balance_delta_gt.is_some() && !(balance_delta > filter_balance_delta_gt.unwrap()) { continue; }
+            if filter_balance_delta_lte.is_some() && !(balance_delta <= filter_balance_delta_lte.unwrap()) { continue; }
+            if filter_balance_delta_gte.is_some() && !(balance_delta >= filter_balance_delta_gte.unwrap()) { continue; }
 
             items.push(Account {
                 // trace information
@@ -115,20 +85,17 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
 
                 // contract & scope
                 contract,
-                symcode,
+                symcode: symcode.to_string(),
 
                 // payload
                 account: account,
-                old_balance: old_balance_str,
-                new_balance: new_balance_str,
+                balance: balance.to_string(),
+                balance_delta,
 
                 // extras
                 precision: precision.into(),
-                old_amount,
-                old_value,
-                new_amount,
-                new_value,
-                delta_amount,
+                amount: balance.amount,
+                value: utils::to_value(balance),
             });
         }
     }
@@ -142,10 +109,16 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
     // query-params
     let filter_symcode = utils::create_filters(params.as_str(), "symcode");
     let filter_contract = utils::create_filters(params.as_str(), "contract");
+
     let filter_supply_lt = utils::create_i64_filter(params.as_str(), "supply_lt");
     let filter_supply_gt = utils::create_i64_filter(params.as_str(), "supply_gt");
     let filter_supply_lte = utils::create_i64_filter(params.as_str(), "supply_lte");
     let filter_supply_gte = utils::create_i64_filter(params.as_str(), "supply_gte");
+
+    let filter_supply_delta_lt = utils::create_i64_filter(params.as_str(), "supply_delta_lt");
+    let filter_supply_delta_gt = utils::create_i64_filter(params.as_str(), "supply_delta_gt");
+    let filter_supply_delta_lte = utils::create_i64_filter(params.as_str(), "supply_delta_lte");
+    let filter_supply_delta_gte = utils::create_i64_filter(params.as_str(), "supply_delta_gte");
 
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
@@ -153,44 +126,74 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
 
             let contract = db_op.code.clone();
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
-            let symcode = SymbolCode::from(raw_primary_key).to_string();
+            let symcode = SymbolCode::from(raw_primary_key);
 
             // filter by params
-            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
+            if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
+            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode.to_string()) { continue; }
             if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
 
-            match abi::CurrencyStats::try_from(db_op.new_data_json.as_str()) {
-                Ok(data) => {
-                    let supply = Asset::from(data.supply.as_str());
+            let old_data = abi::CurrencyStats::try_from(db_op.old_data_json.as_str()).ok();
+            let new_data = abi::CurrencyStats::try_from(db_op.new_data_json.as_str()).ok();
+            if old_data.is_none() && new_data.is_none() { continue; } // no data
 
-                    // filter by params
-                    if filter_supply_lt.is_some() && !(supply.amount < filter_supply_lt.unwrap()) { continue; }
-                    if filter_supply_gt.is_some() && !(supply.amount > filter_supply_gt.unwrap()) { continue; }
-                    if filter_supply_lte.is_some() && !(supply.amount <= filter_supply_lte.unwrap()) { continue; }
-                    if filter_supply_gte.is_some() && !(supply.amount >= filter_supply_gte.unwrap()) { continue; }
+            let old_supply = match &old_data {
+                Some(data) => Some(Asset::from(data.supply.as_str())),
+                None => None,
+            };
+            let new_supply = match &new_data {
+                Some(data) => Some(Asset::from(data.supply.as_str())),
+                None => None,
+            };
+            let precision = match new_supply.is_some() {
+                true => new_supply.unwrap().symbol.precision(),
+                false => old_supply.unwrap().symbol.precision(),
+            };
+            let sym = Symbol::from_precision(symcode, precision);
+            let supply = match new_supply.is_some() {
+                true => new_supply.unwrap(),
+                false => Asset::from_amount(0, sym),
+            };
 
-                    items.push(Stat {
-                        // trace information
-                        trx_id: trx.id.clone(),
-                        action_index: db_op.action_index,
+            let supply_delta = match old_supply.is_some() {
+                true => supply.amount - old_supply.unwrap().amount,
+                false => supply.amount,
+            };
 
-                        // contract & scope
-                        contract,
-                        symcode,
+            // filter by params
+            if filter_supply_lt.is_some() && !(supply.amount < filter_supply_lt.unwrap()) { continue; }
+            if filter_supply_gt.is_some() && !(supply.amount > filter_supply_gt.unwrap()) { continue; }
+            if filter_supply_lte.is_some() && !(supply.amount <= filter_supply_lte.unwrap()) { continue; }
+            if filter_supply_gte.is_some() && !(supply.amount >= filter_supply_gte.unwrap()) { continue; }
 
-                        // payload
-                        issuer: data.issuer,
-                        max_supply: data.max_supply,
-                        supply: data.supply,
+            if filter_supply_delta_lt.is_some() && !(supply_delta < filter_supply_delta_lt.unwrap()) { continue; }
+            if filter_supply_delta_gt.is_some() && !(supply_delta > filter_supply_delta_gt.unwrap()) { continue; }
+            if filter_supply_delta_lte.is_some() && !(supply_delta <= filter_supply_delta_lte.unwrap()) { continue; }
+            if filter_supply_delta_gte.is_some() && !(supply_delta >= filter_supply_delta_gte.unwrap()) { continue; }
 
-                        // extras
-                        precision: supply.symbol.precision().into(),
-                        amount: supply.amount,
-                        value: utils::to_value(supply),
-                    });
-                }
-                Err(_) => continue,
-            }
+            // TO-DO fix in case of new_data is None
+            let data = new_data.unwrap();
+
+            items.push(Stat {
+                // trace information
+                trx_id: trx.id.clone(),
+                action_index: db_op.action_index,
+
+                // contract & scope
+                contract,
+                symcode: symcode.to_string(),
+
+                // payload
+                issuer: data.issuer,
+                max_supply: data.max_supply,
+                supply: supply.to_string(),
+                supply_delta,
+
+                // extras
+                precision: precision.into(),
+                amount: supply.amount,
+                value: utils::to_value(supply),
+            });
         }
     }
     Ok(Stats { items })
@@ -206,6 +209,7 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
     let filter_symcode = utils::create_filters(params.as_str(), "symcode");
     let filter_contract = utils::create_filters(params.as_str(), "contract");
     let filter_to_or_from = utils::create_filters(params.as_str(), "to_or_from");
+
     let filter_quantity_lt = utils::create_i64_filter(params.as_str(), "quantity_lt");
     let filter_quantity_gt = utils::create_i64_filter(params.as_str(), "quantity_gt");
     let filter_quantity_lte = utils::create_i64_filter(params.as_str(), "quantity_lte");
