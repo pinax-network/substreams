@@ -6,20 +6,43 @@
 
 
 ### Params
-Params allow to filter messages and can be supplied to modules in the form of URL query, i.e. `to=swap.defi&contract=eosio.token` - filter EOS transfers to `swap.defi` account
+Params allow to filter messages and can be supplied to modules in the form of URL query.
+
+> i.e. `to=swap.defi&contract=eosio.token&symcode=EOS` - filters EOS transfers to `swap.defi` account.
+
 - `map_transfers` - filter transfers
   - `to` - receiver
   - `from` - sender
   - `symcode` - symbol code
   - `contract` - token contract
   - `to_or_from` - either receiver or sender
+  - `quantity_lt` - quantity amount **less than**
+  - `quantity_lte` - quantity amount **less than or equal to**
+  - `quantity_gt` - quantity amount **greater than**
+  - `quantity_gte` - quantity amount **greater than or equal to**
 - `map_accounts` - filter account balance changes
   - `account` - account
   - `symcode` - symbol code
   - `contract` - token contract
+  - `new_balance_lt` - new balance amount **less than**
+  - `new_balance_lte` - new balance amount **less than or equal to**
+  - `new_balance_gt` - new balance amount **greater than**
+  - `new_balance_gte` - new balance amount **greater than or equal to**
+  - `old_balance_lt` - old balance amount **less than**
+  - `old_balance_lte` - old balance amount **less than or equal to**
+  - `old_balance_gt` - old balance amount **greater than**
+  - `old_balance_gte` - old balance amount **greater than or equal to**
+  - `delta_balance_lt` - delta balance amount **less than**
+  - `delta_balance_lte` - delta balance amount **less than or equal to**
+  - `delta_balance_gt` - delta balance amount **greater than**
+  - `delta_balance_gte` - delta balance amount **greater than or equal to**
 - `map_stat` - filter token stats
   - `symcode` - symbol code
   - `contract` - token contract
+  - `supply_lt` - supply amount **less than**
+  - `supply_lte` - supply amount **less than or equal to**
+  - `supply_gt` - supply amount **greater than**
+  - `supply_gte` - supply amount **greater than or equal to**
 
 ### Quickstart
 

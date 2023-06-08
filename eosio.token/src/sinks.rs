@@ -44,13 +44,20 @@ pub fn kv_out(map_accounts: Accounts, map_stat: Stats) -> Result<KvOperations, E
 
     let mut ordinal = 1;
     for account in map_accounts.items {
-        let asset = Asset::from(account.balance.as_str());
-        let key = format!(
-            "accounts:{}:{}:{}",
-            account.account, account.contract, asset.symbol
-        );
-        kv_ops.push_new(key, asset.amount.to_string(), ordinal);
-        ordinal += 1;
+        match account.new_balance {
+            Some(balance) => {
+                let asset = Asset::from(balance.as_str());
+                let key = format!(
+                    "accounts:{}:{}:{}",
+                    account.account, account.contract, asset.symbol
+                );
+                kv_ops.push_new(key, asset.amount.to_string(), ordinal);
+                ordinal += 1;
+            },
+            None => {
+                continue;
+            }
+        }
     }
 
     ordinal = 1;

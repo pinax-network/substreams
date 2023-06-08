@@ -36,3 +36,7 @@ gui:
 .PHONY: params
 params:
 	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s -1 -p map_transfers="to=swap.defi&symcode=EOS,USDT"
+
+.PHONY: accounts
+accounts:
+	substreams gui -e eos.firehose.eosnation.io:9001 map_accounts -s -1
