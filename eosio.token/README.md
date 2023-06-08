@@ -78,7 +78,7 @@ graph TD;
 
 ```yaml
 Package name: eosio_token
-Version: v0.12.0
+Version: v0.13.0
 Doc: Antelope `eosio.token` based action traces & database operations.
 Modules:
 ----
@@ -86,35 +86,35 @@ Name: map_transfers
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.TransferEvents
-Hash: c2ddeec2dba7004b4a3d44fb1ee9f2e8f995de10
+Hash: 85d87a1e5aea3ff7e545fed84a1498b90b75ab27
 
 Name: map_accounts
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.Accounts
-Hash: 4c9b69a46775b3cb48f516bf97d2e4e62e2050a7
+Hash: cb3a616f37c81921ada58e42d7b1bd477a08c627
 
 Name: map_stat
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.eosio.token.v1.Stats
-Hash: 72f9694a2ec4c9f92bdaa52ffae5be3615549e1a
+Hash: 280bcef38dfea42c581220b9de015f48bf43891f
 
 Name: graph_out
 Initial block: 0
 Kind: map
 Output Type: proto:substreams.entity.v1.EntityChanges
-Hash: 9f6bb5e02d226a92ea288396c6d65c4bafe8e916
+Hash: a19a41ac282f80a0b650641135f7b7ba125f576a
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
-Hash: 4a80a82300d3ca63fe9183e3fbbf84ef21f184cb
+Hash: 811775e8de26eb222af7a8f35865b22556988981
 
 Name: db_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.database.v1.DatabaseChanges
-Hash: 062e8bdda04d569a44bdd14c7bcc2308f37529fc
+Hash: 2c57375d5313b67ef83e0e0fc2d01ba9d45456ba
 ```
