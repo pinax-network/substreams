@@ -11,3 +11,13 @@ message Pushtx {
 message Pushtxs {
     repeated Pushtx events = 1;
 }
+
+message Pushbalance {
+    string miner = 1;
+    double balance = 2;
+    string symcode = 3;
+}
+
+message Pushbalances {
+    repeated Pushbalance items = 1;
+}

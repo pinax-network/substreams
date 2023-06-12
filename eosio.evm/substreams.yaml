@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: eosio_evm
-  version: v0.0.2
+  version: v0.0.3
   url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.evm` contract.
 
@@ -28,6 +28,13 @@ modules:
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.eosio.evm.v1.Pushtxs
+
+  - name: map_balances
+    kind: map
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.evm.v1.Pushbalances
 
   - name: graph_out
     kind: map
