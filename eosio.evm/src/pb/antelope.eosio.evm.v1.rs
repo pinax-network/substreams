@@ -21,6 +21,8 @@ pub struct Pushbalance {
     pub balance: f64,
     #[prost(string, tag="3")]
     pub symcode: ::prost::alloc::string::String,
+    #[prost(int64, tag="4")]
+    pub dust: i64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Pushbalances {

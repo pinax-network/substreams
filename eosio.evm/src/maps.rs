@@ -43,17 +43,37 @@ fn map_balances(block: Block) -> Result<eosio_evm::Pushbalances, Error> {
             let contract = db_op.code.clone();
 
             if contract == "eosio.evm" &&  db_op.table_name == "balances" {
-                log::debug!("new_data_json={:?}", db_op.new_data_json);
                 
                 match serde_json::from_str::<Value>(&db_op.new_data_json) {
                     Ok(parsed_value) => {
-                        log::debug!("Parsed JSON: {:?}", parsed_value);
 
-                        events.push(eosio_evm::Pushbalance {
-                            miner: "testing12345".to_string(),
-                            balance: 1.0001,
-                            symcode: "EOS".to_string(),
-                        });
+                        let owner = (parsed_value.get("owner").unwrap().to_string()).trim_matches('"').to_string();
+                        let balances = (parsed_value.get("balance").unwrap().to_string()).trim_matches('"').to_string();
+
+                        match serde_json::from_str::<Value>(&balances) {
+                            Ok(parsed_value_balance) => {
+                                let balancesym = (parsed_value_balance.get("balance").unwrap().to_string()).trim_matches('"').to_string();
+                                let dust = (parsed_value_balance.get("dust").unwrap().to_string()).trim_matches('"').to_string();
+
+                                let parts: Vec<&str> = balancesym.split_whitespace().collect();
+                                if parts.len() == 2 {
+                                    let balance = parts[0].parse::<f64>().unwrap_or(0.0);
+                                    let sym = String::from(parts[1]);
+                                
+                                    events.push(eosio_evm::Pushbalance {
+                                        miner: owner,
+                                        balance: balance,
+                                        symcode: sym,
+                                        dust: dust.parse::<i64>().ok().unwrap()
+                                    });
+                                }
+                            }
+                            Err(e) => {
+                                log::debug!("Failed to parse JSON: {}", e);
+                            }
+                        }
+
+                        
 
                     }
                     Err(e) => {
