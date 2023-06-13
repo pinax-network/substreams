@@ -13,6 +13,22 @@ pub struct Pushtxs {
     #[prost(message, repeated, tag="1")]
     pub events: ::prost::alloc::vec::Vec<Pushtx>,
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Pushbalance {
+    #[prost(string, tag="1")]
+    pub miner: ::prost::alloc::string::String,
+    #[prost(double, tag="2")]
+    pub balance: f64,
+    #[prost(string, tag="3")]
+    pub symcode: ::prost::alloc::string::String,
+    #[prost(int64, tag="4")]
+    pub dust: i64,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Pushbalances {
+    #[prost(message, repeated, tag="1")]
+    pub events: ::prost::alloc::vec::Vec<Pushbalance>,
+}
 /// Encoded file descriptor set for the `antelope.eosio.evm.v1` package
 pub const FILE_DESCRIPTOR_SET: &[u8] = &[
     0x0a, 0xf8, 0x03, 0x0a, 0x0f, 0x65, 0x6f, 0x73, 0x69, 0x6f, 0x2e, 0x65, 0x76, 0x6d, 0x2e, 0x70,
