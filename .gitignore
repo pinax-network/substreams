@@ -822,3 +822,6 @@ cython_debug/
 yarn.lock
 adapters/**/*.csv
 adapters/**/*.jsonl
+
+# Sublime Text
+*.sublime*

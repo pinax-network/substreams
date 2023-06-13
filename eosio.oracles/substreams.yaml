@@ -1,0 +1,52 @@
+specVersion: v0.1.0
+package:
+  name: eosio_oracles
+  version: v0.0.2
+  url: https://github.com/pinax-network/substreams
+  doc: Antelope `eosio.token` based action traces & database operations.
+
+imports:
+  database_change: https://github.com/streamingfast/substreams-database-change/releases/download/v1.0.0/substreams-database-change-v1.0.0.spkg
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/eosio_oracles.wasm
+
+protobuf:
+  files:
+    - eosio.oracles.proto
+  importPaths:
+    - ./proto/v1
+
+modules:
+  - name: map_pairs
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.oracles.v1.Pairs
+
+  - name: map_datapoints
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.oracles.v1.Datapoints
+
+  - name: map_prices
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.oracles.v1.Prices
+
+  - name: db_out
+    kind: map
+    inputs:
+      - map: map_pairs
+    output:
+      type: proto:sf.substreams.sink.database.v1.DatabaseChanges

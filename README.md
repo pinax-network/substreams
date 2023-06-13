@@ -19,6 +19,7 @@
 | [`accounts`](accounts/)             | 🛠 | Antelope accounts
 | [`eosio.token`](eosio.token/)       | ✅ | Antelope `eosio.token` token transfers
 | [`eosio.evm`](eosio.evm/)           | 🔨 | Antelope `eosio.evm` contract events
+| [`eosio.oracles`](eosio.oracles/)           | 🔨 | Antelope Oracles prices from [`delphioracle`](https://bloks.io/account/delphioracle) and [`oracle.defi`](https://bloks.io/account/oracle.defi)
 | [`atomicmarket`](atomicmarket/)     | 🔨 | Metrics for [AtomicHub Market](https://eos.atomichub.io/)
 | [`pomelo`](pomelo/)                 | 🔨 | [Pomelo Grants](https://pomelo.io/) events
 | [ERC721](https://eips.ethereum.org/EIPS/eip-721) | 🔨 | ERC-721: Non-Fungible Token Standard

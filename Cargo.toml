@@ -3,6 +3,7 @@ members = [
     "common",
     "eosio.evm",
     "eosio.ibc",
+    "eosio.oracles",
     "eosio.token",
     "eosmechanics",
     "accounts",

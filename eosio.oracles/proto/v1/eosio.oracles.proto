@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package antelope.eosio.oracles.v1;
+
+message Pair {
+	enum ASSET_TYPE {
+		FIAT = 0;
+		CRYPTOCURRENCY = 1;
+		ERC20_TOKEN = 2;
+		EOSIO_TOKEN = 3;
+		EQUITY = 4;
+		DERIVATIVE = 5;
+		OTHER = 6;
+	}
+
+	bool active = 1;
+    bool bounty_awarded = 2;
+    bool bounty_edited_by_custodians = 3;
+
+    string proposer = 4;
+    string name = 5;
+    string bounty_amount = 6;
+
+    repeated string approving_custodians = 7;
+    repeated string approving_oracles = 8;
+
+    string base_symbol = 9;
+    ASSET_TYPE base_type = 10;
+    string base_contract = 11;
+
+    string quote_symbol = 12;
+    ASSET_TYPE quote_type = 13;
+    string quote_contract = 14;
+    uint64 quoted_precision = 15;
+}
+
+message Pairs {
+	repeated Pair pairs = 1;
+}
+
+message Datapoint {
+	uint64 id = 1;
+	uint64 median = 2;
+	string owner = 3;
+	string timestamp = 4;
+	uint64 value = 5;
+}
+
+message Datapoints {
+	repeated Datapoint datapoints = 1;
+}
+
+message Quote {
+	Pair pair = 1;
+	Datapoints historical_values = 2;
+}
+
+message Quotes {
+	repeated Quote quotes = 1;
+}
+
+message Price {
+    uint64 id = 1;
+    string contract = 2;
+    string coin = 3;
+    uint32 precision = 4;
+    uint64 acc_price = 5;
+    uint64 last_price = 6;
+    uint64 avg_price = 7;
+    string last_update = 8;
+}
+
+message Prices {
+	repeated Price prices = 1;
+}
