@@ -1,6 +1,6 @@
 [package]
 name = "eosio_oracles"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
     "Denis <denis@pinax.network>",
     "Etienne <etienne@pinax.network>"
