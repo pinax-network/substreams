@@ -3,8 +3,9 @@ use substreams::errors::Error;
 use substreams_entity_change::pb::entity::{entity_change, EntityChanges};
 use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
 use substreams_database_change::pb::database::{table_change, DatabaseChanges};
+use substreams::pb::substreams::Clock;
 
-use crate::eosio_oracles::{Pairs};
+use crate::eosio_oracles::{Pairs, Datapoints};
 
 // Work In Progress: Make a generic db_out for oracle information
 #[substreams::handlers::map]
@@ -32,4 +33,20 @@ pub fn db_out(map_pairs: Pairs) -> Result<DatabaseChanges, Error> {
     }
 
     Ok(db_out)
+}
+
+#[substreams::handlers::map]
+pub fn kv_out(map_datapoints: Datapoints, clock: Clock) -> Result<KvOperations, Error> {
+    let mut kv_out = KvOperations::default();
+    let seconds = clock.timestamp.unwrap().seconds;
+    let epoch = (seconds / 86400) * 86400;
+
+    let day = epoch / 86400;
+
+    for datapoint in map_datapoints.datapoints {
+        let key = format!("delphioracle:{}:{}", datapoint.timestamp, "dummy");
+        kv_out.push_new(key, &datapoint.value.to_ne_bytes(), 1);
+    }
+
+    Ok(kv_out)
 }

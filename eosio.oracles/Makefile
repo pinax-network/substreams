@@ -36,3 +36,7 @@ delphioracle:
 .PHONY: oracle_defi
 oracle_defi:
 	substreams gui -e eos.firehose.eosnation.io:9001 map_prices -s -1
+
+.PHONY: kv_out
+kv_out:
+	substreams gui -e eos.firehose.eosnation.io:9001 kv_out -s -1

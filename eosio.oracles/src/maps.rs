@@ -8,6 +8,18 @@ use crate::eosio_oracles::*;
 use crate::utils;
 use antelope::{Asset, Name, SymbolCode};
 
+fn remove_quotes_from_value(json_str: String, key: String) -> Result<String, Error> {
+    let mut json_data = json_str.clone();
+    let first_char_value_offset = json_data.find(&key).unwrap() + key.len() + 2;
+
+    if json_data.chars().nth(first_char_value_offset).unwrap() == '"' {
+        json_data.remove(first_char_value_offset);
+        json_data.remove(json_data[first_char_value_offset..].find('"').map(|i| i + first_char_value_offset).unwrap());
+    }
+
+    Ok(json_data)
+}
+
 // Work In Progress: Extract prices information from `prices` table of `oracle.defi`
 #[substreams::handlers::map]
 fn map_prices(params: String, block: Block) -> Result<Prices, Error> {
@@ -16,39 +28,34 @@ fn map_prices(params: String, block: Block) -> Result<Prices, Error> {
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
             let contract = db_op.code.clone();
+            let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
+            let symcode = SymbolCode::from(raw_primary_key);
+            let account = db_op.scope.clone();
 
             if contract == "oracle.defi" && db_op.table_name == "prices" {
-                log::debug!("contract={:?} / table_name={:?}", contract, db_op.table_name);
-                log::debug!("new_data_json={:?}", db_op.new_data_json);
+                //log::debug!("contract={:?} / table_name={:?}", contract, db_op.table_name);
+                //log::debug!("raw_primary_key={:?} / symcode={:?} / account={:?}", raw_primary_key, symcode, account);
+                //log::debug!("new_data_json={:?}", db_op.new_data_json);
 
                 /*for trace in &trx.action_traces {
                     let action_trace = trace.action.as_ref().unwrap();
                     log::debug!("action_trace={:?}", action_trace);
                 }*/
 
-                response.push(Price {
-                    id: 1,
-                    contract: "dummy".to_string(),
-                    coin: "dummy".to_string(),
-                    precision: 1,
-                    acc_price: 1,
-                    last_price: 1,
-                    avg_price: 1,
-                    last_update: "0".to_string()
-                });
+                let json_data = remove_quotes_from_value(db_op.new_data_json.to_string(), "acc_price".to_string());
 
-                match abi::Price::try_from(db_op.new_data_json.as_str()) {
+                match abi::Price::try_from(json_data?.as_str()) {
                     Ok(price) => {
-                        log::debug!("price={:?}", price);
+                        //log::debug!("price={:?}", price);
                         response.push(Price {
-                            id: 1,
-                            contract: "dummy".to_string(),
-                            coin: "dummy".to_string(),
-                            precision: 1,
-                            acc_price: 1,
-                            last_price: 1,
-                            avg_price: 1,
-                            last_update: "0".to_string()
+                            id: price.id,
+                            contract: price.contract,
+                            coin: price.coin,
+                            precision: price.precision,
+                            acc_price: price.acc_price,
+                            last_price: price.last_price,
+                            avg_price: price.avg_price,
+                            last_update: price.last_update
                         });
                     }
                     Err(e) => {
@@ -78,19 +85,23 @@ fn map_datapoints(params: String, block: Block) -> Result<Datapoints, Error> {
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
             let contract = db_op.code.clone();
+            let pair = db_op.scope.clone();
 
             if contract == "delphioracle" && db_op.table_name == "datapoints" {
-                log::debug!("contract={:?} / table_name={:?}", contract, db_op.table_name);
-                log::debug!("new_data_json={:?}", db_op.new_data_json);
+                //log::debug!("new_data_json={:?}", db_op.new_data_json);
 
                 for trace in &trx.action_traces {
                     let action_trace = trace.action.as_ref().unwrap();
                     //log::debug!("action_trace={:?}", action_trace);
                 }
 
-                match abi::Datapoints::try_from(db_op.new_data_json.as_str()) {
+                let json_data = remove_quotes_from_value(db_op.new_data_json.to_string(), "id".to_string());
+
+                //log::debug!("parsed_data_json={:?}", json_data);
+                match abi::Datapoints::try_from(json_data?.as_str()) {
                     Ok(datapoint) => {
-                        log::debug!("datapoint={:?}", datapoint);
+                        //log::debug!("pair={:?}", pair);
+                        //log::debug!("datapoint={:?}", datapoint);
                         response.push(Datapoint {
                             id: datapoint.id,
                             median: datapoint.median,
