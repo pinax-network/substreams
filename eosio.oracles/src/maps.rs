@@ -8,18 +8,6 @@ use crate::eosio_oracles::*;
 use crate::utils;
 use antelope::{Asset, Name, SymbolCode};
 
-fn remove_quotes_from_value(json_str: String, key: String) -> Result<String, Error> {
-    let mut json_data = json_str.clone();
-    let first_char_value_offset = json_data.find(&key).unwrap() + key.len() + 2;
-
-    if json_data.chars().nth(first_char_value_offset).unwrap() == '"' {
-        json_data.remove(first_char_value_offset);
-        json_data.remove(json_data[first_char_value_offset..].find('"').map(|i| i + first_char_value_offset).unwrap());
-    }
-
-    Ok(json_data)
-}
-
 // Work In Progress: Extract prices information from `prices` table of `oracle.defi`
 #[substreams::handlers::map]
 fn map_prices(params: String, block: Block) -> Result<Prices, Error> {
@@ -42,9 +30,9 @@ fn map_prices(params: String, block: Block) -> Result<Prices, Error> {
                     log::debug!("action_trace={:?}", action_trace);
                 }*/
 
-                let json_data = remove_quotes_from_value(db_op.new_data_json.to_string(), "acc_price".to_string());
+                let json_data = utils::remove_quotes_from_value(db_op.new_data_json.to_string(), "acc_price".to_string());
 
-                match abi::Price::try_from(json_data?.as_str()) {
+                match abi::Price::try_from(json_data.as_str()) {
                     Ok(price) => {
                         //log::debug!("price={:?}", price);
                         response.push(Price {
@@ -95,10 +83,10 @@ fn map_datapoints(params: String, block: Block) -> Result<Datapoints, Error> {
                     //log::debug!("action_trace={:?}", action_trace);
                 }
 
-                let json_data = remove_quotes_from_value(db_op.new_data_json.to_string(), "id".to_string());
+                let json_data = utils::remove_quotes_from_value(db_op.new_data_json.to_string(), "id".to_string());
 
                 //log::debug!("parsed_data_json={:?}", json_data);
-                match abi::Datapoints::try_from(json_data?.as_str()) {
+                match abi::Datapoints::try_from(json_data.as_str()) {
                     Ok(datapoint) => {
                         //log::debug!("pair={:?}", pair);
                         //log::debug!("datapoint={:?}", datapoint);

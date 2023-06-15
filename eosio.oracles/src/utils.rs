@@ -44,6 +44,18 @@ pub fn create_i64_filter(params: &str, key: &str) -> Option<i64> {
     Option::None
 }
 
+pub fn remove_quotes_from_value(json_str: String, key: String) -> String {
+    let mut json_data = json_str.clone();
+    let first_char_value_offset = json_data.find(&key).unwrap() + key.len() + 2; // +2 to account for the '":' characters of the key
+
+    if json_data.chars().nth(first_char_value_offset).unwrap() == '"' {
+        json_data.remove(first_char_value_offset);
+        json_data.remove(first_char_value_offset + json_data[first_char_value_offset..].find('"').unwrap());
+    }
+
+    json_data
+}
+
 pub fn to_value(quantity: Asset) -> f64 {
     quantity.amount as f64 / 10_i64.pow(quantity.symbol.precision() as u32) as f64
 }
