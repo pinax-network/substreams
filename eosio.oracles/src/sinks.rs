@@ -8,7 +8,7 @@ use substreams::pb::substreams::Clock;
 use crate::eosio_oracles::{Pairs, Datapoints};
 
 // Work In Progress: Make a generic db_out for oracle information
-#[substreams::handlers::map]
+/*#[substreams::handlers::map]
 pub fn db_out(map_pairs: Pairs) -> Result<DatabaseChanges, Error> {
     let mut db_out = DatabaseChanges::default();
 
@@ -49,4 +49,4 @@ pub fn kv_out(map_datapoints: Datapoints, clock: Clock) -> Result<KvOperations, 
     }
 
     Ok(kv_out)
-}
+}*/
