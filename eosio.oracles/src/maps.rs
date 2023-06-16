@@ -8,7 +8,6 @@ use crate::eosio_oracles::*;
 use crate::utils;
 use antelope::{Asset, Name, SymbolCode};
 
-// Work In Progress: Extract prices information from `prices` table of `oracle.defi`
 #[substreams::handlers::map]
 fn map_prices(params: String, block: Block) -> Result<Prices, Error> {
     let mut response = vec![];
@@ -30,9 +29,7 @@ fn map_prices(params: String, block: Block) -> Result<Prices, Error> {
                     log::debug!("action_trace={:?}", action_trace);
                 }*/
 
-                let json_data = utils::remove_quotes_from_value(db_op.new_data_json.to_string(), "acc_price".to_string());
-
-                match abi::Price::try_from(json_data.as_str()) {
+                match abi::Price::try_from(db_op.new_data_json.as_str()) {
                     Ok(price) => {
                         //log::debug!("price={:?}", price);
                         response.push(Price {
@@ -58,14 +55,6 @@ fn map_prices(params: String, block: Block) -> Result<Prices, Error> {
     Ok(Prices { prices: response })
 }
 
-/*#[substreams::handlers::map]
-fn map_quotes(params: String, block: Block) -> Result<Quotes, Error> {
-    let mut response = vec![];
-
-    Ok(Quotes { quotes: response })
-}*/
-
-// Work In Progress: Extract datapoints information from `datapoints` table of `delphioracle`
 #[substreams::handlers::map]
 fn map_datapoints(params: String, block: Block) -> Result<Datapoints, Error> {
     let mut response = vec![];
@@ -83,10 +72,7 @@ fn map_datapoints(params: String, block: Block) -> Result<Datapoints, Error> {
                     //log::debug!("action_trace={:?}", action_trace);
                 }
 
-                let json_data = utils::remove_quotes_from_value(db_op.new_data_json.to_string(), "id".to_string());
-
-                //log::debug!("parsed_data_json={:?}", json_data);
-                match abi::Datapoints::try_from(json_data.as_str()) {
+                match abi::Datapoints::try_from(db_op.new_data_json.as_str()) {
                     Ok(datapoint) => {
                         //log::debug!("pair={:?}", pair);
                         //log::debug!("datapoint={:?}", datapoint);
@@ -230,4 +216,11 @@ fn map_pairs(params: String, block: Block) -> Result<Pairs, Error> {
     }
 
     Ok(Pairs { pairs: response })
+}*/
+
+/*#[substreams::handlers::map]
+fn map_quotes(params: String, block: Block) -> Result<Quotes, Error> {
+    let mut response = vec![];
+
+    Ok(Quotes { quotes: response })
 }*/

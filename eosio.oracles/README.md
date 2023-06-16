@@ -16,7 +16,6 @@ $ make oracle_defi # prices
 
 ```mermaid
 graph TD;
-graph TD;
   map_pairs[map: map_pairs];
   map_pairs:params[params] --> map_pairs;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_pairs;
