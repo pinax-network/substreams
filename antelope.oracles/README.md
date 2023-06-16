@@ -27,7 +27,7 @@ graph TD;
 ### Modules
 
 ```yaml
-Package name: eosio_oracles
+Package name: antelope_oracles
 Version: v0.0.4
 Doc: Antelope `eosio.token` based action traces & database operations.
 Modules:

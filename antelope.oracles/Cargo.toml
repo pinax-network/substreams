@@ -1,5 +1,5 @@
 [package]
-name = "eosio_oracles"
+name = "antelope_oracles"
 version = "0.0.4"
 authors = [
     "Denis <denis@pinax.network>",

@@ -4,7 +4,7 @@ use substreams::errors::Error;
 use substreams_antelope::Block;
 
 use crate::abi;
-use crate::eosio_oracles::*;
+use crate::antelope_oracles::*;
 use crate::utils;
 use antelope::{Asset, Name, SymbolCode};
 

@@ -1,12 +1,10 @@
 // @generated
 pub mod antelope {
-    pub mod eosio {
-        pub mod oracles {
-            // @@protoc_insertion_point(attribute:antelope.eosio.oracles.v1)
-            pub mod v1 {
-                include!("antelope.eosio.oracles.v1.rs");
-                // @@protoc_insertion_point(antelope.eosio.oracles.v1)
-            }
+    pub mod oracles {
+        // @@protoc_insertion_point(attribute:antelope.oracles.v1)
+        pub mod v1 {
+            include!("antelope.oracles.v1.rs");
+            // @@protoc_insertion_point(antelope.oracles.v1)
         }
     }
 }

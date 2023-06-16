@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package antelope.eosio.oracles.v1;
+package antelope.oracles.v1;
 
 message Pair {
 	enum ASSET_TYPE {

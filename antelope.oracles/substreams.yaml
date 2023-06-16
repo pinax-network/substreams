@@ -1,6 +1,6 @@
 specVersion: v0.1.0
 package:
-  name: eosio_oracles
+  name: antelope_oracles
   version: v0.0.4
   url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.token` based action traces & database operations.
@@ -16,7 +16,7 @@ binaries:
 
 protobuf:
   files:
-    - eosio.oracles.proto
+    - antelope.oracles.proto
   importPaths:
     - ./proto/v1
 
