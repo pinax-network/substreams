@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: antelope_oracles
-  version: v0.0.4
+  version: v0.0.5
   url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.token` based action traces & database operations.
 
@@ -12,7 +12,7 @@ imports:
 binaries:
   default:
     type: wasm/rust-v1
-    file: ../target/wasm32-unknown-unknown/release/eosio_oracles.wasm
+    file: ../target/wasm32-unknown-unknown/release/antelope_oracles.wasm
 
 protobuf:
   files:
@@ -21,18 +21,18 @@ protobuf:
     - ./proto/v1
 
 modules:
-  - name: map_datapoints
-    kind: map
-    inputs:
-      - params: string
-      - source: sf.antelope.type.v1.Block
-    output:
-      type: proto:antelope.eosio.oracles.v1.Datapoints
-
   - name: map_prices
     kind: map
     inputs:
       - params: string
       - source: sf.antelope.type.v1.Block
     output:
-      type: proto:antelope.eosio.oracles.v1.Prices
+      type: proto:antelope.oracles.v1.Prices
+
+  - name: map_quotes
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.oracles.v1.Quotes

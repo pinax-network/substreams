@@ -1,6 +1,6 @@
 [package]
 name = "antelope_oracles"
-version = "0.0.4"
+version = "0.0.5"
 authors = [
     "Denis <denis@pinax.network>",
     "Etienne <etienne@pinax.network>"

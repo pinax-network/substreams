@@ -31,10 +31,10 @@ run:
 
 .PHONY: delphioracle
 delphioracle:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_datapoints -s -1
+	substreams gui -e eos.firehose.eosnation.io:9001 map_quotes -s -1
 
-.PHONY: oracle_defi
-oracle_defi:
+.PHONY: oracle.defi
+oracle.defi:
 	substreams gui -e eos.firehose.eosnation.io:9001 map_prices -s -1
 
 .PHONY: kv_out

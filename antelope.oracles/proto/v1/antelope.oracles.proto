@@ -46,13 +46,9 @@ message Datapoint {
 	uint64 value = 5;
 }
 
-message Datapoints {
-	repeated Datapoint datapoints = 1;
-}
-
 message Quote {
-	Pair pair = 1;
-	Datapoints historical_values = 2;
+	string pair = 1;
+	Datapoint value = 2;
 }
 
 message Quotes {

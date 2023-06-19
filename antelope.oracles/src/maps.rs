@@ -56,7 +56,7 @@ fn map_prices(params: String, block: Block) -> Result<Prices, Error> {
 }
 
 #[substreams::handlers::map]
-fn map_datapoints(params: String, block: Block) -> Result<Datapoints, Error> {
+fn map_quotes(params: String, block: Block) -> Result<Quotes, Error> {
     let mut response = vec![];
 
     for trx in block.all_transaction_traces() {
@@ -67,21 +67,19 @@ fn map_datapoints(params: String, block: Block) -> Result<Datapoints, Error> {
             if contract == "delphioracle" && db_op.table_name == "datapoints" {
                 //log::debug!("new_data_json={:?}", db_op.new_data_json);
 
-                for trace in &trx.action_traces {
-                    let action_trace = trace.action.as_ref().unwrap();
-                    //log::debug!("action_trace={:?}", action_trace);
-                }
-
                 match abi::Datapoints::try_from(db_op.new_data_json.as_str()) {
                     Ok(datapoint) => {
                         //log::debug!("pair={:?}", pair);
                         //log::debug!("datapoint={:?}", datapoint);
-                        response.push(Datapoint {
-                            id: datapoint.id,
-                            median: datapoint.median,
-                            owner: datapoint.owner.as_str().to_string(),
-                            timestamp: datapoint.timestamp.as_str().to_string(),
-                            value: datapoint.value
+                        response.push(Quote {
+                            pair,
+                            value: Some(Datapoint {
+                                id: datapoint.id,
+                                median: datapoint.median,
+                                owner: datapoint.owner.as_str().to_string(),
+                                timestamp: datapoint.timestamp.as_str().to_string(),
+                                value: datapoint.value
+                            })
                         });
                     }
                     Err(e) => {
@@ -93,7 +91,7 @@ fn map_datapoints(params: String, block: Block) -> Result<Datapoints, Error> {
         }
     }
 
-    Ok(Datapoints { datapoints: response })
+    Ok(Quotes { quotes: response })
 }
 
 // Work In Progress: Extract pairs information from `pairs` table of `delphioracle`
@@ -216,11 +214,4 @@ fn map_pairs(params: String, block: Block) -> Result<Pairs, Error> {
     }
 
     Ok(Pairs { pairs: response })
-}*/
-
-/*#[substreams::handlers::map]
-fn map_quotes(params: String, block: Block) -> Result<Quotes, Error> {
-    let mut response = vec![];
-
-    Ok(Quotes { quotes: response })
 }*/

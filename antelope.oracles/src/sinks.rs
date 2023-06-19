@@ -5,7 +5,7 @@ use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
 use substreams_database_change::pb::database::{table_change, DatabaseChanges};
 use substreams::pb::substreams::Clock;
 
-use crate::antelope_oracles::{Pairs, Datapoints};
+use crate::antelope_oracles::{Pairs};
 
 // Work In Progress: Make a generic db_out for oracle information
 /*#[substreams::handlers::map]
