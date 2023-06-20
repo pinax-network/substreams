@@ -40,3 +40,7 @@ oracle.defi:
 .PHONY: kv_out
 kv_out:
 	substreams gui -e eos.firehose.eosnation.io:9001 kv_out -s -1
+
+.PHONY: db_out
+db_out:
+	substreams gui -e eos.firehose.eosnation.io:9001 db_out -s -1

@@ -7,7 +7,6 @@
 ### Quickstart
 
 ```bash
-$ make
 $ make delphioracle # quotes
 $ make oracle.defi # prices
 ```
@@ -52,13 +51,18 @@ graph TD;
   map_quotes[map: map_quotes];
   map_quotes:params[params] --> map_quotes;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_quotes;
+  kv_out[map: kv_out];
+  map_quotes --> kv_out;
+  sf.substreams.v1.Clock[source: sf.substreams.v1.Clock] --> kv_out;
+  db_out[map: db_out];
+  map_quotes --> db_out;
 ```
 
 ### Modules
 
 ```yaml
 Package name: antelope_oracles
-Version: v0.0.5
+Version: v0.0.6
 Doc: Antelope `eosio.token` based action traces & database operations.
 Modules:
 ----
@@ -66,11 +70,23 @@ Name: map_prices
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.oracles.v1.Prices
-Hash: 6d5f12fd8fdac6fc38902db1552abbe5469b8a99
+Hash: d5ec501aa597007bb1b63f729263f3a152b749ac
 
 Name: map_quotes
 Initial block: 0
 Kind: map
 Output Type: proto:antelope.oracles.v1.Quotes
-Hash: 7c8d5104d1baeedd15ba61da4a97bdda10024ba0
+Hash: 76429076938ef322d2bc68412e9137eb40f4ef53
+
+Name: kv_out
+Initial block: 0
+Kind: map
+Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
+Hash: 2e4bf0e6984be6caa57d81f6afe826f8027d79eb
+
+Name: db_out
+Initial block: 0
+Kind: map
+Output Type: proto:sf.substreams.sink.database.v1.DatabaseChanges
+Hash: 72a43f091ecbccc84af59cfc66b512c11779a3d3
 ```
