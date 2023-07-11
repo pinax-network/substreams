@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: common
-  version: v0.5.0
+  version: v0.6.0
   url: https://github.com/pinax-network/substreams
   doc: Antelope based action traces & database operations.
 
@@ -14,8 +14,13 @@ binaries:
     type: wasm/rust-v1
     file: ../target/wasm32-unknown-unknown/release/common.wasm
 
-modules:
+protobuf:
+  files:
+    - common.proto
+  importPaths:
+    - ./proto/v1
 
+modules:
   - name: map_block_header
     kind: map
     initialBlock: 2
@@ -62,6 +67,6 @@ modules:
   - name: kv_out
     kind: map
     inputs:
-      - source: sf.antelope.type.v1.Block
+      - source: sf.substreams.v1.Clock
     output:
       type: proto:sf.substreams.sink.kv.v1.KVOperations

@@ -36,3 +36,7 @@ gui:
 .PHONY: params
 params:
 	substreams run -e eos.firehose.eosnation.io:9001 map_action_traces -s -1 -p map_action_traces=receiver=eosio.token
+
+.PHONY: sink
+sink:
+	substreams gui -e eos.firehose.eosnation.io:9001 kv_out -s -1

@@ -13,8 +13,20 @@ $ make run
 
 ### KV
 
-- `block.id:<block.number>`
-- `block.timestamp:<block.number>`
+- `block.number:<number>` -> `BlockTimestamp`
+- `block.timestamp:<timestamp>` -> `BlockId`
+
+**proto**
+```protobuf
+message BlockId {
+  string id = 1;
+  uint64 number = 2;
+}
+
+message BlockTimestamp {
+  string timestamp = 1;
+}
+```
 
 ### Params
 
@@ -35,8 +47,8 @@ Params allow to filter messages and can be supplied to modules in the form of UR
 
 ```mermaid
 graph TD;
-  map_block_header[map: map_block_header];
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header;
+  map_block_header[map: map_block_header];                                                                                                                    
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header;                                                                          
   map_blockroot_merkle[map: map_blockroot_merkle];
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_blockroot_merkle;
   map_transaction_traces[map: map_transaction_traces];
@@ -46,53 +58,53 @@ graph TD;
   map_action_traces:params[params] --> map_action_traces;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_action_traces;
   map_db_ops[map: map_db_ops];
-  map_db_ops:params[params] --> map_db_ops;
+  map_db_ops:params[params] --> map_db_ops;                                  
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_db_ops;
-  kv_out[map: kv_out];
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> kv_out;
+  kv_out[map: kv_out];        
+  sf.substreams.v1.Clock[source: sf.substreams.v1.Clock] --> kv_out;
 ```
 
 ### Modules
 
 ```yaml
 Package name: common
-Version: v0.5.0
-Doc: Antelope based action traces & database operations.
+Version: v0.6.0
+Doc: Antelope based action traces & database operations.                                                                                                      
 Modules:
 ----
 Name: map_block_header
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockHeader
-Hash: 28ee1f2bd5abdbf74cda9d2767f6928cbf178a35
+Hash: 33951d63d323eb9a2bae9d09e9df8a7ebe84362b
 
 Name: map_blockroot_merkle
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockRootMerkle
-Hash: 23107f7d53b6e80417bd36acb5c7fbd6020dd04f
+Hash: 797ec4ed64818cbdd92ec75dabadd81ef3ad1dbb
 
 Name: map_transaction_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.TransactionTraces
-Hash: cd6fb8422bbd0fc41819a63e9b473ecf76a3f478
+Hash: f2541a11641027caec2d60de4b56f41c35837283
 
 Name: map_action_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.ActionTraces
-Hash: 6310c031f22b5e80f41123efad448f48f5a7f000
+Hash: b4c28e9904a2ea44ddf4eb891bc5a15040acc118
 
 Name: map_db_ops
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.DBOps
-Hash: 8a5340561fc532ebd52c7074d14c7b60fa7fffa1
+Hash: c5acb9bb18e65fb6ab8d375053c1257bcb3b8a16
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
-Hash: f3a5dbde58ac99fbef4e6a1dd4eae0375073b56a
+Hash: 9a2f97c2cf63229d2bec92b338007ad44baa87d0
 ```

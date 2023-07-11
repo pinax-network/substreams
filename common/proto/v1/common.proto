@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package common.v1;
+
+message BlockId {
+  string id = 1;
+  uint64 number = 2;
+}
+
+message BlockTimestamp {
+  string timestamp = 1;
+}
