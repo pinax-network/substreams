@@ -53,8 +53,8 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 
 #[substreams::handlers::map]
 pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
-    let active_schedule: Vec<String> = schedule_to_accounts(block.active_schedule_v2.clone().unwrap());
-    let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.as_ref().unwrap().schedule_v2.clone().unwrap());
+    let active_schedule: Vec<String> = schedule_to_accounts(block.active_schedule_v2.as_ref().unwrap());
+    let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.as_ref().unwrap().schedule_v2.as_ref().unwrap());
 
     // If there is no pending schedule, then there is no schedule change
     if pending_schedule.is_empty() { return Ok(Default::default()); }
@@ -91,7 +91,7 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
     })
 }
 
-pub fn schedule_to_accounts(schedule: ProducerAuthoritySchedule) -> Vec<String> {
+pub fn schedule_to_accounts(schedule: &ProducerAuthoritySchedule) -> Vec<String> {
     schedule.producers.iter().map(|p| p.account_name.clone()).collect()
 }
 
