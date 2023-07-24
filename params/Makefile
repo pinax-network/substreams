@@ -13,4 +13,8 @@ pack:
 
 .PHONY: run
 run:
-	substreams run -e api-unstable.streamingfast.io:443 map_params -s 2 -t +2
+	substreams run map_params -s 1 -t +1 -p "map_params=custom run params 🔥"
+
+.PHONY: gui
+gui:
+	substreams gui map_params -s 1 -t +1 -p "map_params=custom gui params 🔥"

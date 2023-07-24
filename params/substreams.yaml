@@ -18,4 +18,4 @@ modules:
       type: proto:sf.substreams.v1.Clock
 
 params:
-  map_params: "🎉 custom params 🎉"
+  map_params: "default params 🎉"
