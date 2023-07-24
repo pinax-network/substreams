@@ -1,0 +1,25 @@
+specVersion: v0.1.0
+package:
+  name: "pomelo_bounties"
+  version: v0.1.0
+  url: https://github.com/pinax-network/substreams
+  doc: Antelope pomelo bounties updates
+
+protobuf:
+  files:
+    - pomelo.bounties.proto
+  importPaths:
+    - ./proto/v1
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/pomelo_bounties.wasm
+
+modules:
+  - name: map_actions
+    kind: map
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.pomelo.bounties.v1.Actions

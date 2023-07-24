@@ -10,7 +10,8 @@ members = [
     "params",
     "atomicmarket",
     "pomelo",
-    "erc721"
+    "erc721",
+    "pomelo.bounties",
 ]
 
 [workspace.dependencies]

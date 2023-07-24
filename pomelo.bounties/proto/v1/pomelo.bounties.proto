@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package antelope.pomelo.bounties.v1;
+
+message Actions {
+    repeated StateLog statelogs = 1;
+}
+
+message StateLog {
+    string trx_id = 1;
+    uint32 trx_index = 2;
+    string state = 3;
+    string action = 4;
+    string bounty_id = 5;
+}
