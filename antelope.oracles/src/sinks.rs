@@ -14,12 +14,12 @@ pub fn db_out(map_quotes: Quotes) -> Result<DatabaseChanges, Error> {
 
     for quote in map_quotes.quotes {
         db_out
-            .push_change("id", quote.value.as_ref().ok_or(0).unwrap().id.to_string(), 0, table_change::Operation::Create)
+            .push_change("id", &quote.value.as_ref().unwrap().id.to_string(), 0, table_change::Operation::Create)
             .change("pair", ("", quote.pair.as_str()))
-            .change("median", ("", quote.value.as_ref().ok_or(0).unwrap().median.to_string().as_ref()))
-            .change("owner", ("", quote.value.as_ref().ok_or(0).unwrap().owner.as_str()))
-            .change("timestamp", ("", quote.value.as_ref().ok_or(0).unwrap().timestamp.as_str()))
-            .change("value", ("", quote.value.as_ref().ok_or(0).unwrap().value.to_string().as_ref()));
+            .change("median", ("", quote.value.as_ref().unwrap().median.to_string().as_ref()))
+            .change("owner", ("", quote.value.as_ref().unwrap().owner.as_str()))
+            .change("timestamp", ("", quote.value.as_ref().unwrap().timestamp.as_str()))
+            .change("value", ("", quote.value.as_ref().unwrap().value.to_string().as_ref()));
     }
 
     Ok(db_out)
