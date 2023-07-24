@@ -20,6 +20,10 @@ modules:
   - name: map_actions
     kind: map
     inputs:
+      - params: string
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.pomelo.bounties.v1.Actions
+
+params:
+  map_actions: "d.w.pomelo"
