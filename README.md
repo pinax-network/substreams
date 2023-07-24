@@ -22,6 +22,7 @@
 | [`antelope.oracles`](antelope.oracles/)           | 🔨 | Antelope Oracles prices from [`delphioracle`](https://bloks.io/account/delphioracle) and [`oracle.defi`](https://bloks.io/account/oracle.defi)
 | [`atomicmarket`](atomicmarket/)     | 🔨 | Metrics for [AtomicHub Market](https://eos.atomichub.io/)
 | [`pomelo`](pomelo/)                 | 🔨 | [Pomelo Grants](https://pomelo.io/) events
+| [`pomelo.bounties`](pomelo.bounties/)| 🔨 | [Pomelo Bounties](https://bounties.pomelo.io/) events
 | [ERC721](https://eips.ethereum.org/EIPS/eip-721) | 🔨 | ERC-721: Non-Fungible Token Standard
 | [ERC20](https://eips.ethereum.org/EIPS/eip-20) | 🔨 | ERC-20: Token Standard
 
