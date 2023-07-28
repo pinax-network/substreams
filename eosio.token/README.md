@@ -5,8 +5,8 @@
 ### [Latest Releases](https://github.com/pinax-network/substreams/releases)
 
 
-### Params
-Params allow to filter messages and can be supplied to modules in the form of URL query.
+### Param
+Param allow to filter messages and can be supplied to modules in the form of URL query.
 
 > i.e. `to=swap.defi&contract=eosio.token&symcode=EOS` - filters EOS transfers to `swap.defi` account.
 
