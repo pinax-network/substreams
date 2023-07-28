@@ -1,5 +1,6 @@
 use antelope::Symbol;
 use substreams::errors::Error;
+use substreams::log;
 use substreams_antelope::Block;
 
 use crate::abi;
@@ -240,6 +241,8 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
                     if filter_quantity_gt.is_some() && !(quantity.amount > filter_quantity_gt.unwrap()) { continue; }
                     if filter_quantity_lte.is_some() && !(quantity.amount <= filter_quantity_lte.unwrap()) { continue; }
                     if filter_quantity_gte.is_some() && !(quantity.amount >= filter_quantity_gte.unwrap()) { continue; }
+
+                    log::debug!("symcode: {:?}", symcode);
 
                     response.push(TransferEvent {
                         // trace information

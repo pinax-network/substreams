@@ -44,3 +44,7 @@ accounts:
 .PHONY: stat
 stat:
 	substreams gui -e eos.firehose.eosnation.io:9001 map_stat -s -10000
+
+.PHONY: wax
+wax:
+	substreams run -e wax.firehose.eosnation.io:9001 map_transfers -s 258145472 -t +2 -p map_transfers="symcode=VOID,BLUX"
