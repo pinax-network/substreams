@@ -1,33 +1,62 @@
-#[allow(dead_code)]
 mod abi;
 mod pb;
 
-use substreams_antelope::Block;
-use pb::antelope::pomelo::bounties::v1::{Actions, StateLog};
+use pb::antelope::pomelo::bounties::v1::{Actions, StateLog, Apply, CreateLog, ExtendedSymbol, ClaimLog, ExtendedAsset};
 
 #[substreams::handlers::map]
-fn map_actions(param_account: String, block: Block) -> Result<Actions, substreams::errors::Error> {
+fn map_actions(param_account: String, block: substreams_antelope::Block) -> Result<Actions, substreams::errors::Error> {
     Ok(Actions {
-        statelogs: block.all_transaction_traces()
-            .flat_map(|trx| trx.action_traces.iter())
-            .filter(|trace| trace.action.as_ref().unwrap().name == "statelog")
-            .filter(|trace| trace.action.as_ref().unwrap().account == param_account)
-            .map(|trace|
-                match abi::Statelog::try_from(trace.action.as_ref().unwrap().json_data.as_str()) {
-                    Ok(data) =>
-                        StateLog {
-                            // trx information
-                            trx_id: trace.transaction_id.clone(),
-                            trx_index: trace.action_ordinal,
+        statelogs: block.actions::<abi::contract::actions::Statelog>(&[param_account.as_str()])
+            .map(|(action, trx)| StateLog {
+                trx_id: trx.transaction_id.clone(),
+                trx_index: trx.action_ordinal,
 
-                            // action data
-                            action: data.action,
-                            state: data.status,
-                            bounty_id: data.bounty_id,
-                        },
-                    Err(_) => panic!("Error parsing statelog action data"),
-                }
-            )
+                action: action.action,
+                state: action.status,
+                bounty_id: action.bounty_id,
+            })
+            .collect(),
+        applys: block.actions::<abi::contract::actions::Apply>(&[param_account.as_str()])
+            .map(|(action, trx)| Apply {
+                trx_id: trx.transaction_id.clone(),
+                trx_index: trx.action_ordinal,
+
+                bounty_id: action.bounty_id,
+                user_id: action.user_id,
+            })
+            .collect(),
+        createlogs: block.actions::<abi::contract::actions::Createlog>(&[param_account.as_str()])
+            .map(|(action, trx)| CreateLog {
+                trx_id: trx.transaction_id.clone(),
+                trx_index: trx.action_ordinal,
+
+                bounty_id: action.bounty_id,
+                author_user_id: action.author_user_id,
+                r#type: action.type_,
+                permissions: action.permissions,
+                ext_sym: Some(ExtendedSymbol {
+                    sym: action.ext_sym.sym,
+                    contract: action.ext_sym.contract,
+                }),
+
+            })
+            .collect(),
+        claimlogs: block.actions::<abi::contract::actions::Claimlog>(&[param_account.as_str()])
+            .map(|(action, trx)| ClaimLog {
+                trx_id: trx.transaction_id.clone(),
+                trx_index: trx.action_ordinal,
+
+                bounty_id: action.bounty_id,
+                receiver: action.receiver,
+                fee: action.fee,
+                ext_quantity: Some(ExtendedAsset{
+                    quantity: action.ext_quantity.quantity,
+                    contract: action.ext_quantity.contract,
+                }),
+                status: action.status,
+                worker_user_id: action.worker_user_id,
+                days_since_created: action.days_since_created,
+            })
             .collect(),
     })
 }

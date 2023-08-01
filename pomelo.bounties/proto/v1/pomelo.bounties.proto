@@ -4,6 +4,9 @@ package antelope.pomelo.bounties.v1;
 
 message Actions {
     repeated StateLog statelogs = 1;
+    repeated Apply applys = 2;
+    repeated CreateLog createlogs = 3;
+    repeated ClaimLog claimlogs = 4;
 }
 
 message StateLog {
@@ -12,4 +15,44 @@ message StateLog {
     string state = 3;
     string action = 4;
     string bounty_id = 5;
+}
+
+message Apply {
+    string trx_id = 1;
+    uint32 trx_index = 2;
+    string bounty_id = 3;
+    string user_id = 4;
+}
+
+message CreateLog {
+    string trx_id = 1;
+    uint32 trx_index = 2;
+    string bounty_id = 3;
+    string author_user_id = 4;
+    ExtendedSymbol ext_sym = 5;
+    string type_ = 6;
+    string permissions = 7;
+}
+
+message ExtendedSymbol {
+    string sym = 1;
+    string contract = 2;
+}
+
+
+message ExtendedAsset {
+    string quantity = 1;
+    string contract = 2;
+}
+
+message ClaimLog {
+    string trx_id = 1;
+    uint32 trx_index = 2;
+    string bounty_id = 3;
+    string receiver = 4;
+    ExtendedAsset ext_quantity = 5;
+    string fee = 6;
+    string status = 7;
+    string worker_user_id = 8;
+    uint32 days_since_created = 9;
 }

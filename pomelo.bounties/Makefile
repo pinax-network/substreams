@@ -27,8 +27,12 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_actions -s 316012811 -t +100000 -p "map_actions=d.w.pomelo"
+	substreams run -e eos.firehose.eosnation.io:9001 map_actions -s 317328003 -t +10 -p "map_actions=d.w.pomelo"
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_actions -s 316012811 -t +100000 -p "map_actions=d.w.pomelo"
+	substreams gui -e eos.firehose.eosnation.io:9001 map_actions -s 317328003 -t +10000 -p "map_actions=d.w.pomelo"
+
+.PHONY: claim
+claim:
+	substreams gui -e eos.firehose.eosnation.io:9001 map_actions -s 316013128 -t +10000 -p "map_actions=d.w.pomelo"
