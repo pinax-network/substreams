@@ -1,0 +1,400 @@
+{
+  "version": "eosio::abi/1.2",
+  "types": [],
+  "structs": [{
+      "name": "addrecipe",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        },{
+          "name": "templates",
+          "type": "nft[]"
+        }
+      ]
+    },{
+      "name": "blendlog",
+      "base": "",
+      "fields": [{
+          "name": "owner",
+          "type": "name"
+        },{
+          "name": "description",
+          "type": "string"
+        },{
+          "name": "in_asset_ids",
+          "type": "uint64[]"
+        },{
+          "name": "out_asset_id",
+          "type": "uint64"
+        },{
+          "name": "in_templates",
+          "type": "nft_extra[]"
+        },{
+          "name": "out_template",
+          "type": "nft_extra"
+        },{
+          "name": "total_mint",
+          "type": "int32"
+        },{
+          "name": "total_burn",
+          "type": "int32"
+        }
+      ]
+    },{
+      "name": "blends_row",
+      "base": "",
+      "fields": [{
+          "name": "id",
+          "type": "nft_extra"
+        },{
+          "name": "recipe_ids",
+          "type": "uint64[]"
+        },{
+          "name": "description",
+          "type": "string?"
+        },{
+          "name": "plugin",
+          "type": "name?"
+        },{
+          "name": "quantity",
+          "type": "extended_asset?"
+        },{
+          "name": "start_time",
+          "type": "time_point_sec?"
+        },{
+          "name": "end_time",
+          "type": "time_point_sec?"
+        }
+      ]
+    },{
+      "name": "cancel",
+      "base": "",
+      "fields": [{
+          "name": "owner",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        }
+      ]
+    },{
+      "name": "collections_row",
+      "base": "",
+      "fields": [{
+          "name": "collection_names",
+          "type": "name[]"
+        }
+      ]
+    },{
+      "name": "config_row",
+      "base": "",
+      "fields": [{
+          "name": "status",
+          "type": "name"
+        },{
+          "name": "protocol_fee",
+          "type": "uint16"
+        },{
+          "name": "fee_account",
+          "type": "name"
+        }
+      ]
+    },{
+      "name": "delblend",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        }
+      ]
+    },{
+      "name": "dellimit",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        }
+      ]
+    },{
+      "name": "delrecipe",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        },{
+          "name": "recipe_id",
+          "type": "uint64"
+        }
+      ]
+    },{
+      "name": "limits_row",
+      "base": "",
+      "fields": [{
+          "name": "template_id",
+          "type": "int32"
+        },{
+          "name": "mint_assets",
+          "type": "int64"
+        },{
+          "name": "max_mint_assets",
+          "type": "int64"
+        }
+      ]
+    },{
+      "name": "nft",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        }
+      ]
+    },{
+      "name": "nft_extra",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        },{
+          "name": "schema_name",
+          "type": "name"
+        }
+      ]
+    },{
+      "name": "orders_row",
+      "base": "",
+      "fields": [{
+          "name": "id",
+          "type": "nft"
+        },{
+          "name": "quantity",
+          "type": "extended_asset"
+        }
+      ]
+    },{
+      "name": "recipes_row",
+      "base": "",
+      "fields": [{
+          "name": "id",
+          "type": "uint64"
+        },{
+          "name": "templates",
+          "type": "nft_extra[]"
+        }
+      ]
+    },{
+      "name": "reset",
+      "base": "",
+      "fields": [{
+          "name": "table",
+          "type": "name"
+        },{
+          "name": "scope",
+          "type": "name?"
+        }
+      ]
+    },{
+      "name": "setblend",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        },{
+          "name": "description",
+          "type": "string?"
+        },{
+          "name": "plugin",
+          "type": "name?"
+        },{
+          "name": "quantity",
+          "type": "extended_asset?"
+        },{
+          "name": "start_time",
+          "type": "time_point_sec?"
+        },{
+          "name": "end_time",
+          "type": "time_point_sec?"
+        }
+      ]
+    },{
+      "name": "setfee",
+      "base": "",
+      "fields": [{
+          "name": "protocol_fee",
+          "type": "uint16?"
+        },{
+          "name": "fee_account",
+          "type": "name?"
+        }
+      ]
+    },{
+      "name": "setlimit",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        },{
+          "name": "max_mint_assets",
+          "type": "int64"
+        }
+      ]
+    },{
+      "name": "setrecipes",
+      "base": "",
+      "fields": [{
+          "name": "collection_name",
+          "type": "name"
+        },{
+          "name": "template_id",
+          "type": "int32"
+        },{
+          "name": "recipe_ids",
+          "type": "uint64[]"
+        }
+      ]
+    },{
+      "name": "setstatus",
+      "base": "",
+      "fields": [{
+          "name": "status",
+          "type": "name"
+        }
+      ]
+    },{
+      "name": "status_row",
+      "base": "",
+      "fields": [{
+          "name": "counters",
+          "type": "uint32[]"
+        },{
+          "name": "last_updated",
+          "type": "time_point_sec"
+        }
+      ]
+    }
+  ],
+  "actions": [{
+      "name": "addrecipe",
+      "type": "addrecipe",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: addrecipe\nsummary: Add NFT recipe\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "blendlog",
+      "type": "blendlog",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: blendlog\nsummary: Blend logging\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "cancel",
+      "type": "cancel",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: cancel\nsummary: Returns any remaining orders to owner account\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "delblend",
+      "type": "delblend",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: delblend\nsummary: Delete NFT blend\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "dellimit",
+      "type": "dellimit",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: dellimit\nsummary: Delete limit\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "delrecipe",
+      "type": "delrecipe",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: delrecipe\nsummary: Delete NFT recipe\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "reset",
+      "type": "reset",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: reset\nsummary: Reset table\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "setblend",
+      "type": "setblend",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: setblend\nsummary: Set NFT blend\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "setfee",
+      "type": "setfee",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: setfee\nsummary: Set protocol fee\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "setlimit",
+      "type": "setlimit",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: setlimit\nsummary: Set limit\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "setrecipes",
+      "type": "setrecipes",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: setrecipes\nsummary: Set recipes\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    },{
+      "name": "setstatus",
+      "type": "setstatus",
+      "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: setstatus\nsummary: Set status\nicon: https://avatars0.githubusercontent.com/u/75587337#4065db6936f0967a12224125dbdc91f9cc1bbc8d4ee2735ced6bdff180d73d79\n---"
+    }
+  ],
+  "tables": [{
+      "name": "blends",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "blends_row"
+    },{
+      "name": "collections",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "collections_row"
+    },{
+      "name": "config",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "config_row"
+    },{
+      "name": "limits",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "limits_row"
+    },{
+      "name": "orders",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "orders_row"
+    },{
+      "name": "recipes",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "recipes_row"
+    },{
+      "name": "status",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "status_row"
+    }
+  ],
+  "ricardian_clauses": [],
+  "error_messages": [],
+  "abi_extensions": [],
+  "variants": [],
+  "action_results": [],
+  "kv_tables": {}
+}

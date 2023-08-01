@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package antelope.gems.blend.v1;
+
+message Actions {
+    repeated BlendLog blendlogs = 1;
+}
+
+message BlendLog {
+    string trx_id = 1;
+    uint32 trx_index = 2;
+    string owner = 3;
+    string description = 4;
+    repeated uint64 in_asset_ids = 5;
+    uint64 out_asset_id = 6;
+    repeated NftExtra in_templates = 7;
+    NftExtra out_template = 8;
+    int32 total_mint = 9;
+    int32 total_burn = 10;
+}
+
+message NftExtra {
+    string collection_name = 1;
+    int32 template_id = 2;
+    string schema_name = 3;
+}

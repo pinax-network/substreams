@@ -1,0 +1,25 @@
+specVersion: v0.1.0
+package:
+  name: "gems_blend"
+  version: v0.1.0
+  url: https://github.com/pinax-network/substreams
+  doc: dotGems Blend updates
+
+protobuf:
+  files:
+    - gems.blend.proto
+  importPaths:
+    - ./proto/v1
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/gems_blend.wasm
+
+modules:
+  - name: map_actions
+    kind: map
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.gems.blend.v1.Actions
