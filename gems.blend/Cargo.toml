@@ -10,13 +10,14 @@ crate-type = ["cdylib"]
 prost = { workspace = true }
 prost-types = { workspace = true }
 substreams = { workspace = true }
-substreams-antelope = { git = "https://github.com/pinax-network/substreams-antelope.git", branch = "feat/abigen" }
 #substreams-antelope = { workspace = true }
-#substreams-antelope = { path = "/Users/shkvo/github/Pinax/substreams-antelope" }
+#substreams-antelope = { path = "/Users/shkvo/github/Pinax/substreams-antelope/substreams-antelope" }
+substreams-antelope = "0.3"
 serde_json = "1.0.91"
 serde = { version = "1.0", features = ["derive"] }
 
 [build-dependencies]
-substreams-antelope = { git = "https://github.com/pinax-network/substreams-antelope.git", branch = "feat/abigen" }
-#substreams-antelope = { workspace = true }
+#substreams-antelope = { path = "/Users/shkvo/github/Pinax/substreams-antelope/substreams-antelope" }
+# substreams-antelope = { workspace = true }
 #substreams-antelope = { path = "/Users/shkvo/github/Pinax/substreams-antelope" }
+substreams-antelope = "0.3"

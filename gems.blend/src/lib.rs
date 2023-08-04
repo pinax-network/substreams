@@ -4,9 +4,9 @@ mod pb;
 use pb::antelope::gems::blend::v1::{Actions, BlendLog, NftExtra};
 
 #[substreams::handlers::map]
-fn map_actions(block: substreams_antelope::Block) -> Result<Actions, substreams::errors::Error> {
+fn map_actions(block: substreams_antelope::pb::Block) -> Result<Actions, substreams::errors::Error> {
     Ok(Actions {
-        blendlogs: block.actions::<abi::contract::actions::Blendlog>(&["blend.gems"])
+        blendlogs: block.actions::<abi::contract::actions::Blendlog>(&[abi::contract::ACCOUNT.expect("specify contract account")])
             .map(|(action, trx)| BlendLog {
                 trx_id: trx.transaction_id.clone(),
                 trx_index: trx.action_ordinal,

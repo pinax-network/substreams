@@ -1,3 +1,5 @@
+#[allow(dead_code)]
+pub const ACCOUNT: Option<&'static str> = Some("blend.gems");
 pub mod types {
     use substreams_antelope::types::*;
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -68,6 +70,8 @@ pub mod types {
 }
 pub mod actions {
     use substreams_antelope::types::*;
+    use substreams_antelope::decoder::decode;
+    #[allow(unused_imports)]
     use super::types::*;
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
     #[serde(deny_unknown_fields)]
@@ -76,16 +80,12 @@ pub mod actions {
         pub template_id: Int32,
         pub templates: Vec<Nft>,
     }
-    impl substreams_antelope::action::Action for Addrecipe {
+    impl substreams_antelope::Action for Addrecipe {
         const NAME: &'static str = "addrecipe";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -102,16 +102,12 @@ pub mod actions {
         pub total_mint: Int32,
         pub total_burn: Int32,
     }
-    impl substreams_antelope::action::Action for Blendlog {
+    impl substreams_antelope::Action for Blendlog {
         const NAME: &'static str = "blendlog";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -120,16 +116,12 @@ pub mod actions {
         pub owner: Name,
         pub template_id: Int32,
     }
-    impl substreams_antelope::action::Action for Cancel {
+    impl substreams_antelope::Action for Cancel {
         const NAME: &'static str = "cancel";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -138,16 +130,12 @@ pub mod actions {
         pub collection_name: Name,
         pub template_id: Int32,
     }
-    impl substreams_antelope::action::Action for Delblend {
+    impl substreams_antelope::Action for Delblend {
         const NAME: &'static str = "delblend";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -156,16 +144,12 @@ pub mod actions {
         pub collection_name: Name,
         pub template_id: Int32,
     }
-    impl substreams_antelope::action::Action for Dellimit {
+    impl substreams_antelope::Action for Dellimit {
         const NAME: &'static str = "dellimit";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -176,16 +160,12 @@ pub mod actions {
         #[serde(deserialize_with = "substreams_antelope::decoder::str_or_u64")]
         pub recipe_id: Uint64,
     }
-    impl substreams_antelope::action::Action for Delrecipe {
+    impl substreams_antelope::Action for Delrecipe {
         const NAME: &'static str = "delrecipe";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -194,16 +174,12 @@ pub mod actions {
         pub table: Name,
         pub scope: Name,
     }
-    impl substreams_antelope::action::Action for Reset {
+    impl substreams_antelope::Action for Reset {
         const NAME: &'static str = "reset";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -217,16 +193,12 @@ pub mod actions {
         pub start_time: TimePointSec,
         pub end_time: TimePointSec,
     }
-    impl substreams_antelope::action::Action for Setblend {
+    impl substreams_antelope::Action for Setblend {
         const NAME: &'static str = "setblend";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -235,16 +207,12 @@ pub mod actions {
         pub protocol_fee: Uint16,
         pub fee_account: Name,
     }
-    impl substreams_antelope::action::Action for Setfee {
+    impl substreams_antelope::Action for Setfee {
         const NAME: &'static str = "setfee";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -255,16 +223,12 @@ pub mod actions {
         #[serde(deserialize_with = "substreams_antelope::decoder::str_or_i64")]
         pub max_mint_assets: Int64,
     }
-    impl substreams_antelope::action::Action for Setlimit {
+    impl substreams_antelope::Action for Setlimit {
         const NAME: &'static str = "setlimit";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -275,16 +239,12 @@ pub mod actions {
         #[serde(deserialize_with = "substreams_antelope::decoder::vec_str_or_u64")]
         pub recipe_ids: Vec<Uint64>,
     }
-    impl substreams_antelope::action::Action for Setrecipes {
+    impl substreams_antelope::Action for Setrecipes {
         const NAME: &'static str = "setrecipes";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize)]
@@ -292,16 +252,12 @@ pub mod actions {
     pub struct Setstatus {
         pub status: Name,
     }
-    impl substreams_antelope::action::Action for Setstatus {
+    impl substreams_antelope::Action for Setstatus {
         const NAME: &'static str = "setstatus";
         fn decode(
             trace: &substreams_antelope::pb::ActionTrace,
-        ) -> Result<Self, substreams_antelope::errors::Error> {
-            Ok(
-                substreams_antelope::decoder::decode::<
-                    Self,
-                >(&trace.action.as_ref().unwrap().json_data)?,
-            )
+        ) -> Result<Self, substreams_antelope::Error> {
+            Ok(decode::<Self>(&trace.action.as_ref().unwrap().json_data)?)
         }
     }
 }
