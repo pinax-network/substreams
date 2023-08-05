@@ -4,7 +4,7 @@ mod pb;
 use pb::antelope::pomelo::bounties::v1::{Actions, StateLog, Apply, CreateLog, ExtendedSymbol, ClaimLog, ExtendedAsset};
 
 #[substreams::handlers::map]
-fn map_actions(param_account: String, block: substreams_antelope::Block) -> Result<Actions, substreams::errors::Error> {
+fn map_actions(param_account: String, block: substreams_antelope::pb::Block) -> Result<Actions, substreams::errors::Error> {
     Ok(Actions {
         statelogs: block.actions::<abi::contract::actions::Statelog>(&[param_account.as_str()])
             .map(|(action, trx)| StateLog {

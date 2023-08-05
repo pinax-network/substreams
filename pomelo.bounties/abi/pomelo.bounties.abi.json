@@ -1,0 +1,771 @@
+{
+  "account_name": "d.w.pomelo",
+  "abi": {
+    "version": "eosio::abi/1.2",
+    "structs": [
+      {
+        "name": "apply",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "user_id",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "approve",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "applicant_user_id",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "bounties_row",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "author_user_id",
+            "type": "name"
+          },
+          {
+            "name": "funders",
+            "type": "pair_name_asset[]"
+          },
+          {
+            "name": "amount",
+            "type": "extended_asset"
+          },
+          {
+            "name": "fee",
+            "type": "extended_asset"
+          },
+          {
+            "name": "claimed",
+            "type": "asset"
+          },
+          {
+            "name": "applicant_user_ids",
+            "type": "name[]"
+          },
+          {
+            "name": "approved_user_id",
+            "type": "name"
+          },
+          {
+            "name": "status",
+            "type": "name"
+          },
+          {
+            "name": "type",
+            "type": "name"
+          },
+          {
+            "name": "permissions",
+            "type": "name"
+          },
+          {
+            "name": "metadata",
+            "type": "pair_name_string[]"
+          },
+          {
+            "name": "created_at",
+            "type": "time_point_sec"
+          },
+          {
+            "name": "updated_at",
+            "type": "time_point_sec"
+          },
+          {
+            "name": "submitted_at",
+            "type": "time_point_sec"
+          },
+          {
+            "name": "completed_at",
+            "type": "time_point_sec"
+          }
+        ]
+      },
+      {
+        "name": "claim",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "receiver",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "claimlog",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "receiver",
+            "type": "name"
+          },
+          {
+            "name": "ext_quantity",
+            "type": "extended_asset"
+          },
+          {
+            "name": "fee",
+            "type": "asset"
+          },
+          {
+            "name": "status",
+            "type": "name"
+          },
+          {
+            "name": "worker_user_id",
+            "type": "name"
+          },
+          {
+            "name": "days_since_created",
+            "type": "uint32"
+          }
+        ]
+      },
+      {
+        "name": "close",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "complete",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "configs_row",
+        "base": "",
+        "fields": [
+          {
+            "name": "status",
+            "type": "name"
+          },
+          {
+            "name": "fee",
+            "type": "uint64"
+          },
+          {
+            "name": "login_contract",
+            "type": "name"
+          },
+          {
+            "name": "fee_account",
+            "type": "name"
+          },
+          {
+            "name": "metadata_keys",
+            "type": "name[]"
+          }
+        ]
+      },
+      {
+        "name": "create",
+        "base": "",
+        "fields": [
+          {
+            "name": "author_user_id",
+            "type": "name"
+          },
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "accepted_token",
+            "type": "symbol_code"
+          },
+          {
+            "name": "bounty_type",
+            "type": "name?"
+          }
+        ]
+      },
+      {
+        "name": "createlog",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "author_user_id",
+            "type": "name"
+          },
+          {
+            "name": "ext_sym",
+            "type": "extended_symbol"
+          },
+          {
+            "name": "type",
+            "type": "name"
+          },
+          {
+            "name": "permissions",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "deltoken",
+        "base": "",
+        "fields": [
+          {
+            "name": "symcode",
+            "type": "symbol_code"
+          }
+        ]
+      },
+      {
+        "name": "deny",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "depositlog",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "funder_user_id",
+            "type": "name"
+          },
+          {
+            "name": "from",
+            "type": "name"
+          },
+          {
+            "name": "ext_quantity",
+            "type": "extended_asset"
+          },
+          {
+            "name": "fee",
+            "type": "asset"
+          },
+          {
+            "name": "value",
+            "type": "float64"
+          },
+          {
+            "name": "memo",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "extended_symbol",
+        "base": "",
+        "fields": [
+          {
+            "name": "sym",
+            "type": "symbol"
+          },
+          {
+            "name": "contract",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "forfeit",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "pair_name_asset",
+        "base": "",
+        "fields": [
+          {
+            "name": "first",
+            "type": "name"
+          },
+          {
+            "name": "second",
+            "type": "asset"
+          }
+        ]
+      },
+      {
+        "name": "pair_name_string",
+        "base": "",
+        "fields": [
+          {
+            "name": "first",
+            "type": "name"
+          },
+          {
+            "name": "second",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "publish",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "release",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "setconfig",
+        "base": "",
+        "fields": [
+          {
+            "name": "status",
+            "type": "name?"
+          },
+          {
+            "name": "fee",
+            "type": "uint64?"
+          },
+          {
+            "name": "login_contract",
+            "type": "name?"
+          },
+          {
+            "name": "fee_account",
+            "type": "name?"
+          },
+          {
+            "name": "metadata_keys",
+            "type": "name[]"
+          }
+        ]
+      },
+      {
+        "name": "setmetadata",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "metadata_key",
+            "type": "name"
+          },
+          {
+            "name": "metadata_value",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "setstate",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "state",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "statelog",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "status",
+            "type": "name"
+          },
+          {
+            "name": "action",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "status_row",
+        "base": "",
+        "fields": [
+          {
+            "name": "counters",
+            "type": "uint32[]"
+          },
+          {
+            "name": "last_updated",
+            "type": "time_point_sec"
+          }
+        ]
+      },
+      {
+        "name": "syncbounty",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "state",
+            "type": "name"
+          },
+          {
+            "name": "applicant_user_ids",
+            "type": "name[]"
+          },
+          {
+            "name": "approved_user_id",
+            "type": "name?"
+          },
+          {
+            "name": "updated_at",
+            "type": "time_point_sec"
+          },
+          {
+            "name": "submitted_at",
+            "type": "time_point_sec?"
+          },
+          {
+            "name": "completed_at",
+            "type": "time_point_sec?"
+          }
+        ]
+      },
+      {
+        "name": "token",
+        "base": "",
+        "fields": [
+          {
+            "name": "sym",
+            "type": "symbol"
+          },
+          {
+            "name": "contract",
+            "type": "name"
+          },
+          {
+            "name": "min_amount",
+            "type": "uint64"
+          },
+          {
+            "name": "oracle_id",
+            "type": "uint64"
+          }
+        ]
+      },
+      {
+        "name": "tokens_row",
+        "base": "",
+        "fields": [
+          {
+            "name": "sym",
+            "type": "symbol"
+          },
+          {
+            "name": "contract",
+            "type": "name"
+          },
+          {
+            "name": "min_amount",
+            "type": "uint64"
+          },
+          {
+            "name": "oracle_id",
+            "type": "uint64"
+          }
+        ]
+      },
+      {
+        "name": "transfers_row",
+        "base": "",
+        "fields": [
+          {
+            "name": "transfer_id",
+            "type": "uint64"
+          },
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "funder_user_id",
+            "type": "name"
+          },
+          {
+            "name": "from",
+            "type": "name"
+          },
+          {
+            "name": "to",
+            "type": "name"
+          },
+          {
+            "name": "ext_quantity",
+            "type": "extended_asset"
+          },
+          {
+            "name": "fee",
+            "type": "asset"
+          },
+          {
+            "name": "memo",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "type": "float64"
+          },
+          {
+            "name": "trx_id",
+            "type": "checksum256"
+          },
+          {
+            "name": "created_at",
+            "type": "time_point_sec"
+          }
+        ]
+      },
+      {
+        "name": "withdraw",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "receiver",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "withdrawlog",
+        "base": "",
+        "fields": [
+          {
+            "name": "bounty_id",
+            "type": "name"
+          },
+          {
+            "name": "status",
+            "type": "name"
+          },
+          {
+            "name": "author_user_id",
+            "type": "name"
+          },
+          {
+            "name": "receiver",
+            "type": "name"
+          },
+          {
+            "name": "refund",
+            "type": "extended_asset"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "name": "apply",
+        "type": "apply",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: apply\nsummary: Apply\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "approve",
+        "type": "approve",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: approve\nsummary: Approve\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "claim",
+        "type": "claim",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: claim\nsummary: Claim\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "claimlog",
+        "type": "claimlog",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: claimlog\nsummary: Log bounty claims\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "close",
+        "type": "close",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: close\nsummary: Close bounty\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "complete",
+        "type": "complete",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: complete\nsummary: Complete\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "create",
+        "type": "create",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: create\nsummary: Create Bounty\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "createlog",
+        "type": "createlog",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: createlog\nsummary: Log bounty creation\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "deltoken",
+        "type": "deltoken",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: deltoken\nsummary: Delete token\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "deny",
+        "type": "deny",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: deny\nsummary: Deny\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "depositlog",
+        "type": "depositlog",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: depositlog\nsummary: Log deposit\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "forfeit",
+        "type": "forfeit",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: forfeit\nsummary: Forfeit bounty\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "publish",
+        "type": "publish",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: publish\nsummary: Publish bounty\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "release",
+        "type": "release",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: release\nsummary: Release\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "setconfig",
+        "type": "setconfig",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: init\nsummary: Set config parameter\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "setmetadata",
+        "type": "setmetadata",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: setmetadata\nsummary: Set Bounty meta data\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "setstate",
+        "type": "setstate",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: setstate\nsummary: Set project state\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "statelog",
+        "type": "statelog",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: statelog\nsummary: Log bounty state change\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "syncbounty",
+        "type": "syncbounty",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: syncbounty\nsummary: Sync bounty details\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "token",
+        "type": "token",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: token\nsummary: Set token information\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "withdraw",
+        "type": "withdraw",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: withdraw\nsummary: Withdraw\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      },
+      {
+        "name": "withdrawlog",
+        "type": "withdrawlog",
+        "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: withdrawlog\nsummary: Log bounty withdrawals\nicon: https://avatars.githubusercontent.com/u/83723501#b74cf8b3d884f42fffea4bfe7070b3871e1845805c57973a48324af1228ad9cc\n---"
+      }
+    ],
+    "tables": [
+      {
+        "name": "bounties",
+        "index_type": "i64",
+        "type": "bounties_row"
+      },
+      {
+        "name": "configs",
+        "index_type": "i64",
+        "type": "configs_row"
+      },
+      {
+        "name": "status",
+        "index_type": "i64",
+        "type": "status_row"
+      },
+      {
+        "name": "tokens",
+        "index_type": "i64",
+        "type": "tokens_row"
+      },
+      {
+        "name": "transfers",
+        "index_type": "i64",
+        "type": "transfers_row"
+      }
+    ]
+  }
+}
