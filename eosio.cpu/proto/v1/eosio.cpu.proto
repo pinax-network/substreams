@@ -58,27 +58,27 @@ message TransferEvents {
 message TransferEvent {
     // transaction
     string trx_id = 1;
-    uint32 action_ordinal = 2;
+    //uint32 action_ordinal = 2;
 
     // contract & scope
-    string contract = 3;
-    string action = 4;
-    string symcode = 5;
+    string contract = 2;
+    string action = 3;
+    string symcode = 4;
 
     // data payload
-    string from = 6;
-    string to = 7;
-    string quantity = 8;
-    string memo = 9;
+    string from = 5;
+    string to = 6;
+    string quantity = 7;
+    string memo = 8;
 
     // extras
-    uint32 precision = 10;
-    int64 amount = 11;
-    double value = 12;
+    //uint32 precision = 10;
+    //int64 amount = 11;
+    //double value = 12;
 
     // bp and cpu data
-    string producer = 13;
-    uint32 cpu_usage = 14;
-    uint32 net_usage = 15;
-    uint32 tx_count = 16;
+    string producer = 9;
+    uint32 cpu_usage = 10;
+    uint32 net_usage = 11;
+    uint32 tx_count = 12;
 }

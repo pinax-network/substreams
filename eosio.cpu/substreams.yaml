@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: eosio_cpu
-  version: v0.13.0
+  version: v0.14.0
   url: https://github.com/pinax-network/substreams
   doc: Antelope `eosio.cpu` based action traces & database operations.
 
@@ -9,6 +9,7 @@ imports:
   entities: https://github.com/streamingfast/substreams-entity-change/releases/download/v0.2.1/substreams-entity-change-v0.2.1.spkg
   kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v0.1.2/substreams-sink-kv-v0.1.2.spkg
   database_change: https://github.com/streamingfast/substreams-database-change/releases/download/v1.0.0/substreams-database-change-v1.0.0.spkg
+  prometheus: https://github.com/pinax-network/substreams-sink-prometheus.rs/releases/download/v0.1.9/substreams-sink-prometheus-v0.1.9.spkg
 
 binaries:
   default:
@@ -30,49 +31,9 @@ modules:
     output:
       type: proto:antelope.eosio.cpu.v1.TransferEvents
 
-#  - name: map_accounts
-#    kind: map
-#    inputs:
-#      - params: string
-#      - source: sf.antelope.type.v1.Block
-#    output:
-#      type: proto:antelope.eosio.cpu.v1.Accounts
-
-#  - name: map_stat
-#    kind: map
-#    inputs:
-#      - params: string
-#      - source: sf.antelope.type.v1.Block
-#    output:
-#      type: proto:antelope.eosio.cpu.v1.Stats
-
-  # - name: map_accounts_deltas
-  #   kind: map
-  #   inputs:
-  #     - params: string
-  #     - source: sf.antelope.type.v1.Block
-  #   output:
-  #     type: proto:antelope.eosio.cpu.v1.Accounts
-
-  - name: graph_out
+  - name: prom_out
     kind: map
     inputs:
       - map: map_transfers
     output:
-      type: proto:substreams.entity.v1.EntityChanges
-
-#  - name: kv_out
-#    kind: map
-#    inputs:
-#      - map: map_accounts
-#      - map: map_stat
-      # - map: map_balance_delta
-#    output:
-#      type: proto:sf.substreams.sink.kv.v1.KVOperations
-
-  - name: db_out
-    kind: map
-    inputs:
-      - map: map_transfers
-    output:
-      type: proto:sf.substreams.sink.database.v1.DatabaseChanges
+      type: proto:pinax.substreams.sink.prometheus.v1.PrometheusOperations

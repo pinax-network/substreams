@@ -1,6 +1,6 @@
 [package]
 name = "eosio_cpu"
-version = "0.13.0"
+version = "0.14.0"
 authors = [
     "Denis <denis@pinax.network>",
     "Yaro <yaro@pinax.network>",
@@ -29,3 +29,4 @@ substreams-database-change = { workspace = true }
 substreams-sink-kv = { workspace = true }
 substreams-antelope = { workspace = true }
 substreams-entity-change = { workspace = true }
+substreams-sink-prometheus = { workspace = true }
