@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package antelope.eosio.deferred.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message Transactions {
+    repeated Transaction transactions = 1;
+}
+
+message Transaction {
+    string trx_id = 2;
+    uint64 block_num = 3;
+    google.protobuf.Timestamp timestamp = 4;
+    string sender = 5;
+    string account = 6;
+    string action = 7;
+    string json_data = 8;
+}

@@ -13,6 +13,7 @@ members = [
     "erc721",
     "pomelo.bounties",
     "gems.blend",
+    "deferred",
 ]
 
 [workspace.dependencies]

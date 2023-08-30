@@ -1,0 +1,26 @@
+specVersion: v0.1.0
+package:
+  name: eosio_deferred
+  version: v0.1.0
+  url: https://github.com/pinax-network/substreams
+  doc: Antelope deferred transactions
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/eosio_deferred.wasm
+
+protobuf:
+  files:
+    - eosio.deferred.proto
+  importPaths:
+    - ./proto/v1
+
+modules:
+  - name: map_deferred
+    kind: map
+    initialBlock: 2
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.eosio.deferred.v1.Transactions
