@@ -75,38 +75,38 @@ pub struct TransferEvent {
     /// transaction
     #[prost(string, tag="1")]
     pub trx_id: ::prost::alloc::string::String,
-    #[prost(uint32, tag="2")]
-    pub action_ordinal: u32,
+    //#[prost(uint32, tag="2")]
+    //pub action_ordinal: u32,
     /// contract & scope
-    #[prost(string, tag="3")]
+    #[prost(string, tag="2")]
     pub contract: ::prost::alloc::string::String,
-    #[prost(string, tag="4")]
+    #[prost(string, tag="3")]
     pub action: ::prost::alloc::string::String,
-    #[prost(string, tag="5")]
+    #[prost(string, tag="4")]
     pub symcode: ::prost::alloc::string::String,
     /// data payload
-    #[prost(string, tag="6")]
+    #[prost(string, tag="5")]
     pub from: ::prost::alloc::string::String,
-    #[prost(string, tag="7")]
+    #[prost(string, tag="6")]
     pub to: ::prost::alloc::string::String,
-    #[prost(string, tag="8")]
+    #[prost(string, tag="7")]
     pub quantity: ::prost::alloc::string::String,
-    #[prost(string, tag="9")]
+    #[prost(string, tag="8")]
     pub memo: ::prost::alloc::string::String,
     /// extras
-    #[prost(uint32, tag="10")]
-    pub precision: u32,
-    #[prost(int64, tag="11")]
-    pub amount: i64,
-    #[prost(double, tag="12")]
-    pub value: f64,
-    #[prost(string, tag="13")]
+    //#[prost(uint32, tag="10")]
+    //pub precision: u32,
+    //#[prost(int64, tag="11")]
+    //pub amount: i64,
+    //#[prost(double, tag="12")]
+    //pub value: f64,
+    #[prost(string, tag="9")]
     pub producer: ::prost::alloc::string::String,
-    #[prost(uint32, tag="14")]
+    #[prost(uint32, tag="10")]
     pub cpu_usage: u32,
-    #[prost(uint32, tag="15")]
+    #[prost(uint32, tag="11")]
     pub net_usage: u32,
-    #[prost(uint32, tag="16")]
+    #[prost(uint32, tag="12")]
     pub tx_count: u32
 }
 /// Encoded file descriptor set for the `antelope.eosio.cpu.v1` package
