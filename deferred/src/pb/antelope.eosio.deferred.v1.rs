@@ -10,17 +10,21 @@ pub struct Transactions {
 pub struct Transaction {
     #[prost(string, tag="2")]
     pub trx_id: ::prost::alloc::string::String,
-    #[prost(uint64, tag="3")]
+    #[prost(string, tag="3")]
+    pub op: ::prost::alloc::string::String,
+    #[prost(uint64, tag="4")]
     pub block_num: u64,
-    #[prost(message, optional, tag="4")]
+    #[prost(message, optional, tag="5")]
     pub timestamp: ::core::option::Option<::prost_types::Timestamp>,
-    #[prost(string, tag="5")]
-    pub sender: ::prost::alloc::string::String,
     #[prost(string, tag="6")]
-    pub account: ::prost::alloc::string::String,
+    pub sender: ::prost::alloc::string::String,
     #[prost(string, tag="7")]
-    pub action: ::prost::alloc::string::String,
+    pub account: ::prost::alloc::string::String,
     #[prost(string, tag="8")]
+    pub action: ::prost::alloc::string::String,
+    #[prost(string, tag="9")]
     pub json_data: ::prost::alloc::string::String,
+    #[prost(string, tag="10")]
+    pub parent_trx_id: ::prost::alloc::string::String,
 }
 // @@protoc_insertion_point(module)

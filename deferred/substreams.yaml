@@ -10,6 +10,9 @@ binaries:
     type: wasm/rust-v1
     file: ../target/wasm32-unknown-unknown/release/eosio_deferred.wasm
 
+imports:
+  sink_files: https://github.com/streamingfast/substreams-sink-files/releases/download/v0.2.0/substreams-sink-files-v0.2.0.spkg
+
 protobuf:
   files:
     - eosio.deferred.proto
@@ -24,3 +27,9 @@ modules:
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.eosio.deferred.v1.Transactions
+  - name: csv_out
+    kind: map
+    inputs:
+      - map: map_deferred
+    output:
+      type: proto:sf.substreams.sink.files.v1.Lines

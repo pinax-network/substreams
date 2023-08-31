@@ -10,10 +10,12 @@ message Transactions {
 
 message Transaction {
     string trx_id = 2;
-    uint64 block_num = 3;
-    google.protobuf.Timestamp timestamp = 4;
-    string sender = 5;
-    string account = 6;
-    string action = 7;
-    string json_data = 8;
+    string op = 3;
+    uint64 block_num = 4;
+    google.protobuf.Timestamp timestamp = 5;
+    string sender = 6;
+    string account = 7;
+    string action = 8;
+    string json_data = 9;
+    string parent_trx_id = 10;
 }
