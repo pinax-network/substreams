@@ -16,11 +16,6 @@ pub fn prom_out(map_transfers: TransferEvents) -> Result<PrometheusOperations, E
     //log::info!("map_transfers={:?}", map_transfers);
 
     for transfer in map_transfers.items {
-        log::info!("producer={:?}", transfer.producer);
-        log::info!("cpu_usage={:?}", transfer.cpu_usage);
-        log::info!("net_usage={:?}", transfer.net_usage);
-        log::info!("tx_count={:?}", transfer.tx_count);
-        log::info!("from={:?}", transfer.from);
 
         let transfer_label = HashMap::from([
             ("producer".to_string(), transfer.producer.to_string()),
