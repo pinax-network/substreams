@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "common",
+    "eosio.cpu",
     "eosio.evm",
     "eosio.ibc",
     "antelope.oracles",
