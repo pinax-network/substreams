@@ -19,12 +19,13 @@ pub fn prom_out(map_transfers: TransferEvents) -> Result<PrometheusOperations, E
 
         let transfer_label = HashMap::from([
             ("producer".to_string(), transfer.producer.to_string()),
-            ("from".to_string(), transfer.from.to_string())
+            //("from".to_string(), transfer.from.to_string())
         ]);
 
-        prom_out.push(Gauge::from("cpu_usage").with(transfer_label.clone()).set(transfer.cpu_usage as f64));
-        prom_out.push(Gauge::from("net_usage").with(transfer_label.clone()).set(transfer.net_usage as f64));
-        prom_out.push(Gauge::from("tx_count").with(transfer_label.clone()).set(transfer.tx_count as f64));
+        prom_out.push(Counter::from("cpu_usage").with(transfer_label.clone()).add(transfer.cpu_usage as f64));
+        prom_out.push(Counter::from("net_usage").with(transfer_label.clone()).add(transfer.net_usage as f64));
+        prom_out.push(Counter::from("tx_count").with(transfer_label.clone()).inc());
+
     }
     Ok(prom_out)
 }
