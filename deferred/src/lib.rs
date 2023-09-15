@@ -26,6 +26,8 @@ fn get_op_str(op: d_trx_op::Operation) -> String {
 #[substreams::handlers::map]
 fn map_deferred(block: Block) -> Result<Transactions, Error> {
     let mut res: Transactions = Default::default();
+    let producer = block.header.as_ref().unwrap().producer.clone();
+
     for trx in block.all_transaction_traces() {
         for dtrx in &trx.dtrx_ops {
             let dtrx = dtrx.clone();
@@ -41,6 +43,7 @@ fn map_deferred(block: Block) -> Result<Transactions, Error> {
                 json_data: action.json_data,
                 block_num: trx.block_num,
                 timestamp: block.header.as_ref().unwrap().timestamp.clone(),
+                producer: producer.to_string()
             });
         }
     }
@@ -52,7 +55,7 @@ fn csv_out(transactions: Transactions) -> Result<Lines, substreams::errors::Erro
 
     Ok(Lines {
         lines: transactions.transactions.into_iter().map(|t| {
-            format!("{},{},{},{},{},{},\"{}\",{},{}",
+            format!("{},{},{},{},{},{},\"{}\",{},{},{}",
                 t.trx_id,
                 t.parent_trx_id,
                 t.op,
@@ -62,6 +65,7 @@ fn csv_out(transactions: Transactions) -> Result<Lines, substreams::errors::Erro
                 t.json_data.replace("\"", "'"),
                 t.block_num,
                 t.timestamp.unwrap().to_string(),
+                t.producer
             )
         }).collect()
     })

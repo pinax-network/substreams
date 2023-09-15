@@ -18,4 +18,5 @@ message Transaction {
     string action = 8;
     string json_data = 9;
     string parent_trx_id = 10;
+    string producer = 11;
 }

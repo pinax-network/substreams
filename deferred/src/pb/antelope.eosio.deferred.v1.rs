@@ -26,5 +26,7 @@ pub struct Transaction {
     pub json_data: ::prost::alloc::string::String,
     #[prost(string, tag="10")]
     pub parent_trx_id: ::prost::alloc::string::String,
+    #[prost(string, tag="11")]
+    pub producer: ::prost::alloc::string::String
 }
 // @@protoc_insertion_point(module)
