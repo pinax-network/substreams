@@ -1,11 +1,10 @@
-use antelope::Asset;
 use substreams::errors::Error;
-use substreams_entity_change::pb::entity::{entity_change, EntityChanges};
+use substreams_entity_change::{pb::entity::EntityChanges, tables::Tables};
 use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
 use substreams_database_change::pb::database::{table_change, DatabaseChanges};
 use substreams::pb::substreams::Clock;
 
-use crate::antelope_oracles::{Pairs, Quotes};
+use crate::antelope_oracles::Quotes;
 
 // Work In Progress: Make a generic db_out for oracle information
 #[substreams::handlers::map]
@@ -31,7 +30,7 @@ pub fn kv_out(map_quotes: Quotes, clock: Clock) -> Result<KvOperations, Error> {
     let seconds = clock.timestamp.unwrap().seconds;
     let epoch = (seconds / 86400) * 86400;
 
-    let day = epoch / 86400;
+    let _day = epoch / 86400;
 
     for quote in map_quotes.quotes {
         let key = format!("delphioracle:{}:{}", quote.value.as_ref().ok_or(0).unwrap().timestamp, quote.pair);
@@ -39,4 +38,21 @@ pub fn kv_out(map_quotes: Quotes, clock: Clock) -> Result<KvOperations, Error> {
     }
 
     Ok(kv_out)
+}
+
+#[substreams::handlers::map]
+pub fn graph_out(map_quotes: Quotes) -> Result<EntityChanges, Error> {
+    let mut table = Tables::new();
+
+    for quote in map_quotes.quotes {
+        let datapoint = quote.value.unwrap();
+        let row = table.create_row("quotes", &quote.pair).set("q_pair", &quote.pair);
+        row.set("q_id", datapoint.id);
+        row.set("q_median", datapoint.median);
+        row.set("q_owner", datapoint.owner);
+        row.set("q_timestamp", datapoint.timestamp);
+        row.set("q_value", datapoint.value);
+    }
+
+    Ok(table.to_entity_changes())
 }
