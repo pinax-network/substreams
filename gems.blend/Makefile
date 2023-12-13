@@ -27,8 +27,8 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_actions -s 322315024 -t +10
+	substreams run -e eos.substreams.pinax.network:443 map_actions -s 322315024 -t +10
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_actions -s 322315024 -t +10000
+	substreams gui -e eos.substreams.pinax.network:443 map_actions -s 322315024 -t +10000

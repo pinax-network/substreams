@@ -27,8 +27,8 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_pushtx -s 311800000 -t +1000000 -o jsonl
+	substreams run -e eos.substreams.pinax.network:443 map_pushtx -s 311800000 -t +1000000 -o jsonl
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_pushtx -s 311800000 -t +1000000
+	substreams gui -e eos.substreams.pinax.network:443 map_pushtx -s 311800000 -t +1000000

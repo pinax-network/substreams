@@ -27,20 +27,20 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_transfers -s -1
+	substreams run -e eos.substreams.pinax.network:443 map_transfers -s -1
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s -1
+	substreams gui -e eos.substreams.pinax.network:443 map_transfers -s -1
 
 .PHONY: params
 params:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_transfers -s -1 -p map_transfers="to=swap.defi&symcode=EOS,USDT"
+	substreams gui -e eos.substreams.pinax.network:443 map_transfers -s -1 -p map_transfers="to=swap.defi&symcode=EOS,USDT"
 
 .PHONY: accounts
 accounts:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_accounts -s -1
+	substreams gui -e eos.substreams.pinax.network:443 map_accounts -s -1
 
 .PHONY: stat
 stat:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_stat -s -10000
+	substreams gui -e eos.substreams.pinax.network:443 map_stat -s -10000

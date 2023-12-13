@@ -27,20 +27,20 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_pairs -s -1
+	substreams run -e eos.substreams.pinax.network:443 map_pairs -s -1
 
 .PHONY: delphioracle
 delphioracle:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_quotes -s -1
+	substreams gui -e eos.substreams.pinax.network:443 map_quotes -s -1
 
 .PHONY: oracle.defi
 oracle.defi:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_prices -s -1
+	substreams gui -e eos.substreams.pinax.network:443 map_prices -s -1
 
 .PHONY: kv_out
 kv_out:
-	substreams gui -e eos.firehose.eosnation.io:9001 kv_out -s -1
+	substreams gui -e eos.substreams.pinax.network:443 kv_out -s -1
 
 .PHONY: db_out
 db_out:
-	substreams gui -e eos.firehose.eosnation.io:9001 db_out -s -1
+	substreams gui -e eos.substreams.pinax.network:443 db_out -s -1

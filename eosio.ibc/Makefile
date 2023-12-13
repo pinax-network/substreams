@@ -27,8 +27,8 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_lightproof -s 292442484 -t +100000 -o jsonl
+	substreams run -e eos.substreams.pinax.network:443 map_lightproof -s 292442484 -t +100000 -o jsonl
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_lightproof -s 292103130 -t +100000
+	substreams gui -e eos.substreams.pinax.network:443 map_lightproof -s 292103130 -t +100000

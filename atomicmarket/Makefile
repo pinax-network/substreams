@@ -27,12 +27,12 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 prom_out -s 230078212 -t 230088212 -o jsonl --production-mode 
+	substreams run -e eos.substreams.pinax.network:443 prom_out -s 230078212 -t 230088212 -o jsonl --production-mode 
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 prom_out -s 230078212 -t 230088212 --production-mode 
+	substreams gui -e eos.substreams.pinax.network:443 prom_out -s 230078212 -t 230088212 --production-mode 
 
 .PHONY: sink
 sink:
-	substreams-sink-prometheus run eos.firehose.eosnation.io:9001
+	substreams-sink-prometheus run eos.substreams.pinax.network:443

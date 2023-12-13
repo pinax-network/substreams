@@ -27,12 +27,12 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.firehose.eosnation.io:9001 map_accounts -s 241176757 -t +1
+	substreams run -e eos.substreams.pinax.network:443 map_accounts -s 241176757 -t +1
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.firehose.eosnation.io:9001 map_accounts -s 241176757 -t +10000
+	substreams gui -e eos.substreams.pinax.network:443 map_accounts -s 241176757 -t +10000
 
 .PHONY: sink
 sink:
-	substreams-sink-kv run badger3://badger_data.db eos.firehose.eosnation.io:9001 substreams.yaml kv_out
+	substreams-sink-kv run badger3://badger_data.db eos.substreams.pinax.network:443 substreams.yaml kv_out
