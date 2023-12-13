@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package antelope.trxstats.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message Transactions {
+    repeated Transaction transactions = 1;
+}
+
+message Transaction {
+    string trx_id = 2;
+    uint64 block_num = 4;
+    google.protobuf.Timestamp timestamp = 5;
+    uint32 action_count = 10;
+    int32 cpu = 11;
+    uint32 net = 12;
+}

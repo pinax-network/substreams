@@ -4,6 +4,7 @@ dev/
 buf.gen.yaml
 *.db
 data/
+sink-data/
 
 ### Substreams template
 .envrc
