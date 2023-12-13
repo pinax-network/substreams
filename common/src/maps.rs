@@ -30,9 +30,10 @@ fn map_transaction_traces(params: String, block: Block) -> Result<TransactionTra
                 let action = trace.action.as_ref().unwrap();
 
                 // filter by params
-                if !filter_contract.is_empty() && !filter_contract.contains(&action.account) { has_contract = true; }
-                if !filter_action.is_empty() && !filter_action.contains(&action.name) { has_action = true; }
-                if !filter_receiver.is_empty() && !filter_receiver.contains(&trace.receiver) { has_receiver = true; }
+                if !filter_contract.is_empty() && filter_contract.contains(&action.account) { has_contract = true; }
+                if !filter_action.is_empty() && filter_action.contains(&action.name) { has_action = true; }
+                if !filter_receiver.is_empty() && filter_receiver.contains(&trace.receiver) { has_receiver = true; }
+                if has_contract || has_action || has_receiver { break; }
             }
             // don't include transaction
             if !has_contract && !has_action && !has_receiver { continue; }
