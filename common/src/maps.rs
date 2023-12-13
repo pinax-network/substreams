@@ -22,7 +22,7 @@ fn map_transaction_traces(params: String, block: Block) -> Result<TransactionTra
     let filter_receiver = utils::create_filters(params.as_str(), "receiver");
 
     for trx in block.all_transaction_traces() {
-        if !filter_contract.is_empty() || !filter_action.is_empty() {
+        if !filter_contract.is_empty() || !filter_action.is_empty() || !filter_receiver.is_empty() {
             let mut has_contract = false;
             let mut has_action = false;
             let mut has_receiver = false;
