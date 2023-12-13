@@ -47,8 +47,8 @@ Params allow to filter messages and can be supplied to modules in the form of UR
 
 ```mermaid
 graph TD;
-  map_block_header[map: map_block_header];                                                                                                                    
-  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header;                                                                          
+  map_block_header[map: map_block_header];
+  sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_block_header;
   map_blockroot_merkle[map: map_blockroot_merkle];
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_blockroot_merkle;
   map_transaction_traces[map: map_transaction_traces];
@@ -58,9 +58,9 @@ graph TD;
   map_action_traces:params[params] --> map_action_traces;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_action_traces;
   map_db_ops[map: map_db_ops];
-  map_db_ops:params[params] --> map_db_ops;                                  
+  map_db_ops:params[params] --> map_db_ops;
   sf.antelope.type.v1.Block[source: sf.antelope.type.v1.Block] --> map_db_ops;
-  kv_out[map: kv_out];        
+  kv_out[map: kv_out];
   sf.substreams.v1.Clock[source: sf.substreams.v1.Clock] --> kv_out;
 ```
 
@@ -68,43 +68,43 @@ graph TD;
 
 ```yaml
 Package name: common
-Version: v0.6.0
-Doc: Antelope based action traces & database operations.                                                                                                      
+Version: v0.7.0
+Doc: Antelope based action traces & database operations.
 Modules:
 ----
 Name: map_block_header
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockHeader
-Hash: 33951d63d323eb9a2bae9d09e9df8a7ebe84362b
+Hash: 5d92d369cafe11d367797cb76e7596a85ac53233
 
 Name: map_blockroot_merkle
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.BlockRootMerkle
-Hash: 797ec4ed64818cbdd92ec75dabadd81ef3ad1dbb
+Hash: 85da537db3ac419c47fddd4de48cd949905ffb8d
 
 Name: map_transaction_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.TransactionTraces
-Hash: f2541a11641027caec2d60de4b56f41c35837283
+Hash: 5f45b71f0d9f3d6764fcaad99ec55165c886b68d
 
 Name: map_action_traces
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.ActionTraces
-Hash: b4c28e9904a2ea44ddf4eb891bc5a15040acc118
+Hash: e126ffb8870882e620a7d125d58eabe0cc75e1e4
 
 Name: map_db_ops
 Initial block: 2
 Kind: map
 Output Type: proto:sf.antelope.type.v1.DBOps
-Hash: c5acb9bb18e65fb6ab8d375053c1257bcb3b8a16
+Hash: 50f1ae024c4f9536618454d7de529411c6f4f9e9
 
 Name: kv_out
 Initial block: 0
 Kind: map
 Output Type: proto:sf.substreams.sink.kv.v1.KVOperations
-Hash: 9a2f97c2cf63229d2bec92b338007ad44baa87d0
+Hash: b311d8b665b19fd353e4937e9af297c72d98c08d
 ```
