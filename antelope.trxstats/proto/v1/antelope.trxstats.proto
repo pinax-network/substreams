@@ -11,7 +11,7 @@ message Transactions {
 message Transaction {
     string trx_id = 2;
     uint64 block_num = 4;
-    google.protobuf.Timestamp timestamp = 5;
+    google.protobuf.Timestamp block_time = 5;
     uint32 action_count = 10;
     int32 cpu = 11;
     uint32 net = 12;

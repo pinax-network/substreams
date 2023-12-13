@@ -1,10 +1,9 @@
 CREATE TABLE
     IF NOT EXISTS transactions (
-        "id" SERIAL PRIMARY KEY,
-        "trx_id" VARCHAR(64) UNIQUE,
-        "block_num" BIGINT UNSIGNED,
-        "timestamp" TIMESTAMP,
-        "action_count" INT UNSIGNED,
+        "trx_id" VARCHAR(64) PRIMARY KEY,
+        "block_num" BIGINT,
+        "block_time" TIMESTAMP,
+        "action_count" INT,
         "cpu" INT,
-        "net" INT UNSIGNED
+        "net" INT
     );

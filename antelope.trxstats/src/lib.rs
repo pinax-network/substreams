@@ -15,7 +15,7 @@ fn map_trxs(block: Block) -> Result<Transactions, Error> {
             .map(|trx| Transaction {
                 trx_id: trx.id.clone(),
                 block_num: trx.block_num,
-                timestamp: trx.block_time.clone(),
+                block_time: trx.block_time.clone(),
                 action_count: trx.action_traces.len() as u32,
                 cpu: trx.elapsed as i32,
                 net: trx.net_usage as u32,
@@ -30,10 +30,9 @@ fn db_out(trxs: Transactions) -> Result<DatabaseChanges, substreams::errors::Err
     let mut tables = DatabaseChangeTables::new();
     trxs.transactions.into_iter().for_each(|trx| {
         tables
-            .create_row("transactions", "")
-            .set("trx_id", trx.trx_id)
-            .set("block_time", trx.timestamp.unwrap())
-            .set("block_number", trx.block_num)
+            .create_row("transactions", &trx.trx_id)
+            .set("block_time", trx.block_time.unwrap())
+            .set("block_num", trx.block_num)
             .set("action_count", trx.action_count)
             .set("cpu", trx.cpu)
             .set("net", trx.net);

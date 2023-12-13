@@ -13,7 +13,7 @@ pub struct Transaction {
     #[prost(uint64, tag="4")]
     pub block_num: u64,
     #[prost(message, optional, tag="5")]
-    pub timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    pub block_time: ::core::option::Option<::prost_types::Timestamp>,
     #[prost(uint32, tag="10")]
     pub action_count: u32,
     #[prost(int32, tag="11")]
