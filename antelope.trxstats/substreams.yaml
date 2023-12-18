@@ -25,6 +25,7 @@ modules:
     kind: map
     initialBlock: 2
     inputs:
+      - params: string
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.trxstats.v1.Transactions

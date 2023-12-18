@@ -27,12 +27,12 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e eos.substreams.pinax.network:443 map_trxs -s 100000000 -t +100
+	substreams run -e eos.substreams.pinax.network:443 map_trxs -s 100000000 -t +100 -p map_trxs="cpu_usage=20000"
 
 .PHONY: gui
 gui:
-	substreams gui -e eos.substreams.pinax.network:443 map_trxs -s 100000000 -t +100
+	substreams gui -e eos.substreams.pinax.network:443 map_trxs -s 100000000 -t +100 -p map_trxs="cpu_usage=20000"
 
 .PHONY: sql
 sql:
-	substreams gui -e eos.substreams.pinax.network:443 db_out -s 100000000 -t +100
+	substreams gui -e eos.substreams.pinax.network:443 db_out -s 100000000 -t +100 -p map_trxs="cpu_usage=20000"

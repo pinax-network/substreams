@@ -14,8 +14,8 @@ message Transaction {
     google.protobuf.Timestamp block_time = 5;
     int32 status = 6;
     uint32 action_count = 10;
-    int32 elapsed = 11;
-    uint32 net_usage = 12;
-    uint32 cpu_usage_micro_seconds = 13;
-    uint32 net_usage_words = 14;
+    uint32 cpu_elapsed_us = 11;
+    uint32 net_elapsed_bytes = 12;
+    uint32 cpu_usage_us = 13;
+    uint32 net_usage_bytes = 14;
 }

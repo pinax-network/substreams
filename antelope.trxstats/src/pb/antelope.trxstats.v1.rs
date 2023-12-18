@@ -18,13 +18,13 @@ pub struct Transaction {
     pub status: i32,
     #[prost(uint32, tag="10")]
     pub action_count: u32,
-    #[prost(int32, tag="11")]
-    pub elapsed: i32,
+    #[prost(uint32, tag="11")]
+    pub cpu_elapsed_us: u32,
     #[prost(uint32, tag="12")]
-    pub net_usage: u32,
+    pub net_elapsed_bytes: u32,
     #[prost(uint32, tag="13")]
-    pub cpu_usage_micro_seconds: u32,
+    pub cpu_usage_us: u32,
     #[prost(uint32, tag="14")]
-    pub net_usage_words: u32,
+    pub net_usage_bytes: u32,
 }
 // @@protoc_insertion_point(module)
