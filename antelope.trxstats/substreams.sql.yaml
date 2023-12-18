@@ -43,5 +43,3 @@ sink:
     engine: postgres
     postgraphile_frontend:
       enabled: true
-
-network: eos

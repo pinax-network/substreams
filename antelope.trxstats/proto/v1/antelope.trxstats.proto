@@ -12,7 +12,10 @@ message Transaction {
     string trx_id = 2;
     uint64 block_num = 4;
     google.protobuf.Timestamp block_time = 5;
+    int32 status = 6;
     uint32 action_count = 10;
-    int32 cpu = 11;
-    uint32 net = 12;
+    int32 elapsed = 11;
+    uint32 net_usage = 12;
+    uint32 cpu_usage_micro_seconds = 13;
+    uint32 net_usage_words = 14;
 }

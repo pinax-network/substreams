@@ -14,11 +14,17 @@ pub struct Transaction {
     pub block_num: u64,
     #[prost(message, optional, tag="5")]
     pub block_time: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(int32, tag="6")]
+    pub status: i32,
     #[prost(uint32, tag="10")]
     pub action_count: u32,
     #[prost(int32, tag="11")]
-    pub cpu: i32,
+    pub elapsed: i32,
     #[prost(uint32, tag="12")]
-    pub net: u32,
+    pub net_usage: u32,
+    #[prost(uint32, tag="13")]
+    pub cpu_usage_micro_seconds: u32,
+    #[prost(uint32, tag="14")]
+    pub net_usage_words: u32,
 }
 // @@protoc_insertion_point(module)
