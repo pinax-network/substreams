@@ -34,9 +34,10 @@ fn map_trxs(block: Block) -> Result<Transactions, Error> {
 fn db_out(trxs: Transactions) -> Result<DatabaseChanges, substreams::errors::Error> {
     // Initialize changes container
     let mut tables = DatabaseChangeTables::new();
-    trxs.transactions.into_iter().for_each(|trx| {
+    trxs.transactions.into_iter().enumerate().for_each(|(i, trx)| {
         tables
-            .create_row("transactions", &trx.trx_id)
+            .create_row("transactions", format!("{}-{}", trx.block_num, i))
+            .set("trx_id", trx.trx_id)
             .set("block_time", trx.block_time.unwrap())
             .set("block_num", trx.block_num)
             .set("action_count", trx.action_count)
