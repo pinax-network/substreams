@@ -13,6 +13,7 @@ struct Params {
     net_elapsed: u32,
     cpu_usage: u32,
     net_usage: u32,
+    action_count: u32,
 }
 
 fn parse_params(input: String) -> Result<Params, Error> {
@@ -34,6 +35,7 @@ fn parse_params(input: String) -> Result<Params, Error> {
             "net_elapsed" => result.net_elapsed = parsed_value,
             "cpu_usage" => result.cpu_usage = parsed_value,
             "net_usage" => result.net_usage = parsed_value,
+            "action_count" => result.action_count = parsed_value,
             _ => return Err(Error::Unexpected(format!("Unknown parameter: '{}'", key))),
         }
     }
@@ -66,6 +68,7 @@ fn map_trxs(params: String, block: Block) -> Result<Transactions, Error> {
                     && trx.net_usage_bytes >= params.net_elapsed
                     && trx.cpu_usage_us >= params.cpu_usage
                     && trx.net_usage_bytes >= params.net_usage
+                    && trx.action_count >= params.action_count
             })
             .collect(),
     })
