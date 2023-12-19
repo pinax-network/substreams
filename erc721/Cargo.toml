@@ -32,6 +32,3 @@ substreams-ethereum = "0.9"
 lto = true
 opt-level = 's'
 strip = "debuginfo"
-
-[build]
-target = "wasm32-unknown-unknown"

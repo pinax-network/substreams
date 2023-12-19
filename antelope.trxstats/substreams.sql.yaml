@@ -36,6 +36,9 @@ modules:
     output:
       type: proto:sf.substreams.sink.database.v1.DatabaseChanges
 
+params:
+  map_trxs: "cpu_usage=100000"
+
 sink:
   module: db_out
   type: sf.substreams.sink.sql.v1.Service
