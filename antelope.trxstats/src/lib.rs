@@ -25,10 +25,10 @@ fn parse_params(input: String) -> Result<Params, Error> {
     for param in input.split('&') {
         let (key, value) = param
             .split_once('=')
-            .ok_or_else(|| Error::Unexpected(format!("Invalid parameter format: {}", param)))?;
+            .ok_or_else(|| substreams::errors::Error::Unexpected(format!("Invalid parameter format: {}", param)))?;
         let parsed_value = value
             .parse::<u32>()
-            .map_err(|_| Error::Unexpected(format!("Invalid param value for key '{}'", key)))?;
+            .map_err(|_| substreams::errors::Error::Unexpected(format!("Invalid param value for key '{}'", key)))?;
 
         match key {
             "cpu_elapsed" => result.cpu_elapsed = parsed_value,
@@ -36,7 +36,7 @@ fn parse_params(input: String) -> Result<Params, Error> {
             "cpu_usage" => result.cpu_usage = parsed_value,
             "net_usage" => result.net_usage = parsed_value,
             "action_count" => result.action_count = parsed_value,
-            _ => return Err(Error::Unexpected(format!("Unknown parameter: '{}'", key))),
+            _ => return Err(substreams::errors::Error::Unexpected(format!("Unknown parameter: '{}'", key))),
         }
     }
 
