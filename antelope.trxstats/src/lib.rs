@@ -1,4 +1,4 @@
-use substreams::errors::Error as SubError;
+use substreams::errors::Error;
 use substreams_antelope::Block;
 use substreams_database_change::pb::database::DatabaseChanges;
 use substreams_database_change::tables::Tables as DatabaseChangeTables;
@@ -16,7 +16,7 @@ struct Params {
     action_count: u32,
 }
 
-fn parse_params(input: String) -> Result<Params, SubError> {
+fn parse_params(input: String) -> Result<Params, Error> {
     let mut result = Params::default();
     if input.is_empty() {
         return Ok(result);
@@ -25,10 +25,10 @@ fn parse_params(input: String) -> Result<Params, SubError> {
     for param in input.split('&') {
         let (key, value) = param
             .split_once('=')
-            .ok_or_else(|| SubError::Unexpected(format!("Invalid parameter format: {}", param)))?;
+            .ok_or_else(|| Error::Unexpected(format!("Invalid parameter format: {}", param)))?;
         let parsed_value = value
             .parse::<u32>()
-            .map_err(|_| SubError::Unexpected(format!("Invalid param value for key '{}'", key)))?;
+            .map_err(|_| Error::Unexpected(format!("Invalid param value for key '{}'", key)))?;
 
         match key {
             "cpu_elapsed" => result.cpu_elapsed = parsed_value,
@@ -36,7 +36,7 @@ fn parse_params(input: String) -> Result<Params, SubError> {
             "cpu_usage" => result.cpu_usage = parsed_value,
             "net_usage" => result.net_usage = parsed_value,
             "action_count" => result.action_count = parsed_value,
-            _ => return Err(SubError::Unexpected(format!("Unknown parameter: '{}'", key))),
+            _ => return Err(Error::Unexpected(format!("Unknown parameter: '{}'", key))),
         }
     }
 
@@ -44,7 +44,7 @@ fn parse_params(input: String) -> Result<Params, SubError> {
 }
 
 #[substreams::handlers::map]
-fn map_trxs(params: String, block: Block) -> Result<Transactions, SubError> {
+fn map_trxs(params: String, block: Block) -> Result<Transactions, Error> {
     let params = parse_params(params)?;
     Ok(Transactions {
         transactions: block
@@ -75,7 +75,7 @@ fn map_trxs(params: String, block: Block) -> Result<Transactions, SubError> {
 }
 
 #[substreams::handlers::map]
-fn db_out(trxs: Transactions) -> Result<DatabaseChanges, SubError> {
+fn db_out(trxs: Transactions) -> Result<DatabaseChanges, substreams::errors::Error> {
     let mut tables = DatabaseChangeTables::new();
     trxs.transactions.into_iter().enumerate().for_each(|(i, trx)| {
         tables
