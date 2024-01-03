@@ -1,0 +1,5 @@
+{
+    "rust.formatOnSave": true,
+    "rustfmt.path": "rustfmt",
+    "editor.formatOnSave": true
+  }

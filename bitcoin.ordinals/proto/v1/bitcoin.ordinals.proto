@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package bitcoin.ordinals.v1;
+
+message Inscriptions {
+    repeated Inscription items = 1;
+}
+
+message Inscription {
+    string inscription_id = 1;
+    string inscribed_by = 2;
+    string owned_by = 3;
+    int64 time = 5;
+    int64 height = 6;
+    string content_type = 8;
+    uint32 content_length = 9;
+    bytes content = 10;
+    uint32 inscription_fee = 11;
+}
