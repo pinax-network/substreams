@@ -12,6 +12,7 @@ message Inscription {
     string owned_by = 3;
     int64 time = 5;
     int64 height = 6;
+    uint32 offset = 7;
     string content_type = 8;
     uint32 content_length = 9;
     bytes content = 10;

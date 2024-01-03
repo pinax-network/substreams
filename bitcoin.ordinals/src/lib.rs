@@ -7,7 +7,6 @@ use substreams_bitcoin::pb::btc::v1::Block;
 #[allow(dead_code)]
 mod ord;
 mod pb;
-// use crate::ord::envelope::ParsedEnvelope;
 
 #[substreams::handlers::map]
 fn map_inscriptions(block: Block) -> Result<Inscriptions, Error> {
@@ -25,8 +24,10 @@ fn map_inscriptions(block: Block) -> Result<Inscriptions, Error> {
                 Some(Inscription {
                     inscription_id: format!("{}i{}", trx_id, envelope.offset),
                     inscribed_by: owner.into(),
+                    owned_by: owner.into(),
                     time: block.time,
                     height: block.height,
+                    offset: envelope.offset,
                     content_type: envelope.payload.content_type().unwrap_or_default().to_string(),
                     content_length: envelope.payload.content_length().unwrap_or_default() as u32,
                     content: envelope.payload.body().unwrap_or_default().to_vec(),

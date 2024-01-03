@@ -18,6 +18,8 @@ pub struct Inscription {
     pub time: i64,
     #[prost(int64, tag="6")]
     pub height: i64,
+    #[prost(uint32, tag="7")]
+    pub offset: u32,
     #[prost(string, tag="8")]
     pub content_type: ::prost::alloc::string::String,
     #[prost(uint32, tag="9")]
