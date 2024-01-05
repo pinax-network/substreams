@@ -1,6 +1,6 @@
 [package]
 name = "antelope_trxstats"
-version = "0.13.0"
+version = "0.1.1"
 authors = ["Yaro <yaro@pinax.network>"]
 description = "Antelope transaction stats"
 license = "MIT OR Apache-2.0"
