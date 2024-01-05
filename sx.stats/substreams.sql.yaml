@@ -23,14 +23,14 @@ binaries:
 modules:
   - name: map_logs
     kind: map
-    initialBlock: 350000000
+    initialBlock: 250000000
     inputs:
       - source: sf.antelope.type.v1.Block
     output:
       type: proto:antelope.sx.stats.v1.Logs
   - name: db_out
     kind: map
-    initialBlock: 350000000
+    initialBlock: 300000000
     inputs:
       - map: map_logs
     output:
