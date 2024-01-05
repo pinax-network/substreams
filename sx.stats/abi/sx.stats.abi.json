@@ -1,0 +1,334 @@
+{
+  "version": "eosio::abi/1.1",
+  "types": [],
+  "structs": [{
+      "name": "clean",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        }
+      ]
+    },{
+      "name": "erase",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        }
+      ]
+    },{
+      "name": "flash_row",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        },{
+          "name": "last_modified",
+          "type": "time_point_sec"
+        },{
+          "name": "transactions",
+          "type": "uint64"
+        },{
+          "name": "borrow",
+          "type": "pair_symbol_code_asset[]"
+        },{
+          "name": "fees",
+          "type": "pair_symbol_code_asset[]"
+        },{
+          "name": "reserves",
+          "type": "pair_symbol_code_asset[]"
+        }
+      ]
+    },{
+      "name": "gateway_row",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        },{
+          "name": "last_modified",
+          "type": "time_point_sec"
+        },{
+          "name": "transactions",
+          "type": "uint64"
+        },{
+          "name": "ins",
+          "type": "pair_symbol_code_pair_uint64_asset[]"
+        },{
+          "name": "outs",
+          "type": "pair_symbol_code_pair_uint64_asset[]"
+        },{
+          "name": "exchanges",
+          "type": "pair_name_uint64[]"
+        },{
+          "name": "savings",
+          "type": "pair_symbol_code_asset[]"
+        },{
+          "name": "fees",
+          "type": "pair_symbol_code_asset[]"
+        }
+      ]
+    },{
+      "name": "gatewaylog",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        },{
+          "name": "in",
+          "type": "asset"
+        },{
+          "name": "out",
+          "type": "asset"
+        },{
+          "name": "exchanges",
+          "type": "name[]"
+        },{
+          "name": "savings",
+          "type": "asset"
+        },{
+          "name": "fee",
+          "type": "asset"
+        }
+      ]
+    },{
+      "name": "pair_name_uint64",
+      "base": "",
+      "fields": [{
+          "name": "key",
+          "type": "name"
+        },{
+          "name": "value",
+          "type": "uint64"
+        }
+      ]
+    },{
+      "name": "pair_symbol_code_asset",
+      "base": "",
+      "fields": [{
+          "name": "key",
+          "type": "symbol_code"
+        },{
+          "name": "value",
+          "type": "asset"
+        }
+      ]
+    },{
+      "name": "pair_symbol_code_float64",
+      "base": "",
+      "fields": [{
+          "name": "key",
+          "type": "symbol_code"
+        },{
+          "name": "value",
+          "type": "float64"
+        }
+      ]
+    },{
+      "name": "pair_symbol_code_pair_uint64_asset",
+      "base": "",
+      "fields": [{
+          "name": "key",
+          "type": "symbol_code"
+        },{
+          "name": "value",
+          "type": "pair_uint64_asset"
+        }
+      ]
+    },{
+      "name": "pair_symbol_code_uint64",
+      "base": "",
+      "fields": [{
+          "name": "key",
+          "type": "symbol_code"
+        },{
+          "name": "value",
+          "type": "uint64"
+        }
+      ]
+    },{
+      "name": "pair_uint64_asset",
+      "base": "",
+      "fields": [{
+          "name": "first",
+          "type": "uint64"
+        },{
+          "name": "second",
+          "type": "asset"
+        }
+      ]
+    },{
+      "name": "spotprices_row",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        },{
+          "name": "last_modified",
+          "type": "time_point_sec"
+        },{
+          "name": "base",
+          "type": "symbol_code"
+        },{
+          "name": "quotes",
+          "type": "pair_symbol_code_float64[]"
+        }
+      ]
+    },{
+      "name": "swaplog",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        },{
+          "name": "buyer",
+          "type": "name"
+        },{
+          "name": "amount_in",
+          "type": "asset"
+        },{
+          "name": "amount_out",
+          "type": "asset"
+        },{
+          "name": "fee",
+          "type": "asset"
+        }
+      ]
+    },{
+      "name": "tradelog",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        },{
+          "name": "executor",
+          "type": "name"
+        },{
+          "name": "borrow",
+          "type": "asset"
+        },{
+          "name": "quantities",
+          "type": "asset[]"
+        },{
+          "name": "codes",
+          "type": "name[]"
+        },{
+          "name": "profit",
+          "type": "asset"
+        }
+      ]
+    },{
+      "name": "trades_row",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        },{
+          "name": "last_modified",
+          "type": "time_point_sec"
+        },{
+          "name": "transactions",
+          "type": "uint64"
+        },{
+          "name": "borrow",
+          "type": "pair_symbol_code_asset[]"
+        },{
+          "name": "quantities",
+          "type": "pair_symbol_code_asset[]"
+        },{
+          "name": "codes",
+          "type": "pair_name_uint64[]"
+        },{
+          "name": "symcodes",
+          "type": "pair_symbol_code_uint64[]"
+        },{
+          "name": "executors",
+          "type": "pair_name_uint64[]"
+        },{
+          "name": "profits",
+          "type": "pair_symbol_code_asset[]"
+        }
+      ]
+    },{
+      "name": "volume_row",
+      "base": "",
+      "fields": [{
+          "name": "contract",
+          "type": "name"
+        },{
+          "name": "last_modified",
+          "type": "time_point_sec"
+        },{
+          "name": "transactions",
+          "type": "uint64"
+        },{
+          "name": "volume",
+          "type": "pair_symbol_code_asset[]"
+        },{
+          "name": "fees",
+          "type": "pair_symbol_code_asset[]"
+        }
+      ]
+    }
+  ],
+  "actions": [{
+      "name": "clean",
+      "type": "clean",
+      "ricardian_contract": ""
+    },{
+      "name": "erase",
+      "type": "erase",
+      "ricardian_contract": ""
+    },{
+      "name": "gatewaylog",
+      "type": "gatewaylog",
+      "ricardian_contract": ""
+    },{
+      "name": "swaplog",
+      "type": "swaplog",
+      "ricardian_contract": ""
+    },{
+      "name": "tradelog",
+      "type": "tradelog",
+      "ricardian_contract": ""
+    }
+  ],
+  "tables": [{
+      "name": "flash",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "flash_row"
+    },{
+      "name": "gateway",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "gateway_row"
+    },{
+      "name": "spotprices",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "spotprices_row"
+    },{
+      "name": "trades",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "trades_row"
+    },{
+      "name": "volume",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": [],
+      "type": "volume_row"
+    }
+  ],
+  "ricardian_clauses": [],
+  "error_messages": [],
+  "abi_extensions": [],
+  "variants": [],
+  "action_results": []
+}

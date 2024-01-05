@@ -1,0 +1,46 @@
+specVersion: v0.1.0
+package:
+  name: "sx_stats"
+  version: v0.1.0
+  url: https://github.com/pinax-network/substreams
+  doc: SX Stats
+
+imports:
+  sql: https://github.com/streamingfast/substreams-sink-sql/releases/download/protodefs-v1.0.7/substreams-sink-sql-protodefs-v1.0.7.spkg
+  database_change: https://github.com/streamingfast/substreams-sink-database-changes/releases/download/v1.2.1/substreams-database-change-v1.2.1.spkg
+
+protobuf:
+  files:
+    - sx.stats.proto
+  importPaths:
+    - ./proto/v1
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/sx_stats.wasm
+
+modules:
+  - name: map_logs
+    kind: map
+    initialBlock: 350000000
+    inputs:
+      - source: sf.antelope.type.v1.Block
+    output:
+      type: proto:antelope.sx.stats.v1.Logs
+  - name: db_out
+    kind: map
+    initialBlock: 350000000
+    inputs:
+      - map: map_logs
+    output:
+      type: proto:sf.substreams.sink.database.v1.DatabaseChanges
+
+sink:
+  module: db_out
+  type: sf.substreams.sink.sql.v1.Service
+  config:
+    schema: "./schema.sql"
+    engine: postgres
+    postgraphile_frontend:
+      enabled: true

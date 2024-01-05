@@ -17,6 +17,7 @@ members = [
     "deferred",
     "antelope.trxstats",
     "bitcoin.ordinals",
+    "sx.stats",
 ]
 
 [workspace.dependencies]

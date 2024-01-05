@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package antelope.sx.stats.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message Logs {
+    repeated TradeLog tradelogs = 1;
+}
+
+message TradeLog {
+    uint64 block_num = 1;
+    string trx_id = 2;
+    uint32 trx_index = 3;
+    google.protobuf.Timestamp block_time = 4;
+    string producer = 5;
+    uint32 cpu_usage = 6;
+    string contract = 7;
+    string executor = 8;
+    Asset borrow = 9;
+    Asset profit = 10;
+    repeated Asset quantities = 11;
+    repeated string codes = 12;
+}
+
+message Asset {
+    double value = 1;
+    uint64 amount = 2;
+    string symbol = 3;
+    uint32 precision = 4;
+}
