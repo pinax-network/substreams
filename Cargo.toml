@@ -18,6 +18,7 @@ members = [
     "antelope.trxstats",
     "bitcoin.ordinals",
     "sx.stats",
+    "blocks",
 ]
 
 [workspace.dependencies]

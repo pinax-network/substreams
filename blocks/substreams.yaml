@@ -1,0 +1,20 @@
+specVersion: v0.1.0
+package:
+  name: blocks
+  version: v0.1.0
+  url: https://github.com/pinax-network/substreams
+  doc: Blocks
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/blocks.wasm
+
+modules:
+  - name: map_blocks
+    kind: map
+    initialBlock: 2
+    inputs:
+      - source: sf.substreams.v1.Clock
+    output:
+      type: proto:sf.substreams.v1.Clock
