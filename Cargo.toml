@@ -19,6 +19,7 @@ members = [
     "bitcoin.ordinals",
     "sx.stats",
     "blocks",
+    "bitcoin.txo",
 ]
 
 [workspace.dependencies]

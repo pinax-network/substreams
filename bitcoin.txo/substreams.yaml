@@ -1,0 +1,33 @@
+specVersion: v0.1.0
+package:
+  name: bitcoin_txo
+  version: v0.1.0
+  url: https://github.com/pinax-network/substreams
+  doc: Bitcoin TXOs
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ../target/wasm32-unknown-unknown/release/bitcoin_txo.wasm
+
+protobuf:
+  files:
+    - bitcoin.txo.proto
+  importPaths:
+    - ./proto
+
+modules:
+  - name: store_txo
+    kind: store
+    inputs:
+      - source: sf.bitcoin.type.v1.Block
+    valueType: int64
+    updatePolicy: add
+
+  - name: map_txo
+    kind: map
+    inputs:
+      - store: store_txo
+        mode: get
+    output:
+      type: proto:bitcoin.txo

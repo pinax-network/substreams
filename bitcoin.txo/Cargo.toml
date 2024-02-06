@@ -1,0 +1,20 @@
+[package]
+name = "bitcoin_txo"
+version = "0.1.0"
+authors = ["Yaro <yaro@pinax.network>"]
+description = "Bitcoin TXOs"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+publish = false
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+substreams-bitcoin = { workspace = true }
+substreams = { workspace = true }
+prost = { workspace = true }
+prost-types = { workspace = true }
