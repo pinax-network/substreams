@@ -1,7 +1,7 @@
 use antelope::Symbol;
 use substreams::errors::Error;
-use substreams_antelope::Block;
 use substreams::log;
+use substreams_antelope::pb::Block;
 
 use crate::abi;
 use crate::eosio_cpu::*;
@@ -26,7 +26,6 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
     let mut transaction_count: u32 = 0;
 
     for trx in block.all_transaction_traces() {
-
         let cpu_usage = trx.receipt.as_ref().unwrap().cpu_usage_micro_seconds as u32;
         let net_usage = trx.net_usage as u32;
         let producer = block.header.as_ref().unwrap().producer.clone();
@@ -35,8 +34,12 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
         for trace in &trx.action_traces {
             let action_trace = trace.action.as_ref().unwrap();
 
-            if action_trace.account != trace.receiver { continue; }
-            if action_trace.name != "transfer" { continue; }
+            if action_trace.account != trace.receiver {
+                continue;
+            }
+            if action_trace.name != "transfer" {
+                continue;
+            }
 
             match abi::Transfer::try_from(action_trace.json_data.as_str()) {
                 Ok(data) => {
@@ -47,11 +50,21 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
                     let contract = action_trace.account.clone();
 
                     // filter by params
-                    if !filter_from.is_empty() && !filter_from.contains(&data.from) { continue; }
-                    if !filter_to.is_empty() && !filter_to.contains(&data.to) { continue; }
-                    if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
-                    if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
-                    if !filter_to_or_from.is_empty() && !(filter_to_or_from.contains(&data.to) || filter_to_or_from.contains(&data.from)) { continue; }
+                    if !filter_from.is_empty() && !filter_from.contains(&data.from) {
+                        continue;
+                    }
+                    if !filter_to.is_empty() && !filter_to.contains(&data.to) {
+                        continue;
+                    }
+                    if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) {
+                        continue;
+                    }
+                    if !filter_contract.is_empty() && !filter_contract.contains(&contract) {
+                        continue;
+                    }
+                    if !filter_to_or_from.is_empty() && !(filter_to_or_from.contains(&data.to) || filter_to_or_from.contains(&data.from)) {
+                        continue;
+                    }
                     //if filter_quantity_lt.is_some() && !(quantity.amount < filter_quantity_lt.unwrap()) { continue; }
                     //if filter_quantity_gt.is_some() && !(quantity.amount > filter_quantity_gt.unwrap()) { continue; }
                     //if filter_quantity_lte.is_some() && !(quantity.amount <= filter_quantity_lte.unwrap()) { continue; }
@@ -84,7 +97,7 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
                         producer: producer.to_string(),
                         cpu_usage: cpu_usage,
                         net_usage: net_usage,
-                        tx_count: transaction_count
+                        tx_count: transaction_count,
                     });
                 }
                 Err(_) => continue,

@@ -27,8 +27,3 @@ getrandom = { version = "0.2", features = ["custom"] }
 
 [build-dependencies]
 substreams-ethereum = "0.9"
-
-[profile.release]
-lto = true
-opt-level = 's'
-strip = "debuginfo"

@@ -1,6 +1,6 @@
-use substreams::log;
 use substreams::errors::Error;
-use substreams_antelope::Block;
+use substreams::log;
+use substreams_antelope::pb::Block;
 
 use crate::abi;
 use crate::accounts;

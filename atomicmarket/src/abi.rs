@@ -1,6 +1,6 @@
-use substreams_antelope::ActionTrace;
 use antelope::Asset;
 use serde::{Deserialize, Serialize};
+use substreams_antelope::pb::ActionTrace;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(deny_unknown_fields)]
@@ -22,7 +22,9 @@ pub struct NewSale {
 
 pub fn parse_lognewsale(action_trace: &ActionTrace) -> Option<NewSale> {
     let action = action_trace.action.as_ref()?;
-    if action.name != "lognewsale" { return None; }
+    if action.name != "lognewsale" {
+        return None;
+    }
     let data: LogNewSale = serde_json::from_str(&action.json_data).unwrap();
     Some(NewSale {
         collection_name: data.collection_name,

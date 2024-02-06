@@ -1,9 +1,9 @@
-use substreams_antelope::ActionTraces;
 use std::collections::HashMap;
+use substreams_antelope::pb::ActionTraces;
 
-use substreams::errors::Error;
-use substreams_sink_prometheus::{PrometheusOperations, Counter};
 use crate::abi;
+use substreams::errors::Error;
+use substreams_sink_prometheus::{Counter, PrometheusOperations};
 
 #[substreams::handlers::map]
 pub fn prom_out(action_traces: ActionTraces) -> Result<PrometheusOperations, Error> {
@@ -14,7 +14,7 @@ pub fn prom_out(action_traces: ActionTraces) -> Result<PrometheusOperations, Err
                 let labels = HashMap::from([("collection_name".to_string(), new_sale.collection_name)]);
                 let mut counter = Counter::from("newsale").with(labels);
                 prom_out.push(counter.add(new_sale.listen_price as f64));
-            },
+            }
             None => (),
         }
     }

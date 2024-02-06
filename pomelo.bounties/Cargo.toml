@@ -1,7 +1,7 @@
 [package]
 name = "pomelo_bounties"
 version = "0.1.0"
-authors = ["Yaro <yaro@pinax.network>" ]
+authors = ["Yaro <yaro@pinax.network>"]
 description = "Antelope Pomelo substreams"
 license = "MIT OR Apache-2.0"
 edition = "2021"
@@ -17,9 +17,9 @@ crate-type = ["cdylib"]
 prost = { workspace = true }
 prost-types = { workspace = true }
 substreams = { workspace = true }
-substreams-antelope = "0.3.*"
+substreams-antelope = { workspace = true }
 serde_json = "1.0.91"
 serde = { version = "1.0", features = ["derive"] }
 
 [build-dependencies]
-substreams-antelope = "0.3.*"
+substreams-antelope = { workspace = true }

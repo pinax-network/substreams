@@ -1,5 +1,5 @@
 use substreams::errors::Error;
-use substreams_antelope::{Block, ActionTraces};
+use substreams_antelope::pb::{ActionTraces, Block};
 
 #[substreams::handlers::map]
 fn map_actions(block: Block) -> Result<ActionTraces, Error> {
@@ -8,8 +8,12 @@ fn map_actions(block: Block) -> Result<ActionTraces, Error> {
     for trx in block.all_transaction_traces() {
         for trace in &trx.action_traces {
             let action_trace = trace.action.as_ref().unwrap().clone();
-            if action_trace.account != "atomicmarket" { continue; }
-            if action_trace.account != trace.receiver { continue; }
+            if action_trace.account != "atomicmarket" {
+                continue;
+            }
+            if action_trace.account != trace.receiver {
+                continue;
+            }
             action_traces.push(trace.clone());
         }
     }

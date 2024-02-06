@@ -1,5 +1,5 @@
 use substreams::errors::Error;
-use substreams_antelope::Block;
+use substreams_antelope::pb::Block;
 use substreams_database_change::pb::database::DatabaseChanges;
 use substreams_database_change::tables::Tables as DatabaseChangeTables;
 

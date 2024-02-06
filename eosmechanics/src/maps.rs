@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use substreams::errors::Error;
-use substreams_antelope::{Block, ProducerAuthoritySchedule};
+use substreams_antelope::pb::{Block, ProducerAuthoritySchedule};
 
 use crate::eosmechanics::{ProducerUsage, ScheduleChange};
 
@@ -39,12 +39,13 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
         // Only return a value if the transaction trace contains `eosmechanics:cpu` action
         for trace in &trx.action_traces {
             let action_trace = trace.action.as_ref().unwrap();
-            if action_trace.account != "eosmechanics" { continue; }
-            if action_trace.name != "cpu"  { continue; }
-            return Ok(ProducerUsage{
-                producer,
-                cpu_usage,
-            })
+            if action_trace.account != "eosmechanics" {
+                continue;
+            }
+            if action_trace.name != "cpu" {
+                continue;
+            }
+            return Ok(ProducerUsage { producer, cpu_usage });
         }
     }
     // If no transaction trace contains `eosmechanics:cpu` action, return default value
@@ -57,7 +58,9 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
     let pending_schedule: Vec<String> = schedule_to_accounts(block.pending_schedule.as_ref().unwrap().schedule_v2.as_ref().unwrap());
 
     // If there is no pending schedule, then there is no schedule change
-    if pending_schedule.is_empty() { return Ok(Default::default()); }
+    if pending_schedule.is_empty() {
+        return Ok(Default::default());
+    }
 
     let mut add_to_schedule: Vec<String> = Default::default();
     let mut remove_from_schedule: Vec<String> = Default::default();
@@ -81,7 +84,7 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
     // header
     let header = block.header.as_ref().unwrap();
 
-    Ok(ScheduleChange{
+    Ok(ScheduleChange {
         producer: header.producer.clone(),
         schedule_version: header.schedule_version,
         active_schedule,
@@ -95,8 +98,10 @@ pub fn schedule_to_accounts(schedule: &ProducerAuthoritySchedule) -> Vec<String>
     schedule.producers.iter().map(|p| p.account_name.clone()).collect()
 }
 
-pub fn producer_in_schedule(producer: String, schedule: Vec<String> ) -> Option<bool> {
-    if schedule.is_empty() { return None; }
+pub fn producer_in_schedule(producer: String, schedule: Vec<String>) -> Option<bool> {
+    if schedule.is_empty() {
+        return None;
+    }
     Some(schedule_to_set(schedule).contains(producer.as_str()))
 }
 

@@ -1,7 +1,7 @@
 use antelope::Symbol;
 use substreams::errors::Error;
 use substreams::log;
-use substreams_antelope::Block;
+use substreams_antelope::pb::Block;
 
 use crate::abi;
 use crate::eosio_token::*;
@@ -29,7 +29,9 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
 
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
-            if db_op.table_name != "accounts" { continue; }
+            if db_op.table_name != "accounts" {
+                continue;
+            }
 
             let contract = db_op.code.clone();
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
@@ -37,13 +39,21 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
             let account = db_op.scope.clone();
 
             // filter by params
-            if !filter_account.is_empty() && !filter_account.contains(&account) { continue; }
-            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode.to_string()) { continue; }
-            if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
+            if !filter_account.is_empty() && !filter_account.contains(&account) {
+                continue;
+            }
+            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode.to_string()) {
+                continue;
+            }
+            if !filter_contract.is_empty() && !filter_contract.contains(&contract) {
+                continue;
+            }
 
             let old_data = abi::Account::try_from(db_op.old_data_json.as_str()).ok();
             let new_data = abi::Account::try_from(db_op.new_data_json.as_str()).ok();
-            if old_data.is_none() && new_data.is_none() { continue; } // no data
+            if old_data.is_none() && new_data.is_none() {
+                continue;
+            } // no data
 
             let old_balance = match &old_data {
                 Some(data) => Some(Asset::from(data.balance.as_str())),
@@ -69,15 +79,31 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
             };
 
             // filter by params
-            if filter_balance_lt.is_some() && !(balance.amount < filter_balance_lt.unwrap()) { continue; }
-            if filter_balance_gt.is_some() && !(balance.amount > filter_balance_gt.unwrap()) { continue; }
-            if filter_balance_lte.is_some() && !(balance.amount <= filter_balance_lte.unwrap()) { continue; }
-            if filter_balance_gte.is_some() && !(balance.amount >= filter_balance_gte.unwrap()) { continue; }
+            if filter_balance_lt.is_some() && !(balance.amount < filter_balance_lt.unwrap()) {
+                continue;
+            }
+            if filter_balance_gt.is_some() && !(balance.amount > filter_balance_gt.unwrap()) {
+                continue;
+            }
+            if filter_balance_lte.is_some() && !(balance.amount <= filter_balance_lte.unwrap()) {
+                continue;
+            }
+            if filter_balance_gte.is_some() && !(balance.amount >= filter_balance_gte.unwrap()) {
+                continue;
+            }
 
-            if filter_balance_delta_lt.is_some() && !(balance_delta < filter_balance_delta_lt.unwrap()) { continue; }
-            if filter_balance_delta_gt.is_some() && !(balance_delta > filter_balance_delta_gt.unwrap()) { continue; }
-            if filter_balance_delta_lte.is_some() && !(balance_delta <= filter_balance_delta_lte.unwrap()) { continue; }
-            if filter_balance_delta_gte.is_some() && !(balance_delta >= filter_balance_delta_gte.unwrap()) { continue; }
+            if filter_balance_delta_lt.is_some() && !(balance_delta < filter_balance_delta_lt.unwrap()) {
+                continue;
+            }
+            if filter_balance_delta_gt.is_some() && !(balance_delta > filter_balance_delta_gt.unwrap()) {
+                continue;
+            }
+            if filter_balance_delta_lte.is_some() && !(balance_delta <= filter_balance_delta_lte.unwrap()) {
+                continue;
+            }
+            if filter_balance_delta_gte.is_some() && !(balance_delta >= filter_balance_delta_gte.unwrap()) {
+                continue;
+            }
 
             items.push(Account {
                 // trace information
@@ -123,20 +149,30 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
 
     for trx in block.all_transaction_traces() {
         for db_op in &trx.db_ops {
-            if db_op.table_name != "stat" { continue; }
+            if db_op.table_name != "stat" {
+                continue;
+            }
 
             let contract = db_op.code.clone();
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
             let symcode = SymbolCode::from(raw_primary_key);
 
             // filter by params
-            if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
-            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode.to_string()) { continue; }
-            if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
+            if !filter_contract.is_empty() && !filter_contract.contains(&contract) {
+                continue;
+            }
+            if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode.to_string()) {
+                continue;
+            }
+            if !filter_contract.is_empty() && !filter_contract.contains(&contract) {
+                continue;
+            }
 
             let old_data = abi::CurrencyStats::try_from(db_op.old_data_json.as_str()).ok();
             let new_data = abi::CurrencyStats::try_from(db_op.new_data_json.as_str()).ok();
-            if old_data.is_none() && new_data.is_none() { continue; } // no data
+            if old_data.is_none() && new_data.is_none() {
+                continue;
+            } // no data
 
             let old_supply = match &old_data {
                 Some(data) => Some(Asset::from(data.supply.as_str())),
@@ -162,15 +198,31 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
             };
 
             // filter by params
-            if filter_supply_lt.is_some() && !(supply.amount < filter_supply_lt.unwrap()) { continue; }
-            if filter_supply_gt.is_some() && !(supply.amount > filter_supply_gt.unwrap()) { continue; }
-            if filter_supply_lte.is_some() && !(supply.amount <= filter_supply_lte.unwrap()) { continue; }
-            if filter_supply_gte.is_some() && !(supply.amount >= filter_supply_gte.unwrap()) { continue; }
+            if filter_supply_lt.is_some() && !(supply.amount < filter_supply_lt.unwrap()) {
+                continue;
+            }
+            if filter_supply_gt.is_some() && !(supply.amount > filter_supply_gt.unwrap()) {
+                continue;
+            }
+            if filter_supply_lte.is_some() && !(supply.amount <= filter_supply_lte.unwrap()) {
+                continue;
+            }
+            if filter_supply_gte.is_some() && !(supply.amount >= filter_supply_gte.unwrap()) {
+                continue;
+            }
 
-            if filter_supply_delta_lt.is_some() && !(supply_delta < filter_supply_delta_lt.unwrap()) { continue; }
-            if filter_supply_delta_gt.is_some() && !(supply_delta > filter_supply_delta_gt.unwrap()) { continue; }
-            if filter_supply_delta_lte.is_some() && !(supply_delta <= filter_supply_delta_lte.unwrap()) { continue; }
-            if filter_supply_delta_gte.is_some() && !(supply_delta >= filter_supply_delta_gte.unwrap()) { continue; }
+            if filter_supply_delta_lt.is_some() && !(supply_delta < filter_supply_delta_lt.unwrap()) {
+                continue;
+            }
+            if filter_supply_delta_gt.is_some() && !(supply_delta > filter_supply_delta_gt.unwrap()) {
+                continue;
+            }
+            if filter_supply_delta_lte.is_some() && !(supply_delta <= filter_supply_delta_lte.unwrap()) {
+                continue;
+            }
+            if filter_supply_delta_gte.is_some() && !(supply_delta >= filter_supply_delta_gte.unwrap()) {
+                continue;
+            }
 
             // TO-DO fix in case of new_data is None
             let data = new_data.unwrap();
@@ -220,8 +272,12 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
         // action traces
         for trace in &trx.action_traces {
             let action_trace = trace.action.as_ref().unwrap();
-            if action_trace.account != trace.receiver { continue; }
-            if action_trace.name != "transfer" { continue; }
+            if action_trace.account != trace.receiver {
+                continue;
+            }
+            if action_trace.name != "transfer" {
+                continue;
+            }
 
             match abi::Transfer::try_from(action_trace.json_data.as_str()) {
                 Ok(data) => {
@@ -232,15 +288,33 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
                     let contract = action_trace.account.clone();
 
                     // filter by params
-                    if !filter_from.is_empty() && !filter_from.contains(&data.from) { continue; }
-                    if !filter_to.is_empty() && !filter_to.contains(&data.to) { continue; }
-                    if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) { continue; }
-                    if !filter_contract.is_empty() && !filter_contract.contains(&contract) { continue; }
-                    if !filter_to_or_from.is_empty() && !(filter_to_or_from.contains(&data.to) || filter_to_or_from.contains(&data.from)) { continue; }
-                    if filter_quantity_lt.is_some() && !(quantity.amount < filter_quantity_lt.unwrap()) { continue; }
-                    if filter_quantity_gt.is_some() && !(quantity.amount > filter_quantity_gt.unwrap()) { continue; }
-                    if filter_quantity_lte.is_some() && !(quantity.amount <= filter_quantity_lte.unwrap()) { continue; }
-                    if filter_quantity_gte.is_some() && !(quantity.amount >= filter_quantity_gte.unwrap()) { continue; }
+                    if !filter_from.is_empty() && !filter_from.contains(&data.from) {
+                        continue;
+                    }
+                    if !filter_to.is_empty() && !filter_to.contains(&data.to) {
+                        continue;
+                    }
+                    if !filter_symcode.is_empty() && !filter_symcode.contains(&symcode) {
+                        continue;
+                    }
+                    if !filter_contract.is_empty() && !filter_contract.contains(&contract) {
+                        continue;
+                    }
+                    if !filter_to_or_from.is_empty() && !(filter_to_or_from.contains(&data.to) || filter_to_or_from.contains(&data.from)) {
+                        continue;
+                    }
+                    if filter_quantity_lt.is_some() && !(quantity.amount < filter_quantity_lt.unwrap()) {
+                        continue;
+                    }
+                    if filter_quantity_gt.is_some() && !(quantity.amount > filter_quantity_gt.unwrap()) {
+                        continue;
+                    }
+                    if filter_quantity_lte.is_some() && !(quantity.amount <= filter_quantity_lte.unwrap()) {
+                        continue;
+                    }
+                    if filter_quantity_gte.is_some() && !(quantity.amount >= filter_quantity_gte.unwrap()) {
+                        continue;
+                    }
 
                     log::debug!("symcode: {:?}", symcode);
 

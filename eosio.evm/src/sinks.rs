@@ -1,6 +1,6 @@
 use substreams::errors::Error;
-use substreams_antelope::Block;
-use substreams_entity_change::pb::entity::{EntityChanges};
+use substreams_antelope::pb::Block;
+use substreams_entity_change::pb::entity::EntityChanges;
 use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
 
 use crate::maps;

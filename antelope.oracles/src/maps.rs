@@ -1,6 +1,6 @@
-use substreams::log;
 use substreams::errors::Error;
-use substreams_antelope::Block;
+use substreams::log;
+use substreams_antelope::pb::Block;
 
 use crate::abi;
 use crate::antelope_oracles::*;
@@ -38,13 +38,13 @@ fn map_prices(_params: String, block: Block) -> Result<Prices, Error> {
                             acc_price: price.acc_price,
                             last_price: price.last_price,
                             avg_price: price.avg_price,
-                            last_update: price.last_update
+                            last_update: price.last_update,
                         });
                     }
                     Err(e) => {
                         log::debug!("error={:?}", e);
                         continue;
-                    },
+                    }
                 }
             }
         }
@@ -76,14 +76,14 @@ fn map_quotes(_params: String, block: Block) -> Result<Quotes, Error> {
                                 median: datapoint.median,
                                 owner: datapoint.owner.as_str().to_string(),
                                 timestamp: datapoint.timestamp.as_str().to_string(),
-                                value: datapoint.value
-                            })
+                                value: datapoint.value,
+                            }),
                         });
                     }
                     Err(e) => {
                         log::debug!("error={:?}", e);
                         continue;
-                    },
+                    }
                 }
             }
         }
