@@ -9,6 +9,7 @@ message Blobs { repeated Blob blobs = 1; }
 message Blob {
   uint64 slot = 1;
   google.protobuf.Timestamp timestamp = 2;
+  uint64 block_number = 3;
   uint32 index = 11;
   uint32 length = 12;
   bytes data = 13;

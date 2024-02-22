@@ -10,7 +10,7 @@ codegen:
 
 .PHONE: package
 package: build
-	substreams pack -o substreams.spkg substreams.yaml
+	substreams pack substreams.yaml
 
 .PHONY: run
 run: build

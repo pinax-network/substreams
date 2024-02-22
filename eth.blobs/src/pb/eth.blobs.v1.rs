@@ -12,6 +12,8 @@ pub struct Blob {
     pub slot: u64,
     #[prost(message, optional, tag="2")]
     pub timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(uint64, tag="3")]
+    pub block_number: u64,
     #[prost(uint32, tag="11")]
     pub index: u32,
     #[prost(uint32, tag="12")]

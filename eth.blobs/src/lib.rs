@@ -9,10 +9,11 @@ fn map_blobs(blk: BeaconBlock) -> Result<Blobs, substreams::errors::Error> {
         Deneb(body) => body
             .embedded_blobs
             .into_iter()
-            .inspect(|_| substreams::log::info!("blk.timestamp: {}", blk.timestamp.clone().unwrap_or_default()))
+            // .inspect(|_| substreams::log::info!("blk.timestamp: {}", blk.timestamp.clone().unwrap_or_default()))
             .map(|b| Blob {
                 slot: blk.slot,
-                timestamp: blk.timestamp.clone(),
+                timestamp: body.execution_payload.as_ref().cloned().unwrap_or_default().timestamp, // blk.timestamp.clone(),
+                block_number: body.execution_payload.as_ref().cloned().unwrap_or_default().block_number,
                 index: b.index as u32,
                 length: b.blob.len() as u32,
                 data: b.blob,
