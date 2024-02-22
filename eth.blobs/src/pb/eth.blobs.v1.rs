@@ -20,9 +20,9 @@ pub struct Blob {
     pub length: u32,
     #[prost(bytes="vec", tag="13")]
     pub data: ::prost::alloc::vec::Vec<u8>,
-    #[prost(string, tag="14")]
-    pub kzg_commitment: ::prost::alloc::string::String,
-    #[prost(string, tag="15")]
-    pub kzg_proof: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="14")]
+    pub kzg_commitment: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="15")]
+    pub kzg_proof: ::prost::alloc::vec::Vec<u8>,
 }
 // @@protoc_insertion_point(module)

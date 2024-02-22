@@ -5,14 +5,13 @@ package:
 
 imports:
   eth: https://github.com/streamingfast/firehose-ethereum/releases/download/v2.0.0/ethereum-v1.1.0.spkg
+  beacon: https://github.com/pinax-network/firehose-beacon/releases/download/v0.1.0/beacon-v0.1.0.spkg
 
 protobuf:
   files:
     - blobs.proto
-    - type.proto
   importPaths:
     - ./proto
-    - ./proto/sf/beacon/type/v1
 
 binaries:
   default:

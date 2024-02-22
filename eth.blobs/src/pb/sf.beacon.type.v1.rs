@@ -2,22 +2,24 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Block {
-    #[prost(enumeration="Spec", tag="1")]
+    #[prost(uint32, tag="1")]
+    pub version: u32,
+    #[prost(enumeration="Spec", tag="2")]
     pub spec: i32,
-    #[prost(uint64, tag="2")]
-    pub slot: u64,
     #[prost(uint64, tag="3")]
+    pub slot: u64,
+    #[prost(uint64, tag="4")]
     pub parent_slot: u64,
-    #[prost(string, tag="4")]
-    pub root: ::prost::alloc::string::String,
-    #[prost(string, tag="5")]
-    pub parent_root: ::prost::alloc::string::String,
-    #[prost(string, tag="6")]
-    pub state_root: ::prost::alloc::string::String,
-    #[prost(uint64, tag="7")]
+    #[prost(bytes="vec", tag="5")]
+    pub root: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="6")]
+    pub parent_root: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="7")]
+    pub state_root: ::prost::alloc::vec::Vec<u8>,
+    #[prost(uint64, tag="8")]
     pub proposer_index: u64,
-    #[prost(string, tag="30")]
-    pub signature: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="30")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag="31")]
     pub timestamp: ::core::option::Option<::prost_types::Timestamp>,
     #[prost(oneof="block::Body", tags="20, 21, 22, 23, 24")]
@@ -43,12 +45,12 @@ pub mod block {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Phase0Body {
-    #[prost(string, tag="1")]
-    pub rando_reveal: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub rando_reveal: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag="2")]
     pub eth1_data: ::core::option::Option<Eth1Data>,
-    #[prost(string, tag="3")]
-    pub graffiti: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub graffiti: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, repeated, tag="4")]
     pub proposer_slashings: ::prost::alloc::vec::Vec<ProposerSlashing>,
     #[prost(message, repeated, tag="5")]
@@ -63,12 +65,12 @@ pub struct Phase0Body {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AltairBody {
-    #[prost(string, tag="1")]
-    pub rando_reveal: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub rando_reveal: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag="2")]
     pub eth1_data: ::core::option::Option<Eth1Data>,
-    #[prost(string, tag="3")]
-    pub graffiti: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub graffiti: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, repeated, tag="4")]
     pub proposer_slashings: ::prost::alloc::vec::Vec<ProposerSlashing>,
     #[prost(message, repeated, tag="5")]
@@ -85,12 +87,12 @@ pub struct AltairBody {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BellatrixBody {
-    #[prost(string, tag="1")]
-    pub rando_reveal: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub rando_reveal: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag="2")]
     pub eth1_data: ::core::option::Option<Eth1Data>,
-    #[prost(string, tag="3")]
-    pub graffiti: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub graffiti: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, repeated, tag="4")]
     pub proposer_slashings: ::prost::alloc::vec::Vec<ProposerSlashing>,
     #[prost(message, repeated, tag="5")]
@@ -109,12 +111,12 @@ pub struct BellatrixBody {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CapellaBody {
-    #[prost(string, tag="1")]
-    pub rando_reveal: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub rando_reveal: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag="2")]
     pub eth1_data: ::core::option::Option<Eth1Data>,
-    #[prost(string, tag="3")]
-    pub graffiti: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub graffiti: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, repeated, tag="4")]
     pub proposer_slashings: ::prost::alloc::vec::Vec<ProposerSlashing>,
     #[prost(message, repeated, tag="5")]
@@ -133,12 +135,12 @@ pub struct CapellaBody {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DenebBody {
-    #[prost(string, tag="1")]
-    pub rando_reveal: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub rando_reveal: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag="2")]
     pub eth1_data: ::core::option::Option<Eth1Data>,
-    #[prost(string, tag="3")]
-    pub graffiti: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub graffiti: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, repeated, tag="4")]
     pub proposer_slashings: ::prost::alloc::vec::Vec<ProposerSlashing>,
     #[prost(message, repeated, tag="5")]
@@ -155,20 +157,20 @@ pub struct DenebBody {
     pub execution_payload: ::core::option::Option<DenebExecutionPayload>,
     #[prost(message, repeated, tag="11")]
     pub bls_to_execution_changes: ::prost::alloc::vec::Vec<SignedBlsToExecutionChange>,
-    #[prost(string, repeated, tag="12")]
-    pub blob_kzg_commitments: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(bytes="vec", repeated, tag="12")]
+    pub blob_kzg_commitments: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
     #[prost(message, repeated, tag="20")]
     pub embedded_blobs: ::prost::alloc::vec::Vec<Blob>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Eth1Data {
-    #[prost(string, tag="1")]
-    pub deposit_root: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub deposit_root: ::prost::alloc::vec::Vec<u8>,
     #[prost(uint64, tag="2")]
     pub deposit_count: u64,
-    #[prost(string, tag="3")]
-    pub block_hash: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub block_hash: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -189,18 +191,18 @@ pub struct AttesterSlashing {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Attestation {
-    #[prost(string, tag="1")]
-    pub aggregation_bits: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub aggregation_bits: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag="2")]
     pub data: ::core::option::Option<AttestationData>,
-    #[prost(string, tag="3")]
-    pub signature: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Deposit {
-    #[prost(string, repeated, tag="1")]
-    pub proof: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(bytes="vec", repeated, tag="1")]
+    pub proof: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
     #[prost(message, optional, tag="2")]
     pub data: ::core::option::Option<DepositData>,
 }
@@ -209,28 +211,28 @@ pub struct Deposit {
 pub struct SignedVoluntaryExit {
     #[prost(message, optional, tag="1")]
     pub message: ::core::option::Option<VoluntaryExit>,
-    #[prost(string, tag="2")]
-    pub signature: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="2")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncAggregate {
-    #[prost(string, tag="1")]
-    pub sync_commitee_bits: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
-    pub sync_comittee_signature: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub sync_commitee_bits: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="2")]
+    pub sync_comittee_signature: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BellatrixExecutionPayload {
-    #[prost(string, tag="1")]
-    pub parent_hash: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
-    pub fee_recipient: ::prost::alloc::string::String,
-    #[prost(string, tag="3")]
-    pub state_root: ::prost::alloc::string::String,
-    #[prost(string, tag="4")]
-    pub receipts_root: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub parent_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="2")]
+    pub fee_recipient: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="3")]
+    pub state_root: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="4")]
+    pub receipts_root: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes="vec", tag="5")]
     pub logs_bloom: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes="vec", tag="6")]
@@ -245,24 +247,24 @@ pub struct BellatrixExecutionPayload {
     pub timestamp: ::core::option::Option<::prost_types::Timestamp>,
     #[prost(bytes="vec", tag="11")]
     pub extra_data: ::prost::alloc::vec::Vec<u8>,
-    #[prost(string, tag="12")]
-    pub base_fee_per_gas: ::prost::alloc::string::String,
-    #[prost(string, tag="13")]
-    pub block_hash: ::prost::alloc::string::String,
-    #[prost(string, repeated, tag="14")]
-    pub transactions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(bytes="vec", tag="12")]
+    pub base_fee_per_gas: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="13")]
+    pub block_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", repeated, tag="14")]
+    pub transactions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CapellaExecutionPayload {
-    #[prost(string, tag="1")]
-    pub parent_hash: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
-    pub fee_recipient: ::prost::alloc::string::String,
-    #[prost(string, tag="3")]
-    pub state_root: ::prost::alloc::string::String,
-    #[prost(string, tag="4")]
-    pub receipts_root: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub parent_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="2")]
+    pub fee_recipient: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="3")]
+    pub state_root: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="4")]
+    pub receipts_root: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes="vec", tag="5")]
     pub logs_bloom: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes="vec", tag="6")]
@@ -277,26 +279,26 @@ pub struct CapellaExecutionPayload {
     pub timestamp: ::core::option::Option<::prost_types::Timestamp>,
     #[prost(bytes="vec", tag="11")]
     pub extra_data: ::prost::alloc::vec::Vec<u8>,
-    #[prost(string, tag="12")]
-    pub base_fee_per_gas: ::prost::alloc::string::String,
-    #[prost(string, tag="13")]
-    pub block_hash: ::prost::alloc::string::String,
-    #[prost(string, repeated, tag="14")]
-    pub transactions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(bytes="vec", tag="12")]
+    pub base_fee_per_gas: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="13")]
+    pub block_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", repeated, tag="14")]
+    pub transactions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
     #[prost(message, repeated, tag="15")]
     pub withdrawals: ::prost::alloc::vec::Vec<Withdrawal>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DenebExecutionPayload {
-    #[prost(string, tag="1")]
-    pub parent_hash: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
-    pub fee_recipient: ::prost::alloc::string::String,
-    #[prost(string, tag="3")]
-    pub state_root: ::prost::alloc::string::String,
-    #[prost(string, tag="4")]
-    pub receipts_root: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub parent_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="2")]
+    pub fee_recipient: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="3")]
+    pub state_root: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="4")]
+    pub receipts_root: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes="vec", tag="5")]
     pub logs_bloom: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes="vec", tag="6")]
@@ -311,12 +313,12 @@ pub struct DenebExecutionPayload {
     pub timestamp: ::core::option::Option<::prost_types::Timestamp>,
     #[prost(bytes="vec", tag="11")]
     pub extra_data: ::prost::alloc::vec::Vec<u8>,
-    #[prost(string, tag="12")]
-    pub base_fee_per_gas: ::prost::alloc::string::String,
-    #[prost(string, tag="13")]
-    pub block_hash: ::prost::alloc::string::String,
-    #[prost(string, repeated, tag="14")]
-    pub transactions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(bytes="vec", tag="12")]
+    pub base_fee_per_gas: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="13")]
+    pub block_hash: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", repeated, tag="14")]
+    pub transactions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
     #[prost(message, repeated, tag="15")]
     pub withdrawals: ::prost::alloc::vec::Vec<Withdrawal>,
     #[prost(uint64, tag="16")]
@@ -329,18 +331,18 @@ pub struct DenebExecutionPayload {
 pub struct SignedBlsToExecutionChange {
     #[prost(message, optional, tag="1")]
     pub message: ::core::option::Option<BlsToExecutionChange>,
-    #[prost(string, tag="2")]
-    pub signature: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="2")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BlsToExecutionChange {
     #[prost(uint64, tag="1")]
     pub validator_index: u64,
-    #[prost(string, tag="2")]
-    pub from_bls_pub_key: ::prost::alloc::string::String,
-    #[prost(string, tag="3")]
-    pub to_execution_address: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="2")]
+    pub from_bls_pub_key: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="3")]
+    pub to_execution_address: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -349,8 +351,8 @@ pub struct Withdrawal {
     pub withdrawal_index: u64,
     #[prost(uint64, tag="2")]
     pub validator_index: u64,
-    #[prost(string, tag="3")]
-    pub address: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub address: ::prost::alloc::vec::Vec<u8>,
     #[prost(uint64, tag="4")]
     pub gwei: u64,
 }
@@ -365,14 +367,14 @@ pub struct VoluntaryExit {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DepositData {
-    #[prost(string, tag="1")]
-    pub public_key: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="1")]
+    pub public_key: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes="vec", tag="2")]
     pub withdrawal_credentials: ::prost::alloc::vec::Vec<u8>,
     #[prost(uint64, tag="3")]
     pub gwei: u64,
-    #[prost(string, tag="4")]
-    pub signature: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="4")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -381,8 +383,8 @@ pub struct IndexedAttestation {
     pub attesting_indices: ::prost::alloc::vec::Vec<u64>,
     #[prost(message, optional, tag="2")]
     pub data: ::core::option::Option<AttestationData>,
-    #[prost(string, tag="3")]
-    pub signature: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -391,8 +393,8 @@ pub struct AttestationData {
     pub slot: u64,
     #[prost(uint64, tag="2")]
     pub committee_index: u64,
-    #[prost(string, tag="3")]
-    pub beacon_block_root: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub beacon_block_root: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag="4")]
     pub source: ::core::option::Option<Checkpoint>,
     #[prost(message, optional, tag="5")]
@@ -403,16 +405,16 @@ pub struct AttestationData {
 pub struct Checkpoint {
     #[prost(uint64, tag="1")]
     pub epoch: u64,
-    #[prost(string, tag="2")]
-    pub root: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="2")]
+    pub root: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SignedBeaconBlockHeader {
     #[prost(message, optional, tag="1")]
     pub message: ::core::option::Option<BeaconBlockHeader>,
-    #[prost(string, tag="2")]
-    pub signature: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="2")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -421,12 +423,12 @@ pub struct BeaconBlockHeader {
     pub slot: u64,
     #[prost(uint64, tag="2")]
     pub proposer_index: u64,
-    #[prost(string, tag="3")]
-    pub parent_root: ::prost::alloc::string::String,
-    #[prost(string, tag="4")]
-    pub state_root: ::prost::alloc::string::String,
-    #[prost(string, tag="5")]
-    pub body_root: ::prost::alloc::string::String,
+    #[prost(bytes="vec", tag="3")]
+    pub parent_root: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="4")]
+    pub state_root: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="5")]
+    pub body_root: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -435,12 +437,12 @@ pub struct Blob {
     pub index: u64,
     #[prost(bytes="vec", tag="2")]
     pub blob: ::prost::alloc::vec::Vec<u8>,
-    #[prost(string, tag="3")]
-    pub kzg_commitment: ::prost::alloc::string::String,
-    #[prost(string, tag="4")]
-    pub kzg_proof: ::prost::alloc::string::String,
-    #[prost(string, repeated, tag="5")]
-    pub kzg_commitment_inclusion_proof: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(bytes="vec", tag="3")]
+    pub kzg_commitment: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="4")]
+    pub kzg_proof: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", repeated, tag="5")]
+    pub kzg_commitment_inclusion_proof: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

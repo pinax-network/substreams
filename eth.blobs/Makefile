@@ -1,4 +1,4 @@
-ENDPOINT ?= goerli-scdm37.mar.eosn.io:10016
+ENDPOINT ?= goerli-scdm37b.mar.eosn.io:10016
 
 .PHONY: build
 build:
@@ -6,7 +6,7 @@ build:
 
 .PHONY: codegen
 codegen:
-	substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google"
+	substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google,sf/ethereum"
 
 .PHONE: package
 package: build
