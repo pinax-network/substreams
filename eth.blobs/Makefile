@@ -15,3 +15,7 @@ package: build
 .PHONY: run
 run: build
 	substreams run -e $(ENDPOINT) map_blobs -s -10 --plaintext
+
+.PHONY: gui
+gui: build
+	substreams gui -e $(ENDPOINT) map_blobs -s -10 --plaintext
