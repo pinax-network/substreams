@@ -2,6 +2,7 @@ mod pb;
 
 use pb::eth::blobs::v1::{Blob, Blobs};
 use pb::sf::beacon::r#type::v1::{block::Body::*, Block as BeaconBlock};
+use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
 
 #[substreams::handlers::map]
 fn map_blobs(blk: BeaconBlock) -> Result<Blobs, substreams::errors::Error> {
@@ -24,4 +25,17 @@ fn map_blobs(blk: BeaconBlock) -> Result<Blobs, substreams::errors::Error> {
         _ => vec![],
     };
     Ok(Blobs { blobs })
+}
+
+#[substreams::handlers::map]
+fn kv_out(blobs: Blobs) -> Result<KvOperations, substreams::errors::Error> {
+    let mut kv_ops: KvOperations = Default::default();
+
+    for blob in blobs.blobs {
+        let key = format!("slot:{}:{}", blob.slot, blob.index);
+        let value = substreams::proto::encode(&blob).expect("unable to encode blob");
+        kv_ops.push_new(key, value, 1);
+    }
+
+    Ok(kv_ops)
 }

@@ -13,6 +13,7 @@ substreams = { workspace = true }
 substreams-database-change = { workspace = true }
 substreams-entity-change = { workspace = true }
 substreams-ethereum = { workspace = true }
+substreams-sink-kv = { workspace = true }
 
 
 [build-dependencies]

@@ -4,8 +4,8 @@ ENDPOINT ?= goerli-scdm37b.mar.eosn.io:10016
 build:
 	cargo build --target wasm32-unknown-unknown --release
 
-.PHONY: codegen
-codegen:
+.PHONY: protogen
+protogen:
 	substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google,sf/ethereum"
 
 .PHONE: package
