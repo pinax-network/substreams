@@ -25,7 +25,7 @@ fn parse_params(input: String) -> Result<Params, Error> {
     for param in input.split('&') {
         let (key, value) = param
             .split_once('=')
-            .ok_or_else(|| Error::Unexpected(format!("Invalid parameter format: {}", param)))?;
+            .ok_or_else(|| substreams::errors::Error::Unexpected(format!("Invalid parameter format: {}", param)))?;
         let parsed_value = value
             .parse::<u32>()
             .map_err(|_| Error::Unexpected(format!("Invalid param value for key '{}'", key)))?;
