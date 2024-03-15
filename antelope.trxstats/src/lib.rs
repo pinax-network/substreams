@@ -22,6 +22,8 @@ fn parse_params(input: String) -> Result<Params, SubstreamsError> {
         return Ok(result);
     }
 
+    return Err(SubstreamsError::Unexpected("Hello".to_string()));
+
     for param in input.split('&') {
         let (key, value) = param
             .split_once('=')
