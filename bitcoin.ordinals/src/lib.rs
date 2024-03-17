@@ -2,6 +2,7 @@ use crate::ord::envelope::ParsedEnvelope;
 use crate::pb::bitcoin::ordinals::v1::{Inscription, Inscriptions};
 use bitcoin::{consensus::deserialize, hashes::hex::FromHex, Transaction};
 use substreams::errors::Error;
+use substreams::log;
 use substreams_bitcoin::pb::btc::v1::Block;
 
 #[allow(dead_code)]
@@ -13,6 +14,7 @@ fn map_inscriptions(block: Block) -> Result<Inscriptions, Error> {
     let items = block
         .transactions()
         .into_iter()
+        .inspect(|tx| log::info!("{:?}", tx.vin.first().unwrap().txid))
         .filter_map(|trx| {
             // log::info!("{:?}", tx);
             let trx_id = &trx.txid;
