@@ -1,12 +1,12 @@
-use antelope::Symbol;
+
 use substreams::errors::Error;
-use substreams::log;
+
 use substreams_antelope::pb::Block;
 
 use crate::abi;
 use crate::eosio_cpu::*;
 use crate::utils;
-use antelope::{Asset, Name, SymbolCode};
+use antelope::{Asset};
 
 #[substreams::handlers::map]
 fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> {
@@ -19,10 +19,10 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
     let filter_contract = utils::create_filters(params.as_str(), "contract");
     let filter_to_or_from = utils::create_filters(params.as_str(), "to_or_from");
 
-    let filter_quantity_lt = utils::create_i64_filter(params.as_str(), "quantity_lt");
-    let filter_quantity_gt = utils::create_i64_filter(params.as_str(), "quantity_gt");
-    let filter_quantity_lte = utils::create_i64_filter(params.as_str(), "quantity_lte");
-    let filter_quantity_gte = utils::create_i64_filter(params.as_str(), "quantity_gte");
+    let _filter_quantity_lt = utils::create_i64_filter(params.as_str(), "quantity_lt");
+    let _filter_quantity_gt = utils::create_i64_filter(params.as_str(), "quantity_gt");
+    let _filter_quantity_lte = utils::create_i64_filter(params.as_str(), "quantity_lte");
+    let _filter_quantity_gte = utils::create_i64_filter(params.as_str(), "quantity_gte");
     let mut transaction_count: u32 = 0;
 
     for trx in block.all_transaction_traces() {

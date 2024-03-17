@@ -2,7 +2,7 @@ use substreams::errors::Error;
 use substreams::log;
 use substreams_antelope::pb::Block;
 
-use antelope::{Asset, Name, SymbolCode};
+
 
 //use serde_json::Result;
 use serde_json::Value;
