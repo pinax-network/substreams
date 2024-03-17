@@ -1,4 +1,4 @@
-use substreams::errors::Error;
+use substreams::errors::Error as SubstreamsError;
 use substreams_antelope::pb::Block;
 use substreams_database_change::pb::database::DatabaseChanges;
 use substreams_database_change::tables::Tables as DatabaseChangeTables;
@@ -16,7 +16,7 @@ struct Params {
     action_count: u32,
 }
 
-fn parse_params(input: String) -> Result<Params, Error> {
+fn parse_params(input: String) -> Result<Params, String> {
     let mut result = Params::default();
     if input.is_empty() {
         return Ok(result);
@@ -25,10 +25,8 @@ fn parse_params(input: String) -> Result<Params, Error> {
     for param in input.split('&') {
         let (key, value) = param
             .split_once('=')
-            .ok_or_else(|| Error::Unexpected(format!("Invalid parameter format: {}", param)))?;
-        let parsed_value = value
-            .parse::<u32>()
-            .map_err(|_| Error::Unexpected(format!("Invalid param value for key '{}'", key)))?;
+            .ok_or_else(|| format!("Invalid parameter format: {}", param))?;
+        let parsed_value = value.parse::<u32>().map_err(|_| format!("Invalid param value for key '{}'", key))?;
 
         match key {
             "cpu_elapsed" => result.cpu_elapsed = parsed_value,
@@ -36,7 +34,7 @@ fn parse_params(input: String) -> Result<Params, Error> {
             "cpu_usage" => result.cpu_usage = parsed_value,
             "net_usage" => result.net_usage = parsed_value,
             "action_count" => result.action_count = parsed_value,
-            _ => return Err(Error::Unexpected(format!("Unknown parameter: '{}'", key))),
+            _ => return Err(format!("Unknown parameter: '{}'", key)),
         }
     }
 
@@ -44,8 +42,11 @@ fn parse_params(input: String) -> Result<Params, Error> {
 }
 
 #[substreams::handlers::map]
-fn map_trxs(params: String, block: Block) -> Result<Transactions, Error> {
-    let params = parse_params(params)?;
+fn map_trxs(params: String, block: Block) -> Result<Transactions, SubstreamsError> {
+    let params = match parse_params(params) {
+        Ok(params) => params,
+        Err(err) => panic!("Bad params: {}", err),
+    };
     Ok(Transactions {
         transactions: block
             .all_transaction_traces()
