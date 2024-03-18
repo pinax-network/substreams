@@ -22,7 +22,7 @@ fn map_logs(block: substreams_antelope::pb::Block) -> Result<Logs, substreams::e
                 block_time: trx.block_time.clone(),
                 producer: block.header.as_ref().unwrap().producer.clone(),
                 cpu_usage: block
-                    .all_transaction_traces()
+                    .executed_transaction_traces()
                     .find(|tx| tx.id == trx.transaction_id)
                     .and_then(|tx| Some(tx.receipt.as_ref().unwrap().cpu_usage_micro_seconds))
                     .unwrap(),

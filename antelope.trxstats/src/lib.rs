@@ -49,7 +49,7 @@ fn map_trxs(params: String, block: Block) -> Result<Transactions, SubstreamsErro
     };
     Ok(Transactions {
         transactions: block
-            .all_transaction_traces()
+            .executed_transaction_traces()
             .filter_map(|trx| match trx.index {
                 0 => None, // skip eosio::onblock trxs
                 _ => Some(Transaction {

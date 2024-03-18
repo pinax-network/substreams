@@ -10,7 +10,7 @@ use crate::utils::from_dbop_to_entityop;
 pub fn entity_out(block: Block) -> Result<EntityChanges, Error> {
     let mut entity_changes: EntityChanges = Default::default();
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for db_op in &trx.db_ops {
             if db_op.code == "app.pomelo" {
                 match db_op.table_name.as_str() {

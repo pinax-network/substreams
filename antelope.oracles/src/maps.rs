@@ -10,7 +10,7 @@ use antelope::{Name, SymbolCode};
 fn map_prices(_params: String, block: Block) -> Result<Prices, Error> {
     let mut response = vec![];
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for db_op in &trx.db_ops {
             let contract = db_op.code.clone();
             let raw_primary_key = Name::from(db_op.primary_key.as_str()).value;
@@ -57,7 +57,7 @@ fn map_prices(_params: String, block: Block) -> Result<Prices, Error> {
 fn map_quotes(_params: String, block: Block) -> Result<Quotes, Error> {
     let mut response = vec![];
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for db_op in &trx.db_ops {
             let contract = db_op.code.clone();
             let pair = db_op.scope.clone();

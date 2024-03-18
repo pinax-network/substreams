@@ -5,7 +5,7 @@ use substreams_antelope::pb::{ActionTraces, Block};
 fn map_actions(block: Block) -> Result<ActionTraces, Error> {
     let mut action_traces = vec![];
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for trace in &trx.action_traces {
             let action_trace = trace.action.as_ref().unwrap().clone();
             if action_trace.account != "atomicmarket" {

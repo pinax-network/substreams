@@ -2,8 +2,6 @@ use substreams::errors::Error;
 use substreams::log;
 use substreams_antelope::pb::Block;
 
-
-
 //use serde_json::Result;
 use serde_json::Value;
 
@@ -13,7 +11,7 @@ use crate::eosio_evm;
 #[substreams::handlers::map]
 fn map_pushtx(block: Block) -> Result<eosio_evm::Pushtxs, Error> {
     let mut events = vec![];
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for trace in &trx.action_traces {
             let action_trace = trace.action.as_ref().unwrap();
             if action_trace.account != "eosio.evm" {
@@ -42,7 +40,7 @@ fn map_pushtx(block: Block) -> Result<eosio_evm::Pushtxs, Error> {
 #[substreams::handlers::map]
 fn map_balances(block: Block) -> Result<eosio_evm::Pushbalances, Error> {
     let mut events = vec![];
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for db_op in &trx.db_ops {
             let contract = db_op.code.clone();
 

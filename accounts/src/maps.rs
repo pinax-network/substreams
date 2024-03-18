@@ -10,7 +10,7 @@ use crate::accounts;
 fn map_accounts(block: Block) -> Result<accounts::Accounts, Error> {
     let mut accounts = vec![];
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for trace in &trx.action_traces {
             let action = trace.action.as_ref().unwrap();
 

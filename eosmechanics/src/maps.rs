@@ -32,7 +32,7 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
     // Producer is found in the block header
     let producer = block.header.as_ref().unwrap().producer.clone();
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         // CPU usage is found in the transaction receipt
         let cpu_usage = trx.receipt.as_ref().unwrap().cpu_usage_micro_seconds as i64;
 

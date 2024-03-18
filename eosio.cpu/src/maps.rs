@@ -1,4 +1,3 @@
-
 use substreams::errors::Error;
 
 use substreams_antelope::pb::Block;
@@ -6,7 +5,7 @@ use substreams_antelope::pb::Block;
 use crate::abi;
 use crate::eosio_cpu::*;
 use crate::utils;
-use antelope::{Asset};
+use antelope::Asset;
 
 #[substreams::handlers::map]
 fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> {
@@ -25,7 +24,7 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
     let _filter_quantity_gte = utils::create_i64_filter(params.as_str(), "quantity_gte");
     let mut transaction_count: u32 = 0;
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         let cpu_usage = trx.receipt.as_ref().unwrap().cpu_usage_micro_seconds as u32;
         let net_usage = trx.net_usage as u32;
         let producer = block.header.as_ref().unwrap().producer.clone();
