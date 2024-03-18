@@ -27,7 +27,7 @@ fn map_accounts(params: String, block: Block) -> Result<Accounts, Error> {
     let filter_balance_delta_lte = utils::create_i64_filter(params.as_str(), "balance_delta_lte");
     let filter_balance_delta_gte = utils::create_i64_filter(params.as_str(), "balance_delta_gte");
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for db_op in &trx.db_ops {
             if db_op.table_name != "accounts" {
                 continue;
@@ -147,7 +147,7 @@ fn map_stat(params: String, block: Block) -> Result<Stats, Error> {
     let filter_supply_delta_lte = utils::create_i64_filter(params.as_str(), "supply_delta_lte");
     let filter_supply_delta_gte = utils::create_i64_filter(params.as_str(), "supply_delta_gte");
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         for db_op in &trx.db_ops {
             if db_op.table_name != "stat" {
                 continue;
@@ -268,7 +268,7 @@ fn map_transfers(params: String, block: Block) -> Result<TransferEvents, Error> 
     let filter_quantity_lte = utils::create_i64_filter(params.as_str(), "quantity_lte");
     let filter_quantity_gte = utils::create_i64_filter(params.as_str(), "quantity_gte");
 
-    for trx in block.all_transaction_traces() {
+    for trx in block.executed_transaction_traces() {
         // action traces
         for trace in &trx.action_traces {
             let action_trace = trace.action.as_ref().unwrap();
