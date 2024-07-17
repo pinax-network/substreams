@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: blocks
-  version: v0.1.0
+  version: v1.0.0
   url: https://github.com/pinax-network/substreams
   doc: Blocks
 
@@ -13,7 +13,7 @@ binaries:
 modules:
   - name: map_blocks
     kind: map
-    initialBlock: 2
+    initialBlock: 0
     inputs:
       - source: sf.substreams.v1.Clock
     output:
