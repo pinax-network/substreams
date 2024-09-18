@@ -5,8 +5,8 @@ package:
   url: https://github.com/pinax-network/substreams
   doc: Block Producer Benchmarks
 
-imports:
-  prometheus: https://github.com/pinax-network/substreams-sink-prometheus.rs/releases/download/v0.1.9/substreams-sink-prometheus-v0.1.9.spkg
+# imports:
+#   prometheus: https://github.com/pinax-network/substreams-sink-prometheus.rs/releases/download/v0.2.0/substreams-sink-prometheus-v0.2.0.spkg
 
 binaries:
   default:

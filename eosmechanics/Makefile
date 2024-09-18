@@ -31,7 +31,7 @@ run:
 
 .PHONY: gui
 gui:
-	substreams gui -e telos.substreams.pinax.network:443 prom_out -s 273976005 -t +1000
+	substreams gui -e kylin.substreams.pinax.network:443 prom_out -s 273976005 -t +1000
 
 .PHONY: sink
 sink:
