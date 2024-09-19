@@ -1,6 +1,6 @@
 [package]
 name = "eosmechanics"
-version = "0.3.6"
+version = "0.3.7"
 authors = ["Denis <denis@pinax.network>", "Fred <fred@pinax.network>", "Charles <charles@pinax.network>"]
 description = "Block Producer Benchmarks"
 license = "MIT OR Apache-2.0"
@@ -17,7 +17,6 @@ crate-type = ["cdylib"]
 prost = { workspace = true }
 prost-types = { workspace = true }
 substreams = { workspace = true }
-# substreams-antelope = { workspace = true }
 substreams-antelope = "0.5"
 substreams-sink-kv = { workspace = true }
 substreams-sink-prometheus = { workspace = true }
