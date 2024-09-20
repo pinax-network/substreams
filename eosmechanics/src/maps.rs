@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use substreams::errors::Error;
+use substreams::{errors::Error, skip_empty_output};
 use substreams_antelope::pb::{Block, ProducerAuthoritySchedule};
 
 use crate::eosmechanics::{ProducerUsage, ScheduleChange};
@@ -29,6 +29,8 @@ use crate::eosmechanics::{ProducerUsage, ScheduleChange};
 /// producer.
 #[substreams::handlers::map]
 pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
+    skip_empty_output();
+
     // Producer is found in the block header
     let producer = block.header.as_ref().unwrap().producer.clone();
 
@@ -54,6 +56,8 @@ pub fn map_producer_usage(block: Block) -> Result<ProducerUsage, Error> {
 
 #[substreams::handlers::map]
 pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
+    skip_empty_output();
+
     let active_schedule: Vec<String> = match block.proposer_policy.as_ref() {
         Some(proposer_policy) => schedule_to_accounts(proposer_policy.proposer_schedule.as_ref().unwrap()), // New
         None => schedule_to_accounts(block.active_schedule_v2.as_ref().unwrap()),                           // Old
