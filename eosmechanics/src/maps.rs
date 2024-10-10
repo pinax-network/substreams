@@ -67,8 +67,8 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
         None => vec![],                                                                                 // New ???
     };
 
-    // If there is no pending schedule, then there is no schedule change
-    if pending_schedule.is_empty() {
+    // If there is no pending schedule and it's old block format, then there is no schedule change
+    if pending_schedule.is_empty() && block.proposer_policy.is_none() {
         return Ok(Default::default());
     }
 
