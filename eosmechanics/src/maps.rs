@@ -64,7 +64,7 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
     };
     let pending_schedule: Vec<String> = match block.pending_schedule.as_ref() {
         Some(pending_schedule) => schedule_to_accounts(pending_schedule.schedule_v2.as_ref().unwrap()), // Old
-        None => vec![],                                                                                 // New ???
+        None => vec![],                                                                                 // New
     };
 
     // If there is no pending schedule and it's old block format, then there is no schedule change
