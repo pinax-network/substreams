@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use substreams::{errors::Error, skip_empty_output};
+use substreams::{errors::Error, log, skip_empty_output};
 use substreams_antelope::pb::{Block, ProducerAuthoritySchedule};
 
 use crate::eosmechanics::{ProducerUsage, ScheduleChange};
@@ -68,7 +68,7 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
     };
 
     // If there is no pending schedule and it's old block format, then there is no schedule change
-    if pending_schedule.is_empty() && block.proposer_policy.is_none() {
+    if pending_schedule.is_empty() && block.proposer_policy.as_ref().is_none() {
         return Ok(Default::default());
     }
 
