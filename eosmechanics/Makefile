@@ -27,13 +27,13 @@ info:
 
 .PHONY: run
 run:
-	substreams run -e telos.substreams.pinax.network:443 prom_out -s 273976005 -o jsonl
+	substreams run ./substreams.yaml -e telos.substreams.pinax.network:443 prom_out -s 273976005 -o jsonl
 
 .PHONY: gui
 gui:
-	substreams gui -e kylin.substreams.pinax.network:443 prom_out -s 273976005 -t +1000
+	substreams gui ./substreams.yaml -e kylin.substreams.pinax.network:443 prom_out -s 273976005 -t +1000
 
 .PHONY: sink
 sink:
-	substreams-sink-prometheus run -e eos.substreams.pinax.network:443 https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.3.5/eosmechanics-v0.3.5.spkg -s 292103130
+	substreams-sink-prometheus run -e eos.substreams.pinax.network:443 https://github.com/pinax-network/substreams/releases/download/eosmechanics-v0.3.5/eosmechanics-v0.3.5.spkg -s 292103130 prom_out
 

@@ -1,7 +1,11 @@
 [package]
 name = "eosmechanics"
 version = "0.3.7"
-authors = ["Denis <denis@pinax.network>", "Fred <fred@pinax.network>", "Charles <charles@pinax.network>"]
+authors = [
+    "Denis <denis@pinax.network>",
+    "Fred <fred@pinax.network>",
+    "Charles <charles@pinax.network>",
+]
 description = "Block Producer Benchmarks"
 license = "MIT OR Apache-2.0"
 edition = "2021"
