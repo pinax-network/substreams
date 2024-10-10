@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use substreams::{errors::Error, log, skip_empty_output};
+use substreams::{errors::Error, skip_empty_output};
 use substreams_antelope::pb::{Block, ProducerAuthoritySchedule};
 
 use crate::eosmechanics::{ProducerUsage, ScheduleChange};
