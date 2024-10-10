@@ -31,7 +31,11 @@ run:
 
 .PHONY: gui
 gui:
-	substreams gui ./substreams.yaml -e kylin.substreams.pinax.network:443 prom_out -s 273976005 -t +1000
+	substreams gui ./substreams.yaml -e eos.substreams.pinax.network:443 prom_out -s 396958039
+
+.PHONY: cache
+cache:
+	substreams gui ./substreams.yaml -e eos.substreams.pinax.network:443 prom_out -s 396958039 -t 0 --production-mode
 
 .PHONY: sink
 sink:

@@ -3,7 +3,6 @@ package:
   name: eosmechanics
   version: v0.4.0
   url: https://github.com/pinax-network/substreams
-  doc: Block Producer Benchmarks
 
 imports:
   prometheus: ./imports/substreams-sink-prometheus-v0.2.0.spkg
