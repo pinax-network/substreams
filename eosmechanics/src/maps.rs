@@ -64,23 +64,11 @@ pub fn map_schedule_change(block: Block) -> Result<ScheduleChange, Error> {
     };
     let pending_schedule: Vec<String> = match block.pending_schedule.as_ref() {
         Some(pending_schedule) => schedule_to_accounts(pending_schedule.schedule_v2.as_ref().unwrap()), // Old
-        None => vec![],                                                                                 // New ???
+        None => vec![],                                                                                 // New
     };
 
-    // New block format
-    if !block.proposer_policy.as_ref().is_none() {
-        return Ok(ScheduleChange {
-            producer: block.header.as_ref().unwrap().producer.clone(),
-            schedule_version: block.header.as_ref().unwrap().schedule_version,
-            active_schedule,
-            pending_schedule,
-            add_to_schedule: Default::default(),
-            remove_from_schedule: Default::default(),
-        });
-    }
-
     // If there is no pending schedule and it's old block format, then there is no schedule change
-    if pending_schedule.is_empty() {
+    if pending_schedule.is_empty() && block.proposer_policy.as_ref().is_none() {
         return Ok(Default::default());
     }
 
