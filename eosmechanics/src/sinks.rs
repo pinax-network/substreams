@@ -1,16 +1,14 @@
 use std::collections::HashMap;
 
-use substreams::errors::Error;
 use substreams::log;
-use substreams_sink_prometheus::{PrometheusOperations, Counter, Gauge, Histogram, Summary};
+use substreams::{errors::Error, skip_empty_output};
+use substreams_sink_prometheus::{Counter, Gauge, Histogram, PrometheusOperations, Summary};
 
 use crate::eosmechanics::{ProducerUsage, ScheduleChange};
 
 #[substreams::handlers::map]
-pub fn prom_out(
-    producer_usage: ProducerUsage,
-    schedule_change: ScheduleChange
-) -> Result<PrometheusOperations, Error> {
+pub fn prom_out(producer_usage: ProducerUsage, schedule_change: ScheduleChange) -> Result<PrometheusOperations, Error> {
+    skip_empty_output();
 
     let mut prom_out = PrometheusOperations::default();
     let producer = producer_usage.producer.clone();

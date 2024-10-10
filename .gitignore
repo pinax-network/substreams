@@ -14,6 +14,7 @@ localblocks
 rpc-cache
 localdata
 *.spkg
+!/**/imports/*.spkg
 
 ### VisualStudioCode template
 .vscode/*
