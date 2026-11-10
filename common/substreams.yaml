@@ -7,7 +7,7 @@ package:
 
 imports:
   kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v2.1.4/substreams-sink-kv-v2.1.4.spkg
-  antelope: https://github.com/EOS-Nation/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
+  antelope: https://github.com/pinax-network/firehose-antelope/releases/download/v0.0.3/antelope-v0.0.3.spkg
 
 binaries:
   default:
